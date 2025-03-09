@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+  <title>Portal Representante</title>
+
+  <!-- Montserrat Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+
+
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script src="./js/db.js"></script>
+
+</head>
+
+<body>
+  <div class="grid-container">
+
+
+
+    <header class="header">
+
+      <div class="menu-icon" onclick="openSidebar()">
+
+        <span class="material-icons-outlined">menu</span>
+
+      </div>
+
+      <!-- <div class="header-left">
+
+          <span class="material-icons-outlined">search</span>
+          
+        </div> -->
+
+      <div class="header-right">
+
+        <span class="material-icons-outlined">account_circle</span>
+
+      </div>
+
+      <div class="filtros">
+
+        <select id="filtro_mes">
+          <option value="01">Janeiro</option>
+          <option value="02">Fevereiro</option>
+          <option value="03">Março</option>
+          <option value="04">Abril</option>
+          <option value="05">Maio</option>
+          <option value="06">Junho</option>
+          <option value="07">Julho</option>
+          <option value="08">Agosto</option>
+          <option value="09">Setembro</option>
+          <option value="10">Outubro</option>
+          <option value="11">Novembro</option>
+          <option value="12">Dezembro</option>
+        </select>
+
+        <select id="filtro_ano">
+
+          <option value="2025">2025</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+
+        </select>
+
+      </div>
+
+    </header>
+
+
+    <aside id="sidebar">
+
+      <div class="sidebar-title">
+
+        <div class="sidebar-brand">
+
+          <!-- <span class="material-icons-outlined">shopping_cart</span> STORE -->
+        </div>
+
+        <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+
+      </div>
+
+      <ul class="sidebar-list">
+
+        <li class="sidebar-list-item">
+          <a href="#">
+            <span class="material-icons-outlined">dashboard</span> Dashboard
+          </a>
+        </li>
+
+        <li class="sidebar-list-item">
+          <a href="#">
+            <span class="material-icons-outlined">inventory_2</span> Pedidos
+          </a>
+        </li>
+
+        <li class="sidebar-list-item">
+          <a href="#">
+            <span class="material-icons-outlined">groups</span> Clientes
+          </a>
+        </li>
+
+        <li class="sidebar-list-item">
+          <a href="#">
+            <span class="material-icons-outlined">fact_check</span> Estoque
+          </a>
+        </li>
+
+
+      </ul>
+
+    </aside>
+
+
+    <main class="main-container">
+
+      <div class="main-title">
+
+        <h2>DASHBOARD</h2>
+
+      </div>
+
+      <div class="main-cards">
+
+        <div class="card">
+          <div class="card-inner">
+            <h3>Valor Vendido</h3>
+            <!-- <span class="material-icons-outlined">inventory_2</span> -->
+          </div>
+          <h1>249</h1>
+        </div>
+
+        <div class="card">
+          <div class="card-inner">
+            <h3>Qtd Pedidos</h3>
+            <!-- <span class="material-icons-outlined">category</span> -->
+          </div>
+          <h1>25</h1>
+        </div>
+
+        <div class="card">
+          <div class="card-inner">
+            <h3>Qtd Clientes</h3>
+            <!-- <span class="material-icons-outlined">groups</span> -->
+          </div>
+          <h1>1500</h1>
+        </div>
+
+        <div class="card">
+          <div class="card-inner">
+            <h3>Ticket Médio</h3>
+            <!-- <span class="material-icons-outlined">notification_important</span> -->
+            <div id="velocimeter-chart"></div>
+          </div>
+          <h1>56</h1>
+        </div>
+
+      </div>
+
+      <div class="charts">
+
+        <div class="charts-card">
+
+          <h2 class="chart-title">Qtd Por Categoria</h2>
+
+          <div id="graficoContainer">
+
+            <canvas id="meuGrafico"></canvas>
+
+          </div>
+
+        </div>
+
+        <div class="charts-card">
+
+          <h2 class="chart-title">Purchase and Sales Orders</h2>
+
+          <div id="area-chart"></div>
+
+        </div>
+
+
+
+      </div>
+    </main>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.5/apexcharts.min.js"></script>
+
+  <script src="js/scripts.js"></script>
+
+</body>
+
+</html>
