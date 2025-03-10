@@ -57,23 +57,32 @@ window.addEventListener("DOMContentLoaded", function () {
         const mesSelecionado = document.getElementById('filtro_mes').value;
     
      
+        // const dadosFiltrados = dataFromLocalStorage.filter(item => {
+        //     const mesDoItem = new Date(item.EMISSAO).getMonth() + 1;
+        //     return mesDoItem == mesSelecionado;
+            
+        // });
+
         const dadosFiltrados = dataFromLocalStorage.filter(item => {
-            const mesDoItem = new Date(item.EMISSAO).getMonth() + 1;
-            return mesDoItem == mesSelecionado;
+            const mesDoItem = new Date(item.EMISSAO).getUTCMonth() + 1; // Pegando o mês corretamente (1-12)
+            return mesDoItem === mesSelecionado;
         });
-    
+        
+        
+        console.log(mesSelecionado);
+        console.log(mesDoItem);
+
       
         const categoriaMap = dadosFiltrados.reduce((acc, item) => {
-            // Se a categoria já existe no acumulador, soma a quantidade
+    
             if (acc[item.CATEGORIA]) {
-                acc[item.CATEGORIA] += item.QTD; // Somando a quantidade
+                acc[item.CATEGORIA] += item.QTD;
             } else {
-                acc[item.CATEGORIA] = item.QTD; // Se não, inicializa com a quantidade
+                acc[item.CATEGORIA] = item.QTD;
             }
             return acc;
         }, {});
     
-        // Criando arrays de categorias e somas
         const categorias = Object.keys(categoriaMap);
         const somas = Object.values(categoriaMap);
     
@@ -91,15 +100,15 @@ window.addEventListener("DOMContentLoaded", function () {
     
         // Criando o gráfico de barras
         const myChart = new Chart(ctx, {
-            type: 'bar',  // Tipo do gráfico: barras
+            type: 'bar',
             data: {
-                labels: categoriasOrdenadas,  // As categorias ordenadas
+                labels: categoriasOrdenadas,
                 datasets: [{
-                    label: 'Categorias',  // Título do gráfico
-                    data: somasOrdenadas,  // As somas das quantidades ordenadas
-                    backgroundColor: 'rgba(6, 144, 236)',  // Cor de fundo das barras
+                    label: categoriasOrdenadas.categoria,
+                    data: somasOrdenadas,
+                    backgroundColor: 'rgba(6, 144, 236)',
                     border: 'none',
-                    borderWidth: 1  // Largura da borda
+                    borderWidth: 1
                 }]
             },
             options: {
