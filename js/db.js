@@ -69,8 +69,6 @@ window.addEventListener("DOMContentLoaded", function () {
         });
         
         
-        console.log(mesSelecionado);
-        console.log(mesDoItem);
 
       
         const categoriaMap = dadosFiltrados.reduce((acc, item) => {
@@ -94,74 +92,75 @@ window.addEventListener("DOMContentLoaded", function () {
         // Recriar as arrays ordenadas de categorias e somas
         const categoriasOrdenadas = sortedData.map(item => item.categoria);
         const somasOrdenadas = sortedData.map(item => item.soma);
+        
+        console.log(dadosFiltrados);
+        
+        // const ctx = document.getElementById('meuGrafico').getContext('2d');
     
-        // Pegando o contexto do canvas
-        const ctx = document.getElementById('meuGrafico').getContext('2d');
-    
-        // Criando o gráfico de barras
-        const myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: categoriasOrdenadas,
-                datasets: [{
-                    label: categoriasOrdenadas.categoria,
-                    data: somasOrdenadas,
-                    backgroundColor: 'rgba(6, 144, 236)',
-                    border: 'none',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                indexAxis: 'y',  // Muda a orientação das barras para horizontal
-                scales: {
-                    x: {
-                        beginAtZero: true,  // O eixo X (agora horizontal) começa no zero
-                        ticks: {
-                            display: false,  // Oculta as labels do eixo X (horizontal)
-                            color: 'white',  // Cor das labels do eixo X
-                        },
-                        grid: {
-                            display: false  // Esconde as linhas de grid do eixo X
-                        }
-                    },
-                    y: {
-                        beginAtZero: true,  // O eixo Y (agora vertical) começa no zero
-                        ticks: {
-                            display: true,  // As labels do eixo Y são exibidas
-                            color: 'white',  // Cor das labels do eixo Y
-                        },
-                        grid: {
-                            display: false  // Esconde as linhas de grid do eixo Y
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: false  // Oculta a legenda
-                    },
-                    datalabels: {
-                        display: true,  // Habilita os rótulos de dados
-                        color: 'white',  // Cor do texto dos rótulos
-                        align: 'end',  // Alinhamento do texto do rótulo
-                        font: {
-                            weight: 'bold',  // Peso da fonte
-                            size: 12  // Tamanho da fonte
-                        },
-                        formatter: function(value) {
-                            return value;  // Exibe o valor da barra como rótulo
-                        }
-                    }
-                }
-            }
-        });
+        // // Criando o gráfico de barras
+        // const myChart = new Chart(ctx, {
+        //     type: 'bar',
+        //     data: {
+        //         labels: categoriasOrdenadas,
+        //         datasets: [{
+        //             label: categoriasOrdenadas.categoria,
+        //             data: somasOrdenadas,
+        //             backgroundColor: 'rgba(6, 144, 236)',
+        //             border: 'none',
+        //             borderWidth: 1
+        //         }]
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         indexAxis: 'y',  // Muda a orientação das barras para horizontal
+        //         scales: {
+        //             x: {
+        //                 beginAtZero: true,  // O eixo X (agora horizontal) começa no zero
+        //                 ticks: {
+        //                     display: false,  // Oculta as labels do eixo X (horizontal)
+        //                     color: 'white',  // Cor das labels do eixo X
+        //                 },
+        //                 grid: {
+        //                     display: false  // Esconde as linhas de grid do eixo X
+        //                 }
+        //             },
+        //             y: {
+        //                 beginAtZero: true,  // O eixo Y (agora vertical) começa no zero
+        //                 ticks: {
+        //                     display: true,  // As labels do eixo Y são exibidas
+        //                     color: 'white',  // Cor das labels do eixo Y
+        //                 },
+        //                 grid: {
+        //                     display: false  // Esconde as linhas de grid do eixo Y
+        //                 }
+        //             }
+        //         },
+        //         plugins: {
+        //             legend: {
+        //                 display: false  // Oculta a legenda
+        //             },
+        //             datalabels: {
+        //                 display: true,  // Habilita os rótulos de dados
+        //                 color: 'white',  // Cor do texto dos rótulos
+        //                 align: 'end',  // Alinhamento do texto do rótulo
+        //                 font: {
+        //                     weight: 'bold',  // Peso da fonte
+        //                     size: 12  // Tamanho da fonte
+        //                 },
+        //                 formatter: function(value) {
+        //                     return value;  // Exibe o valor da barra como rótulo
+        //                 }
+        //             }
+        //         }
+        //     }
+        // });
     }
     
     // Chamando a função para montar o gráfico inicialmente
     montarGraficoComFiltro();
     
     // Evento para atualizar o gráfico quando o mês for alterado
-    document.getElementById('mesSelect').addEventListener('change', function() {
+    document.getElementById('filtro_mes').addEventListener('change', function() {
         montarGraficoComFiltro();
     });
     
