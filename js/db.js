@@ -2,6 +2,8 @@ window.addEventListener("DOMContentLoaded", function () {
 
 
     let user = sessionStorage.getItem("currentUser");
+    let name = sessionStorage.getItem("name");
+
 
     if (user) {
         document.getElementById("nome").innerHTML = user.charAt(0).toUpperCase() + user.slice(1).toLowerCase();
@@ -69,13 +71,13 @@ window.addEventListener("DOMContentLoaded", function () {
         const dadosFiltrados = dataFromLocalStorage.filter(item => {
             const mesDoItem = parseInt(item.mes, 10);
             const anoDoItem = parseInt(item.ano, 10);
-            return mesDoItem === mesSelecionado && anoDoItem === anoSelecionado;
+            return mesDoItem === mesSelecionado && anoDoItem === anoSelecionado && item.REP === name;
         });
 
-        // Calcular e exibir os indicadores
+    
         calcularIndicadores(dadosFiltrados);
 
-        // GRÁFICO DE BARRAS
+    
         const categoriaMap = dadosFiltrados.reduce((acc, item) => {
             acc[item.CATEGORIA] = (acc[item.CATEGORIA] || 0) + item.QTD;
             return acc;

@@ -1,9 +1,23 @@
 [
     {
-        "usuario": "ailton",
-        "senha": "071954",
+        "usuario": "Rep1",
+        "senha": "r1",
         "link": "home.html",
         "img": "https://i.postimg.cc/ZKqHLGrh/boss.png",
-        "apelido": "Ailton Barreto"
+        "apelido": "Representante 1"
+    },
+    {
+        "usuario": "Rep2",
+        "senha": "r2",
+        "link": "home.html",
+        "img": "https://i.postimg.cc/ZKqHLGrh/boss.png",
+        "apelido": "Representante 1"
+    },
+    {
+        "usuario": "Rep3",
+        "senha": "r3",
+        "link": "home.html",
+        "img": "https://i.postimg.cc/ZKqHLGrh/boss.png",
+        "apelido": "Representante 1"
     }
 ]
