@@ -17,4 +17,10 @@ function closeSidebar() {
   }
 }
 
+function Exit() {
 
+  sessionStorage.clear();
+  console.log("sessionStorage após limpeza:", sessionStorage); 
+
+  window.location.href = 'index.html?' + new Date().getTime();
+}

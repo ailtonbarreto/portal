@@ -5,15 +5,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Portal Representante</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <script src="./js/db.js"></script>
+  <script defer src="./js/db.js"></script>
+  <script defer src="js/scripts.js"></script>
 
 </head>
 
@@ -89,33 +87,53 @@
       <ul class="sidebar-list">
 
         <li class="sidebar-list-item">
+
           <a href="#">
+
             <span class="material-icons-outlined">dashboard</span> Visão Geral
+
           </a>
+
         </li>
 
         <li class="sidebar-list-item">
+
           <a href="#">
+
             <span class="material-icons-outlined">inventory_2</span> Pedidos
+
           </a>
+
         </li>
 
         <li class="sidebar-list-item">
+
           <a href="#">
+
             <span class="material-icons-outlined">groups</span> Clientes
+
           </a>
+
         </li>
 
         <li class="sidebar-list-item">
+          
           <a href="#">
+
             <span class="material-icons-outlined">fact_check</span> Estoque
+
           </a>
+
         </li>
 
         <li class="sidebar-list-item" onclick="Exit()">
+
           <a>
+
             <span class="material-icons-outlined">logout</span> Sair
+
           </a>
+
         </li>
 
       </ul>
@@ -227,23 +245,6 @@
     </main>
 
   </div>
-
-
-  <script src="js/scripts.js"></script>
-
-  <script>
-
-
-    function Exit() {
-      sessionStorage.removeItem("logon");
-      sessionStorage.removeItem("currentUser");
-      sessionStorage.removeItem("name");
-      sessionStorage.removeItem("img");
-      window.location.href = "index.html";
-    }
-
-
-  </script>
 
 </body>
 
