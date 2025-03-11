@@ -1,4 +1,12 @@
 window.addEventListener("DOMContentLoaded", function () {
+
+
+    let user = sessionStorage.getItem("currentUser");
+
+    if (user) {
+        document.getElementById("nome").innerHTML = user.charAt(0).toUpperCase() + user.slice(1).toLowerCase();
+    }
+
     async function getApiUrlFromBase() {
         try {
             console.log("Carregando base.json...");
@@ -27,25 +35,47 @@ window.addEventListener("DOMContentLoaded", function () {
             if (!data || typeof data !== "object") throw new Error("Dados inválidos ou vazios.");
 
             localStorage.setItem('database', JSON.stringify(data));
-            console.log("Dados armazenados com sucesso:", data);
+            montarGraficoComFiltro();
         } catch (error) {
             console.error("Erro ao obter dados do endpoint:", error);
         }
     }
 
+    function calcularIndicadores(dadosFiltrados) {
+        const totalVendido = dadosFiltrados.reduce((acc, item) => acc + (item.QTD * item.VR_UNIT), 0).toFixed(2);
+        const totalPedidos = dadosFiltrados.length;
+        const totalClientes = new Set(dadosFiltrados.map(item => item.CLIENTE)).size;
+
+      
+        const ticketMedio = (totalVendido / totalPedidos).toFixed(2);
+
+    
+        document.getElementById('valor_vendido').innerHTML = `R$ ${parseFloat(totalVendido).toLocaleString('pt-BR')}`;
+        document.getElementById('qtd_pedidos').innerHTML = totalPedidos;
+        document.getElementById('qtd_clientes').innerHTML = totalClientes;
+        document.getElementById('ticket_medio').innerHTML = `R$ ${parseFloat(ticketMedio).toLocaleString('pt-BR')}`;
+    }
+
     function montarGraficoComFiltro() {
         const dataFromLocalStorage = JSON.parse(localStorage.getItem('database'));
         if (!dataFromLocalStorage || !Array.isArray(dataFromLocalStorage)) {
-            console.error("Nenhum dado encontrado no localStorage ou formato inválido!");
+            console.error("Nenhum dado encontrado no localStorage ou os dados não estão no formato esperado!");
             return;
         }
 
+        const anoSelecionado = parseInt(document.getElementById('filtro_ano').value, 10);
         const mesSelecionado = parseInt(document.getElementById('filtro_mes').value, 10);
+
         const dadosFiltrados = dataFromLocalStorage.filter(item => {
-            const mesDoItem = new Date(item.EMISSAO).getUTCMonth() + 1;
-            return mesDoItem === mesSelecionado;
+            const mesDoItem = parseInt(item.mes, 10);
+            const anoDoItem = parseInt(item.ano, 10);
+            return mesDoItem === mesSelecionado && anoDoItem === anoSelecionado;
         });
 
+        // Calcular e exibir os indicadores
+        calcularIndicadores(dadosFiltrados);
+
+        // GRÁFICO DE BARRAS
         const categoriaMap = dadosFiltrados.reduce((acc, item) => {
             acc[item.CATEGORIA] = (acc[item.CATEGORIA] || 0) + item.QTD;
             return acc;
@@ -58,47 +88,109 @@ window.addEventListener("DOMContentLoaded", function () {
         const categoriasOrdenadas = sortedData.map(item => item.categoria);
         const somasOrdenadas = sortedData.map(item => item.soma);
 
-        const ctx = document.getElementById('meuGrafico').getContext('2d');
-        if (window.myChart) window.myChart.destroy();
-        
-        window.myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: categoriasOrdenadas,
-                datasets: [{
-                    label: "Quantidade",
-                    data: somasOrdenadas,
-                    backgroundColor: 'rgba(6, 144, 236)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                indexAxis: 'y',
-                scales: {
-                    x: { 
-                        beginAtZero: true, 
-                        grid: { display: false },
-                        ticks: { color: 'white' } 
-                    },
-                    y: { 
-                        grid: { display: false },
-                        ticks: { color: 'white' } 
-                    }
+        const ctxBarras = document.getElementById('barchart');
+        if (ctxBarras) {
+            const contextBarras = ctxBarras.getContext('2d');
+            if (window.myChartBarras) window.myChartBarras.destroy();
+
+            window.myChartBarras = new Chart(contextBarras, {
+                type: 'bar',
+                data: {
+                    labels: categoriasOrdenadas,
+                    datasets: [{
+                        label: "Quantidade",
+                        data: somasOrdenadas,
+                        borderColor: '#0DB8E8',
+                        backgroundColor: '#0e1218',
+                        borderWidth: 1
+                    }]
                 },
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        enabled: true,
-                        callbacks: {
-                            label: context => `Quantidade: ${context.raw}`
+                options: {
+                    responsive: true,
+                    indexAxis: 'y',
+                    scales: {
+                        x: { 
+                            beginAtZero: true, 
+                            grid: { display: false },
+                            ticks: { color: 'white' } 
+                        },
+                        y: { 
+                            grid: { display: false },
+                            ticks: { color: 'white' } 
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            enabled: true,
+                            callbacks: {
+                                label: context => `Quantidade: ${context.raw}`
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
+        } else {
+            console.error("Canvas para o gráfico de barras não encontrado!");
+        }
+
+        // GRAFICO DE LINHA
+        const vendasPorDia = dadosFiltrados.reduce((acc, item) => {
+            acc[item.dia] = (acc[item.dia] || 0) + item.QTD;
+            return acc;
+        }, {});
+
+        const dias = Object.keys(vendasPorDia).sort();
+        const vendas = dias.map(dia => vendasPorDia[dia]);
+
+        const ctxLinha = document.getElementById('line-chart');
+        if (ctxLinha) {
+            const contextLinha = ctxLinha.getContext('2d');
+            if (window.myChartLinha) window.myChartLinha.destroy();
+
+            window.myChartLinha = new Chart(contextLinha, {
+                type: 'line',
+                data: {
+                    labels: dias,
+                    datasets: [{
+                        label: "Vendas por Dia",
+                        data: vendas,
+                        borderColor: '#0DB8E8',
+                        backgroundColor: '#0e1218',
+                        fill: true,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            grid: { display: false },
+                            ticks: { color: 'white' }
+                        },
+                        y: {
+                            grid: { display: false },
+                            ticks: { color: 'white' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            enabled: true,
+                            callbacks: {
+                                label: context => `Vendas: ${context.raw}`
+                            }
+                        }
+                    }
+                }
+            });
+        } else {
+            console.error("Canvas para o gráfico de linha não encontrado!");
+        }
     }
 
-    fetchDataAndStore().then(() => montarGraficoComFiltro());
+    fetchDataAndStore();
     document.getElementById('filtro_mes').addEventListener('change', montarGraficoComFiltro);
+    document.getElementById('filtro_ano').addEventListener('change', montarGraficoComFiltro);
 });

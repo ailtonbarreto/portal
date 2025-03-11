@@ -1,8 +1,17 @@
+
+:root{
+  --bg: #0e1218;
+  --text-color: #9e9ea4;
+  --cards-color: #000;
+  --sidebar-color: #000000;
+}
+
+
 body {
   margin: 0;
   padding: 0;
-  background-color: #1d2634;
-  color: #9e9ea4;
+  background-color: var(--bg);
+  color: var(--text-color);
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -42,7 +51,7 @@ body {
 #sidebar {
   grid-area: sidebar;
   height: 100%;
-  background-color: #263043;
+  background-color: var(--sidebar-color);
   overflow-y: auto;
   transition: all 0.5s;
   -webkit-transition: all 0.5s;
@@ -61,6 +70,7 @@ body {
 }
 
 .sidebar-brand {
+  text-align: center;
   margin-top: 15px;
   font-size: 20px;
   font-weight: 700;
@@ -78,26 +88,31 @@ body {
 }
 
 .sidebar-list-item:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: var(--bg);
   cursor: pointer;
 }
 
 .sidebar-list-item > a {
   text-decoration: none;
-  color: #9e9ea4;
+  color: var(--text-color);
 }
 
 .sidebar-responsive {
   display: inline !important;
   position: absolute;
-  /*
-    the z-index of the ApexCharts is 11
-    we want the z-index of the sidebar higher so that
-    the charts are not showing over the sidebar 
-    on small screens
-  */
   z-index: 12 !important;
 }
+
+
+#filtro_mes, #filtro_ano{
+  background-color: var(--bg);
+  color: var(--text-color);
+  font-size: 0.8vw;
+  padding: 0.3vw;
+  border: none;
+  outline: none;
+}
+
 
 /* ---------- MAIN ---------- */
 
@@ -117,19 +132,18 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 20px;
-  margin: 20px 0;
+  margin: 0.3vw 0;
 }
 
 .card {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  padding: 25px;
+  padding: 0.2vw 3vw;
   border-radius: 5px;
-  background-color: #263043;
+  background-color: var(--sidebar-color);
   box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
 }
-
 
 
 .card-inner {
@@ -138,9 +152,7 @@ body {
   justify-content: space-between;
 }
 
-.card-inner > .material-icons-outlined {
-  font-size: 45px;
-}
+
 
 .charts {
   display: grid;
@@ -150,7 +162,7 @@ body {
 }
 
 .charts-card {
-  background-color: #263043;
+  background-color: var(--sidebar-color);
   margin-bottom: 20px;
   padding: 25px;
   box-sizing: border-box;
@@ -198,6 +210,15 @@ body {
     grid-template-columns: 1fr;
     gap: 10px;
     margin-bottom: 0;
+  }
+
+  #filtro_mes, #filtro_ano{
+    background-color: var(--bg);
+    color: var(--text-color);
+    font-size: 4vw;
+    padding: 0.3vw;
+    border: none;
+    outline: none;
   }
 
   .charts {
