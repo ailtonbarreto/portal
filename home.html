@@ -105,8 +105,8 @@
           </a>
         </li>
 
-        <li class="sidebar-list-item">
-          <a onclick="Exit()">
+        <li class="sidebar-list-item" onclick="Exit()">
+          <a>
             <span class="material-icons-outlined">logout</span> Sair
           </a>
         </li>
@@ -221,6 +221,7 @@
     function Exit() {
       sessionStorage.removeItem("logon");
       sessionStorage.removeItem("currentUser");
+      sessionStorage.removeItem("name");
       window.location.href = "index.html";
     }
 
