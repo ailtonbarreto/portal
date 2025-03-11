@@ -3,21 +3,21 @@
         "usuario": "Rep1",
         "senha": "r1",
         "link": "home.html",
-        "img": "https://i.postimg.cc/ZKqHLGrh/boss.png",
+        "img": "https://i.postimg.cc/pr2NVs8r/image-2.png",
         "apelido": "Representante 1"
     },
     {
         "usuario": "Rep2",
         "senha": "r2",
         "link": "home.html",
-        "img": "https://i.postimg.cc/ZKqHLGrh/boss.png",
+        "img": "https://i.postimg.cc/zvpsyTSj/image-3.png",
         "apelido": "Representante 2"
     },
     {
         "usuario": "Rep3",
         "senha": "r3",
         "link": "home.html",
-        "img": "https://i.postimg.cc/ZKqHLGrh/boss.png",
+        "img": "https://i.postimg.cc/bNwXKFpF/image-4.png",
         "apelido": "Representante 3"
     }
 ]

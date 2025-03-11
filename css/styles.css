@@ -104,7 +104,7 @@ body {
 }
 
 
-#filtro_mes, #filtro_ano{
+#filtro_mes, #filtro_ano, #filtro_tipo{
   background-color: var(--bg);
   color: var(--text-color);
   font-size: 0.8vw;

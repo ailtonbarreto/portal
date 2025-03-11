@@ -56,6 +56,7 @@ window.addEventListener("load", function () {
         sessionStorage.setItem("logon", "1");
         sessionStorage.setItem("currentUser", userData.apelido);
         sessionStorage.setItem("name", userData.usuario);
+        sessionStorage.setItem("img",userData.img)
 
         atualizarInterface(userData);
     }
@@ -64,16 +65,5 @@ window.addEventListener("load", function () {
         const iframe = document.getElementById("iframe");
         iframe.src = userData.link;
         document.getElementById("container-login").classList.add("desapear");
-        document.getElementById("logged-message").innerHTML = `Logado como ${userData.nickname}`;
     }
 });
-
-function Exit() {
-    sessionStorage.removeItem("logon");
-    sessionStorage.removeItem("currentUser");
-    
-    document.getElementById("container-login").classList.remove("desapear");
-    document.getElementById("iframe").src = "";
-    document.getElementById("logged-message").innerHTML = "";
-    window.location.reload();
-}
