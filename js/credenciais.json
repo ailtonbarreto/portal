@@ -11,13 +11,13 @@
         "senha": "r2",
         "link": "home.html",
         "img": "https://i.postimg.cc/ZKqHLGrh/boss.png",
-        "apelido": "Representante 1"
+        "apelido": "Representante 2"
     },
     {
         "usuario": "Rep3",
         "senha": "r3",
         "link": "home.html",
         "img": "https://i.postimg.cc/ZKqHLGrh/boss.png",
-        "apelido": "Representante 1"
+        "apelido": "Representante 3"
     }
 ]
