@@ -12,10 +12,10 @@ window.addEventListener("DOMContentLoaded", async function () {
         try {
             const response = await fetch('./js/base.json');
             if (!response.ok) throw new Error(`Erro ao carregar base.json: ${response.statusText}`);
-            
+
             const data = await response.json();
             if (!data.url) throw new Error("URL da API não encontrada em base.json.");
-            
+
             return data.url;
         } catch (error) {
             console.error("Erro ao obter URL da API:", error);
@@ -54,20 +54,27 @@ window.addEventListener("DOMContentLoaded", async function () {
     function montarGraficoComFiltro() {
         const dataFromLocalStorage = JSON.parse(localStorage.getItem('database'));
         if (!dataFromLocalStorage || !Array.isArray(dataFromLocalStorage)) return;
-
+    
         const anoSelecionado = parseInt(document.getElementById('filtro_ano').value, 10);
         const mesSelecionado = parseInt(document.getElementById('filtro_mes').value, 10);
         const tipoAnalise = document.getElementById('filtro_tipo').value;
-
-        const dadosFiltrados = dataFromLocalStorage.filter(item => 
+    
+        const dadosFiltrados = dataFromLocalStorage.filter(item =>
             parseInt(item.mes, 10) === mesSelecionado &&
             parseInt(item.ano, 10) === anoSelecionado &&
             item.REP === name
         );
-
+    
         calcularIndicadores(dadosFiltrados);
         atualizarGraficos(dadosFiltrados, tipoAnalise);
+    
+        // Criar gráfico de pizza de status dos pedidos
+        criarGraficoPizzaDeStatus('pizza-chart', dadosFiltrados);
+    
+        // Criar gráfico de dispersão por cliente
+        criarGraficoDispersaoPorCliente('scatter-chart', dadosFiltrados, tipoAnalise);
     }
+    
 
     function atualizarGraficos(dadosFiltrados, tipoAnalise) {
         const getMetric = item => tipoAnalise === "quantidade" ? item.QTD : item.QTD * item.VR_UNIT;
@@ -90,20 +97,18 @@ window.addEventListener("DOMContentLoaded", async function () {
 
     function criarGraficoBarras(idCanvas, labels, valores, labelDataset) {
         const ctx = document.getElementById(idCanvas);
-        
+
         if (!ctx) {
             console.error(`Canvas ${idCanvas} não encontrado!`);
             return;
         }
-    
+
         const context = ctx.getContext('2d');
-    
-        // Destruir gráfico antigo, se existir
+
         if (window[idCanvas] instanceof Chart) {
             window[idCanvas].destroy();
         }
-    
-        // Criar novo gráfico
+
         window[idCanvas] = new Chart(context, {
             type: 'bar',
             data: {
@@ -120,14 +125,14 @@ window.addEventListener("DOMContentLoaded", async function () {
                 responsive: true,
                 indexAxis: 'y',
                 scales: {
-                    x: { 
-                        beginAtZero: true, 
+                    x: {
+                        beginAtZero: true,
                         grid: { display: false },
-                        ticks: { color: 'white' } 
+                        ticks: { color: 'white' }
                     },
-                    y: { 
+                    y: {
                         grid: { display: false },
-                        ticks: { color: 'white' } 
+                        ticks: { color: 'white' }
                     }
                 },
                 plugins: {
@@ -142,32 +147,31 @@ window.addEventListener("DOMContentLoaded", async function () {
             }
         });
     }
-    
 
     function criarGraficoLinha(idCanvas, dadosFiltrados, tipoAnalise) {
         const getMetric = item => tipoAnalise === "quantidade" ? item.QTD : item.QTD * item.VR_UNIT;
-    
+
         const vendasPorDia = dadosFiltrados.reduce((acc, item) => {
             acc[item.dia] = (acc[item.dia] || 0) + getMetric(item);
             return acc;
         }, {});
-    
+
         const diasOrdenados = Object.keys(vendasPorDia).sort();
         const valoresOrdenados = diasOrdenados.map(dia => vendasPorDia[dia]);
-    
+
         const ctx = document.getElementById(idCanvas);
-    
+
         if (!ctx) {
             console.error(`Canvas ${idCanvas} não encontrado!`);
             return;
         }
-    
+
         const context = ctx.getContext('2d');
-    
+
         if (window[idCanvas] instanceof Chart) {
             window[idCanvas].destroy();
         }
-    
+
         window[idCanvas] = new Chart(context, {
             type: 'line',
             data: {
@@ -199,9 +203,158 @@ window.addEventListener("DOMContentLoaded", async function () {
             }
         });
     }
+
+    // Função para contar os status dos pedidos
+    function contarStatus(dadosFiltrados) {
+        const statusCount = {};
+        const pedidosContados = new Set();
+    
+        dadosFiltrados.forEach(pedido => {
+            const status = pedido.STATUS;
+            const pedidoId = pedido.PEDIDO;
+    
+            if (pedidosContados.has(pedidoId)) {
+                return;
+            }
+    
+            if (statusCount[status]) {
+                statusCount[status] += 1;
+            } else {
+                statusCount[status] = 1;
+            }
+    
+            pedidosContados.add(pedidoId);
+        });
+    
+        return statusCount;
+    }
+    
+    function criarGraficoPizzaDeStatus(idCanvas, dadosFiltrados) {
+        const statusCount = contarStatus(dadosFiltrados);
+        const labels = Object.keys(statusCount);
+        const valores = Object.values(statusCount);
+    
+        const ctx = document.getElementById('pizza-chart');
+    
+        if (!ctx) {
+            console.error(`Canvas ${idCanvas} não encontrado!`);
+            return;
+        }
+    
+        const context = ctx.getContext('2d');
+    
+        if (window[idCanvas] instanceof Chart) {
+            window[idCanvas].destroy();
+        }
+    
+        window[idCanvas] = new Chart(context, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: valores,
+                    backgroundColor: ['#00FF1E', '#DD1111', '#11CFDD', '#FF5733', '#8E44AD'],
+                    border: 'none',
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true, // Responsivo
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.label}: ${context.raw} pedidos`;
+                            }
+                        }
+                    },
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            boxWidth: 20, // Ajusta o tamanho da caixa de legenda
+                            padding: 10 // Ajusta o espaçamento entre as legendas
+                        }
+                    }
+                }
+            }
+        });
+    }
     
 
+    function criarGraficoDispersaoPorCliente(idCanvas, dadosFiltrados, tipoAnalise) {
+        const getMetric = item => tipoAnalise === "quantidade" ? item.QTD : item.QTD * item.VR_UNIT;
+    
+        // Preparando os dados para o gráfico de dispersão
+        const clientes = [...new Set(dadosFiltrados.map(item => item.CLIENTE))];
+        const vendasPorCliente = clientes.map(cliente => {
+            const vendasCliente = dadosFiltrados.filter(item => item.CLIENTE === cliente);
+            const totalVendas = vendasCliente.reduce((acc, item) => acc + getMetric(item), 0);
+            return {
+                cliente,
+                totalVendas
+            };
+        });
+    
+        const labels = vendasPorCliente.map(item => item.cliente);
+        const valores = vendasPorCliente.map(item => item.totalVendas);
+    
+        const ctx = document.getElementById(idCanvas);
+    
+        if (!ctx) {
+            console.error(`Canvas ${idCanvas} não encontrado!`);
+            return;
+        }
+    
+        const context = ctx.getContext('2d');
+    
+        if (window[idCanvas] instanceof Chart) {
+            window[idCanvas].destroy();
+        }
+    
+        window[idCanvas] = new Chart(context, {
+            type: 'scatter',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: `Vendas por Cliente (${tipoAnalise})`,
+                    data: valores.map((valor, index) => ({
+                        x: index + 1,
+                        y: valor
+                    })),
+                    backgroundColor: '#0DB8E8',
+                    borderColor: '#0DB8E8',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { grid: { display: false }, ticks: { color: 'white' } },
+                    y: { grid: { display: false }, ticks: { color: 'white' } }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        enabled: true,
+                        callbacks: {
+                            label: (context) => {
+                                const index = context.dataIndex;
+                                const cliente = labels[index];
+                                const totalVendas = valores[index];
+                                return `${cliente}: R$ ${totalVendas.toFixed(2)}`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+    
+
+    // Inicia a busca e armazenamento dos dados
     await fetchDataAndStore();
+
+    // Adiciona os eventos de filtro
     document.getElementById('filtro_mes').addEventListener('change', montarGraficoComFiltro);
     document.getElementById('filtro_ano').addEventListener('change', montarGraficoComFiltro);
     document.getElementById('filtro_tipo').addEventListener('change', montarGraficoComFiltro);
