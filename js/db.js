@@ -248,18 +248,19 @@ window.addEventListener("DOMContentLoaded", async function () {
         }
     
         window[idCanvas] = new Chart(context, {
-            type: 'pie',
+            type: 'doughnut',
             data: {
                 labels: labels,
                 datasets: [{
                     data: valores,
-                    backgroundColor: ['#00FF1E', '#DD1111', '#11CFDD', '#FF5733', '#8E44AD'],
+                    backgroundColor: ['#00680C', '#820505', '#11CFDD'],
                     border: 'none',
                     borderWidth: 0
                 }]
             },
             options: {
-                responsive: true, // Responsivo
+                responsive: true,
+                cutout: '70%',
                 plugins: {
                     tooltip: {
                         callbacks: {
@@ -280,7 +281,6 @@ window.addEventListener("DOMContentLoaded", async function () {
         });
     }
     
-
     function criarGraficoDispersaoPorCliente(idCanvas, dadosFiltrados, tipoAnalise) {
         const getMetric = item => tipoAnalise === "quantidade" ? item.QTD : item.QTD * item.VR_UNIT;
     
@@ -294,9 +294,6 @@ window.addEventListener("DOMContentLoaded", async function () {
                 totalVendas
             };
         });
-    
-        const labels = vendasPorCliente.map(item => item.cliente);
-        const valores = vendasPorCliente.map(item => item.totalVendas);
     
         const ctx = document.getElementById(idCanvas);
     
@@ -312,16 +309,16 @@ window.addEventListener("DOMContentLoaded", async function () {
         }
     
         window[idCanvas] = new Chart(context, {
-            type: 'scatter',
+            type: 'bubble', // Corrigido o tipo do gráfico
             data: {
-                labels: labels,
                 datasets: [{
                     label: `Vendas por Cliente (${tipoAnalise})`,
-                    data: valores.map((valor, index) => ({
-                        x: index + 1,
-                        y: valor
+                    data: vendasPorCliente.map((item, index) => ({
+                        x: index + 1,  // Índice do cliente
+                        y: item.totalVendas, // Total vendido pelo cliente
+                        r: Math.sqrt(item.totalVendas) * 2 // Raio proporcional ao valor
                     })),
-                    backgroundColor: '#0DB8E8',
+                    backgroundColor: 'rgba(13, 184, 232, 0.5)',
                     borderColor: '#0DB8E8',
                     borderWidth: 1
                 }]
@@ -329,8 +326,16 @@ window.addEventListener("DOMContentLoaded", async function () {
             options: {
                 responsive: true,
                 scales: {
-                    x: { grid: { display: false }, ticks: { color: 'white' } },
-                    y: { grid: { display: false }, ticks: { color: 'white' } }
+                    x: { 
+                        grid: { display: false }, 
+                        ticks: { color: 'white' },
+                        title: { display: true, text: 'Clientes', color: 'white' }
+                    },
+                    y: { 
+                        grid: { display: false }, 
+                        ticks: { color: 'white' },
+                        title: { display: true, text: 'Total de Vendas', color: 'white' }
+                    }
                 },
                 plugins: {
                     legend: { display: false },
@@ -339,8 +344,8 @@ window.addEventListener("DOMContentLoaded", async function () {
                         callbacks: {
                             label: (context) => {
                                 const index = context.dataIndex;
-                                const cliente = labels[index];
-                                const totalVendas = valores[index];
+                                const cliente = vendasPorCliente[index].cliente;
+                                const totalVendas = vendasPorCliente[index].totalVendas;
                                 return `${cliente}: R$ ${totalVendas.toFixed(2)}`;
                             }
                         }
@@ -350,7 +355,6 @@ window.addEventListener("DOMContentLoaded", async function () {
         });
     }
     
-
     // Inicia a busca e armazenamento dos dados
     await fetchDataAndStore();
 
