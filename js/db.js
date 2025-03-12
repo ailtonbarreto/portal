@@ -23,33 +23,45 @@ window.addEventListener("DOMContentLoaded", async function () {
         }
     }
 
+
     async function fetchDataAndStore() {
+        document.getElementById('spinner').style.display = 'flex';
+    
         try {
             const apiUrl = await getApiUrlFromBase();
             if (!apiUrl) return;
-
+    
             const response = await fetch(apiUrl);
             if (!response.ok) throw new Error(`Erro ao carregar JSON do endpoint: ${response.statusText}`);
-
+    
             const data = await response.json();
             localStorage.setItem('database', JSON.stringify(data));
             montarGraficoComFiltro();
         } catch (error) {
             console.error("Erro ao obter dados do endpoint:", error);
+        } finally {
+            document.getElementById('spinner').style.display = 'none';
         }
     }
+    
 
     function calcularIndicadores(dadosFiltrados) {
+        
         const totalVendido = dadosFiltrados.reduce((acc, item) => acc + (item.QTD * item.VR_UNIT), 0).toFixed(2);
-        const totalPedidos = dadosFiltrados.length;
+    
+        const pedidosUnicos = new Set(dadosFiltrados.map(item => item.PEDIDO));
+        const totalPedidos = pedidosUnicos.size;
+       
         const totalClientes = new Set(dadosFiltrados.map(item => item.CLIENTE)).size;
+      
         const ticketMedio = (totalVendido / totalPedidos).toFixed(2);
-
+    
         document.getElementById('valor_vendido').innerHTML = `R$ ${parseFloat(totalVendido).toLocaleString('pt-BR')}`;
         document.getElementById('qtd_pedidos').innerHTML = totalPedidos;
         document.getElementById('qtd_clientes').innerHTML = totalClientes;
         document.getElementById('ticket_medio').innerHTML = `R$ ${parseFloat(ticketMedio).toLocaleString('pt-BR')}`;
     }
+    
 
     function montarGraficoComFiltro() {
         const dataFromLocalStorage = JSON.parse(localStorage.getItem('database'));
@@ -68,10 +80,9 @@ window.addEventListener("DOMContentLoaded", async function () {
         calcularIndicadores(dadosFiltrados);
         atualizarGraficos(dadosFiltrados, tipoAnalise);
     
-        // Criar gráfico de pizza de status dos pedidos
+       
         criarGraficoPizzaDeStatus('pizza-chart', dadosFiltrados);
     
-        // Criar gráfico de dispersão por cliente
         criarGraficoDispersaoPorCliente('scatter-chart', dadosFiltrados, tipoAnalise);
     }
     
@@ -204,7 +215,6 @@ window.addEventListener("DOMContentLoaded", async function () {
         });
     }
 
-    // Função para contar os status dos pedidos
     function contarStatus(dadosFiltrados) {
         const statusCount = {};
         const pedidosContados = new Set();
@@ -228,13 +238,23 @@ window.addEventListener("DOMContentLoaded", async function () {
     
         return statusCount;
     }
+
+    const coresPorStatus = {
+        "AGUARDANDO APROVAÇÃO": "#96A00A",
+        "CONCLUIDO": "#00680C",
+        "CANCELADO": "#820505",
+        "AGUARDANDO PAGAMENTO": "#0E6D74",
+        "PLANEJADO": "#5B045C",
+    };
     
     function criarGraficoPizzaDeStatus(idCanvas, dadosFiltrados) {
         const statusCount = contarStatus(dadosFiltrados);
         const labels = Object.keys(statusCount);
         const valores = Object.values(statusCount);
     
-        const ctx = document.getElementById('pizza-chart');
+        const cores = labels.map(status => coresPorStatus[status] || "#CCCCCC");
+    
+        const ctx = document.getElementById(idCanvas);
     
         if (!ctx) {
             console.error(`Canvas ${idCanvas} não encontrado!`);
@@ -253,8 +273,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                 labels: labels,
                 datasets: [{
                     data: valores,
-                    backgroundColor: ['#00680C', '#820505', '#11CFDD'],
-                    border: 'none',
+                    backgroundColor: cores,
                     borderWidth: 0
                 }]
             },
@@ -272,8 +291,8 @@ window.addEventListener("DOMContentLoaded", async function () {
                     legend: {
                         position: 'top',
                         labels: {
-                            boxWidth: 20, // Ajusta o tamanho da caixa de legenda
-                            padding: 10 // Ajusta o espaçamento entre as legendas
+                            boxWidth: 20,
+                            padding: 10
                         }
                     }
                 }
@@ -281,10 +300,10 @@ window.addEventListener("DOMContentLoaded", async function () {
         });
     }
     
+    
     function criarGraficoDispersaoPorCliente(idCanvas, dadosFiltrados, tipoAnalise) {
         const getMetric = item => tipoAnalise === "quantidade" ? item.QTD : item.QTD * item.VR_UNIT;
     
-        // Preparando os dados para o gráfico de dispersão
         const clientes = [...new Set(dadosFiltrados.map(item => item.CLIENTE))];
         const vendasPorCliente = clientes.map(cliente => {
             const vendasCliente = dadosFiltrados.filter(item => item.CLIENTE === cliente);
@@ -309,16 +328,16 @@ window.addEventListener("DOMContentLoaded", async function () {
         }
     
         window[idCanvas] = new Chart(context, {
-            type: 'bubble', // Corrigido o tipo do gráfico
+            type: 'bubble',
             data: {
                 datasets: [{
                     label: `Vendas por Cliente (${tipoAnalise})`,
                     data: vendasPorCliente.map((item, index) => ({
-                        x: index + 1,  // Índice do cliente
-                        y: item.totalVendas, // Total vendido pelo cliente
-                        r: Math.sqrt(item.totalVendas) * 2 // Raio proporcional ao valor
+                        x: index + 1,
+                        y: item.totalVendas,
+                        r: Math.sqrt(item.totalVendas) * 0.5
                     })),
-                    backgroundColor: 'rgba(13, 184, 232, 0.5)',
+                    backgroundColor: 'rgba(13, 184, 232, 0.2)',
                     borderColor: '#0DB8E8',
                     borderWidth: 1
                 }]
@@ -333,8 +352,8 @@ window.addEventListener("DOMContentLoaded", async function () {
                     },
                     y: { 
                         grid: { display: false }, 
-                        ticks: { color: 'white' },
-                        title: { display: true, text: 'Total de Vendas', color: 'white' }
+                        ticks: { display: false },
+                        title: { display: false, text: 'Total de Vendas', color: 'white' }
                     }
                 },
                 plugins: {
@@ -346,7 +365,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                                 const index = context.dataIndex;
                                 const cliente = vendasPorCliente[index].cliente;
                                 const totalVendas = vendasPorCliente[index].totalVendas;
-                                return `${cliente}: R$ ${totalVendas.toFixed(2)}`;
+                                return `${cliente}: ${totalVendas.toFixed(2)}`;
                             }
                         }
                     }
@@ -355,10 +374,8 @@ window.addEventListener("DOMContentLoaded", async function () {
         });
     }
     
-    // Inicia a busca e armazenamento dos dados
     await fetchDataAndStore();
 
-    // Adiciona os eventos de filtro
     document.getElementById('filtro_mes').addEventListener('change', montarGraficoComFiltro);
     document.getElementById('filtro_ano').addEventListener('change', montarGraficoComFiltro);
     document.getElementById('filtro_tipo').addEventListener('change', montarGraficoComFiltro);
