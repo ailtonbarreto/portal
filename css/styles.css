@@ -272,8 +272,9 @@ body {
 @media screen and (max-width: 768px) {
 
   body{
-    height: 110vh;
+    height: 105vh;
   }
+
 
   .main-cards {
     grid-template-columns: 1fr;
