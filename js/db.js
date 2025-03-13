@@ -292,7 +292,8 @@ window.addEventListener("DOMContentLoaded", async function () {
                         position: 'top',
                         labels: {
                             boxWidth: 20,
-                            padding: 10
+                            padding: 10,
+                            color: 'white'
                         }
                     }
                 }
