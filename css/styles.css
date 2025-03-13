@@ -270,6 +270,11 @@ body {
 /* Small <= 768px */
 
 @media screen and (max-width: 768px) {
+
+  body{
+    height: 110vh;
+  }
+
   .main-cards {
     grid-template-columns: 1fr;
     gap: 10px;
