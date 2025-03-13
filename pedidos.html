@@ -11,12 +11,18 @@
   <link rel="stylesheet" href="css/styles.css">
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script defer src="./js/db.js"></script>
+  <script defer src="./js/pedidos.js"></script>
   <script defer src="js/scripts.js"></script>
 
 </head>
 
 <body>
+
+  <div id="spinner" style="display: none;">
+
+    <div class="spinner"></div>
+
+  </div>
 
   <div class="grid-container">
 
@@ -68,14 +74,6 @@
 
     </header>
 
-
-    <div id="spinner" style="display: none;">
-
-      <div class="spinner"></div>
-
-    </div>
-
-
     <aside id="sidebar">
 
       <div class="sidebar-title">
@@ -95,11 +93,12 @@
 
       <ul class="sidebar-list">
 
-        <li class="sidebar-list-item">
+        <li class="sidebar-list-item" onclick="window.location.href='./home.html'">
 
           <a href="./home.html">
 
-            <span class="material-icons-outlined">dashboard</span> Visão Geral
+            <span class="material-icons-outlined" onclick="window.location.href='./home.html'">dashboard</span> Visão
+            Geral
 
           </a>
 
@@ -156,6 +155,34 @@
 
         <h2>PEDIDOS</h2>
 
+      </div>
+
+      <div class="charts-card">
+
+
+        <table id="tabela_pedidos">
+
+          <thead>
+
+            <tr>
+
+              <th>PEDIDO</th>
+              <th>CLIENTE</th>
+              <th>DESCRICAO</th>
+              <th>QTD</th>
+              <th>VR_UNITARIO</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+          </tbody>
+
+        </table>
+
+      </div>
 
     </main>
 
