@@ -159,8 +159,8 @@ body {
 }
 
 #pizza-chart {
-  width: 15vw !important;
-  height: 15vw !important;
+  width: 17vw !important;
+  height: 17vw !important;
 }
 
 
@@ -240,6 +240,38 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+/* ----------TABELA DE PEDIDOS---------- */
+
+table {
+  width: 96%;
+  margin: 2vw auto;
+  border-collapse: collapse;
+  box-shadow:  -2px 0 5px rgba(0, 0, 0, 0.5);
+  /* border-radius: 1vw; */
+  overflow: hidden;
+}
+
+table th{
+  background-color: var(--bg);
+  padding: 0.5vw 0 0.5vw 0 ;
+}
+
+
+table td {
+  padding: 1vw;
+  text-align: center;
+}
+
+
+/* table tbody tr:nth-child(even) {
+  background-color: var(--bg);
+} */
+
+table tbody tr:hover {
+  background-color: var(--bg);
+}
+
 
 /* ---------- MEDIA QUERIES ---------- */
 

@@ -11,20 +11,149 @@
   <link rel="stylesheet" href="css/styles.css">
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script defer src="./js/estoque.js"></script>
   <script defer src="./js/db.js"></script>
   <script defer src="js/scripts.js"></script>
 
 </head>
 
-<body>
+<style>
 
+
+
+.card img{
+  width: 10vw;
+}
+
+
+.section {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20vw, 1fr));
+  gap: 1vw;
+  padding: 2vw;
+  box-sizing: border-box;
+}
+
+.card{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  padding: 1vw;
+  height: 22vw;
+  background-color: black;
+  color: var(--text-color);
+  border-radius: 0.4vw;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.tamanhos-info{
+  font-size: 0.8vw;
+}
+
+.logo{
+  width: 5vw;
+}
+
+h2{
+  color: #fff;
+}
+
+
+.pequisa{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1vw 0;
+}
+
+.pesquisar-text{
+  color: #fff;
+  margin-bottom: 0.3vw;
+}
+
+#filterInput{
+  outline: none;
+  padding: 0.5vw;
+  height: 1.5vw;
+  color: var(--text-color);
+  border: var(--text-color);
+  border-radius: 0.3vw;
+}
+
+/* ---------------------------------------------------------------------------------- */
+/* VERSAO MOBILE */
+
+@media screen and (max-width: 728px){
+
+  .section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 5vw;
+      padding: 2vw;
+      box-sizing: border-box;
+      margin-top: 32vw;
+  }
+  
+  .card{
+      height: 90vw;
+      width: 90vw;
+      padding: 6vw 2vw;
+  }
+
+  img{
+      width: 40vw;
+  }
+
+  .tamanhos-info{
+      font-size: 5vw;
+  }
+  
+  header{
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      padding: 2vw;
+      justify-content: space-between;
+  }
+
+  .logo{
+      display: none;
+  }
+
+  .pequisa{
+      display: flex;
+      flex-direction: column;
+      gap: 3vw;
+      align-items: center;
+  } 
+  
+  .pesquisar-text{
+      color: #fff;
+      font-size: 3vw;
+      margin-bottom: 0.3vw;
+  }
+  
+
+  #filterInput{
+      height: 5vw;
+  }
+}
+
+
+
+</style>
+
+<body>
 
   <div id="spinner" style="display: none;">
 
     <div class="spinner"></div>
 
   </div>
-
 
   <div class="grid-container">
 
@@ -39,12 +168,12 @@
 
       <h2 id="title">Portal do Representante</h2>
 
-      <div class="filtros">
+      <div class="filtros" style="visibility: hidden;">
 
         <select id="filtro_tipo">
 
-          <option value="valor">Valor</option>
           <option value="quantidade">Quantidade</option>
+          <option value="valor">Valor</option>
 
         </select>
 
@@ -95,11 +224,12 @@
 
       <ul class="sidebar-list">
 
-        <li class="sidebar-list-item">
+        <li class="sidebar-list-item" onclick="window.location.href='./home.html'">
 
-          <a href="#">
+          <a href="./home.html">
 
-            <span class="material-icons-outlined">dashboard</span> Visão Geral
+            <span class="material-icons-outlined">dashboard</span> Visão
+            Geral
 
           </a>
 
@@ -107,7 +237,7 @@
 
         <li class="sidebar-list-item" onclick="window.location.href='./pedidos.html'">
 
-          <a href="./pedidos.html">
+          <a href="#">
 
             <span class="material-icons-outlined">inventory_2</span> Pedidos
 
@@ -125,7 +255,7 @@
 
         </li>
 
-        <li class="sidebar-list-item" onclick="window.location.href='./estoque.html'">
+        <li class="sidebar-list-item">
 
           <a href="#">
 
@@ -154,110 +284,22 @@
 
       <div class="main-title">
 
-        <h2>VISÃO GERAL</h2>
+        <h2>ESTOQUE</h2>
 
       </div>
 
-      <div class="main-cards">
+      <div class="charts-card" style="background-color: transparent;">
 
-        <div class="card">
+        
+        <p class="pesquisar-text">Pesquisar Produto</p>
 
-          <div class="card-inner">
+        <input type="text" id="filterInput" placeholder="Digite Nome ou SKU..." />
 
-            <h3>Valor Vendido</h3>
+        <div class="section"></div>
 
-            <img src="./img/valor.png" alt="">
-
-          </div>
-
-          <h1 id="valor_vendido"></h1>
-
-        </div>
-
-        <div class="card">
-
-          <div class="card-inner">
-
-            <h3>Qtd Pedidos</h3>
-
-            <img src="./img/pedidos.png" alt="">
-
-          </div>
-
-          <h1 id="qtd_pedidos"></h1>
-
-        </div>
-
-        <div class="card">
-
-          <div class="card-inner">
-
-            <h3>Qtd Clientes</h3>
-
-            <img src="./img/clientes.png" alt="">
-
-          </div>
-
-          <h1 id="qtd_clientes"></h1>
-
-        </div>
-
-        <div class="card">
-
-          <div class="card-inner">
-
-            <h3>Ticket Médio</h3>
-
-            <img src="./img/media.png" alt="">
-
-          </div>
-          <h1 id="ticket_medio"></h1>
-
-        </div>
+        
 
       </div>
-
-      <div class="charts">
-
-        <div class="charts-card pizza">
-
-          <h2 class="chart-title">Pedidos Por Status</h2>
-
-          <div id="graficoContainer">
-
-            <canvas id="pizza-chart" class="chart"></canvas>
-
-          </div>
-
-        </div>
-
-        <div class="charts-card">
-
-          <h2 class="chart-title">Vendas Diárias</h2>
-
-          <canvas id="line-chart" class="chart"></canvas>
-
-        </div>
-
-        <div class="charts-card">
-
-          <h2 class="chart-title">Pedidos Por Categoria</h2>
-
-          <canvas id="barchart" class="chart"></canvas>
-
-        </div>
-
-        <div class="charts-card">
-
-          <h2 class="chart-title">Dispersão Por Clientes</h2>
-
-          <canvas id="scatter-chart" class="chart"></canvas>
-
-        </div>
-
-
-      </div>
-
 
     </main>
 

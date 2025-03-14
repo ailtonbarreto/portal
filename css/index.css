@@ -56,7 +56,7 @@ input{
     outline: none;
     height: 1.5vw;
     width: 100%;
-    color: var(--cor-texto);
+    color: var(--bg);
 }
 
 .campos{

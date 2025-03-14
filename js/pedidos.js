@@ -58,11 +58,32 @@ window.addEventListener("DOMContentLoaded", async function () {
             item.mes.trim() === mesSelecionado &&
             item.REP.trim().toLowerCase() === nomeRep
         );
+        
+        // Agrupar os dados por PEDIDO
+        const dadosAgrupados = dadosFiltrados.reduce((acc, item) => {
+            const pedidoExistente = acc.find(p => p.PEDIDO === item.PEDIDO);
+            if (pedidoExistente) {
+                pedidoExistente.QTD += item.QTD;
+                pedidoExistente.VR_UNIT += item.VR_UNIT;
+                pedidoExistente.TOTAL += item.VR_UNIT * item.QTD;  // Corrigido para somar o TOTAL
+            } else {
+                acc.push({
+                    PEDIDO: item.PEDIDO,
+                    CLIENTE: item.CLIENTE,
+                    DESCRICAO: item.DESCRICAO,
+                    QTD: item.QTD,
+                    VR_UNIT: item.VR_UNIT,
+                    STATUS: item.STATUS || "Não Definido", // Verifique se o STATUS existe
+                    TOTAL: item.VR_UNIT * item.QTD // Inicializa o TOTAL corretamente
+                });
+            }
+            return acc;
+        }, []);
     
-        atualizarTabelaPedidos(dadosFiltrados);
+        // Atualizar a tabela com os dados agrupados
+        atualizarTabelaPedidos(dadosAgrupados);
     }
     
-
     function atualizarTabelaPedidos(dados) {
         const tabela = document.getElementById('tabela_pedidos');
         if (!tabela) return;
@@ -72,7 +93,7 @@ window.addEventListener("DOMContentLoaded", async function () {
 
         if (dados.length === 0) {
             const row = document.createElement('tr');
-            row.innerHTML = `<td colspan="5" style="text-align: center;">Nenhum pedido encontrado.</td>`;
+            row.innerHTML = `<td colspan="6" style="text-align: center;">Nenhum pedido encontrado.</td>`;
             tbody.appendChild(row);
             return;
         }
@@ -82,10 +103,8 @@ window.addEventListener("DOMContentLoaded", async function () {
             row.innerHTML = `
                 <td>${pedido.PEDIDO}</td>
                 <td>${pedido.CLIENTE}</td>
-                <td>${pedido.DESCRICAO}</td>
-                <td>${pedido.QTD}</td>
-                <td>${pedido.VR_UNIT}</td>
-
+                <td>R$ ${parseFloat(pedido.TOTAL).toLocaleString('pt-BR')}</td>
+                <td>${pedido.STATUS}</td>
             `;
             tbody.appendChild(row);
         });
@@ -94,4 +113,7 @@ window.addEventListener("DOMContentLoaded", async function () {
     document.getElementById('filtro_ano')?.addEventListener('change', montarGraficoComFiltro);
     document.getElementById('filtro_mes')?.addEventListener('change', montarGraficoComFiltro);
     document.getElementById('filtro_tipo')?.addEventListener('change', montarGraficoComFiltro);
+    
+    // Carregar a tabela automaticamente ao carregar a página
+    fetchDataAndStore();
 });
