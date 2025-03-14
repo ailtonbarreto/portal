@@ -20,7 +20,6 @@
 <style>
 
 
-
 .card img{
   width: 10vw;
 }
@@ -28,10 +27,11 @@
 
 .section {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(20vw, 1fr));
-  gap: 1vw;
-  padding: 2vw;
+  grid-template-columns: repeat(auto-fill, minmax(15vw, 1fr));
+  padding: 2vw 0 0 0;
   box-sizing: border-box;
+  margin: 0;
+  gap: 1vw;
 }
 
 .card{
@@ -40,24 +40,14 @@
   justify-content: space-between;
   align-items: center;
   text-align: center;
-  padding: 1vw;
-  height: 22vw;
+  margin: 0;
   background-color: black;
-  color: var(--text-color);
   border-radius: 0.4vw;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
 }
 
 .tamanhos-info{
   font-size: 0.8vw;
-}
-
-.logo{
-  width: 5vw;
-}
-
-h2{
-  color: #fff;
 }
 
 
@@ -70,15 +60,17 @@ h2{
 
 .pesquisar-text{
   color: #fff;
+  font-size: 1.5vw;
   margin-bottom: 0.3vw;
 }
 
 #filterInput{
   outline: none;
   padding: 0.5vw;
-  height: 1.5vw;
-  color: var(--text-color);
-  border: var(--text-color);
+  width: 20vw;
+  height: 1.2vw;
+  font-size: 1vw;
+  border: none;
   border-radius: 0.3vw;
 }
 
@@ -100,14 +92,14 @@ h2{
   
   .card{
       height: 90vw;
-      width: 90vw;
+      width: 80vw;
       padding: 6vw 2vw;
   }
 
-  img{
-      width: 40vw;
+  .card img{
+    width: 30vw;
   }
-
+  
   .tamanhos-info{
       font-size: 5vw;
   }
@@ -288,16 +280,16 @@ h2{
 
       </div>
 
-      <div class="charts-card" style="background-color: transparent;">
+      <div class="charts-card" style="background-color: transparent; padding:0;">
 
         
         <p class="pesquisar-text">Pesquisar Produto</p>
 
         <input type="text" id="filterInput" placeholder="Digite Nome ou SKU..." />
 
-        <div class="section"></div>
+        <div class="section">
 
-        
+        </div>
 
       </div>
 
