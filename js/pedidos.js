@@ -10,7 +10,7 @@ window.addEventListener("DOMContentLoaded", async function () {
 
     async function getApiUrlFromBase() {
         try {
-            const response = await fetch(`http://api-webstore.onrender.com/array/${name}`);
+            const response = await fetch(`https://api-webstore.onrender.com/array/${name}`);
             if (!response.ok) throw new Error(`Erro ao carregar base.json: ${response.statusText}`);
 
             const data = await response.json();
@@ -49,7 +49,6 @@ window.addEventListener("DOMContentLoaded", async function () {
     
         const anoSelecionado = document.getElementById('filtro_ano').value.trim();
         const mesSelecionado = document.getElementById('filtro_mes').value.trim();
-        const tipoAnalise = document.getElementById('filtro_tipo').value;
         
         const nomeRep = name ? name.trim().toLowerCase() : "";
     

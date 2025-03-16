@@ -13,7 +13,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         document.getElementById('spinner').style.display = 'flex';
         
         try {
-            const apiUrl = `http://api-webstore.onrender.com/array/${name}`;
+            const apiUrl = `https://api-webstore.onrender.com/array/${name}`;
             
             const response = await fetch(apiUrl);
             if (!response.ok) throw new Error(`Erro ao carregar JSON do endpoint: ${response.statusText}`);
