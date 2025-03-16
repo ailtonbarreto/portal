@@ -10,7 +10,7 @@ window.addEventListener("DOMContentLoaded", async function () {
 
     async function getApiUrlFromBase() {
         try {
-            const response = await fetch('./js/base.json');
+            const response = await fetch(`http://api-webstore.onrender.com/array/${name}`);
             if (!response.ok) throw new Error(`Erro ao carregar base.json: ${response.statusText}`);
 
             const data = await response.json();
@@ -58,14 +58,13 @@ window.addEventListener("DOMContentLoaded", async function () {
             item.mes.trim() === mesSelecionado &&
             item.REP.trim().toLowerCase() === nomeRep
         );
-        
-        // Agrupar os dados por PEDIDO
+
         const dadosAgrupados = dadosFiltrados.reduce((acc, item) => {
             const pedidoExistente = acc.find(p => p.PEDIDO === item.PEDIDO);
             if (pedidoExistente) {
                 pedidoExistente.QTD += item.QTD;
                 pedidoExistente.VR_UNIT += item.VR_UNIT;
-                pedidoExistente.TOTAL += item.VR_UNIT * item.QTD;  // Corrigido para somar o TOTAL
+                pedidoExistente.TOTAL += item.VR_UNIT * item.QTD;
             } else {
                 acc.push({
                     PEDIDO: item.PEDIDO,
@@ -73,14 +72,14 @@ window.addEventListener("DOMContentLoaded", async function () {
                     DESCRICAO: item.DESCRICAO,
                     QTD: item.QTD,
                     VR_UNIT: item.VR_UNIT,
-                    STATUS: item.STATUS || "Não Definido", // Verifique se o STATUS existe
-                    TOTAL: item.VR_UNIT * item.QTD // Inicializa o TOTAL corretamente
+                    STATUS: item.STATUS || "Não Definido",
+                    TOTAL: item.VR_UNIT * item.QTD
                 });
             }
             return acc;
         }, []);
     
-        // Atualizar a tabela com os dados agrupados
+      
         atualizarTabelaPedidos(dadosAgrupados);
     }
     
@@ -113,7 +112,6 @@ window.addEventListener("DOMContentLoaded", async function () {
     document.getElementById('filtro_ano')?.addEventListener('change', montarGraficoComFiltro);
     document.getElementById('filtro_mes')?.addEventListener('change', montarGraficoComFiltro);
     document.getElementById('filtro_tipo')?.addEventListener('change', montarGraficoComFiltro);
-    
-    // Carregar a tabela automaticamente ao carregar a página
+ 
     fetchDataAndStore();
 });
