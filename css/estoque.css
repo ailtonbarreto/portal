@@ -1,5 +1,4 @@
-
-:root{
+:root {
   --bg: #0e1218;
   --text-color: #9e9ea4;
   --cards-color: #000;
@@ -46,7 +45,7 @@ body {
   display: none;
 }
 
-.card img{
+.card img {
   width: 10vw;
 }
 
@@ -60,7 +59,7 @@ body {
   gap: 1vw;
 }
 
-.card{
+.card {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -72,25 +71,25 @@ body {
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
 }
 
-.tamanhos-info{
+.tamanhos-info {
   font-size: 0.8vw;
 }
 
 
-.pequisa{
+.pequisa {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 1vw 0;
 }
 
-.pesquisar-text{
+.pesquisar-text {
   color: #fff;
   font-size: 1.5vw;
   margin-bottom: 0.3vw;
 }
 
-#filterInput{
+#filterInput {
   outline: none;
   padding: 0.5vw;
   width: 20vw;
@@ -99,6 +98,7 @@ body {
   border: none;
   border-radius: 0.3vw;
 }
+
 /* ---------- SPINNER ---------- */
 #spinner {
   position: fixed;
@@ -123,8 +123,13 @@ body {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* ---------- SIDEBAR ---------- */
@@ -146,7 +151,7 @@ body {
   margin-bottom: 30px;
 }
 
-.sidebar-title > span {
+.sidebar-title>span {
   display: none;
 }
 
@@ -173,7 +178,7 @@ body {
   cursor: pointer;
 }
 
-.sidebar-list-item > a {
+.sidebar-list-item>a {
   text-decoration: none;
   color: var(--text-color);
 }
@@ -185,7 +190,8 @@ body {
 }
 
 
-#filtro_mes, #filtro_ano{
+#filtro_mes,
+#filtro_ano {
   background-color: var(--bg);
   color: var(--text-color);
   font-size: 1vw;
@@ -195,7 +201,7 @@ body {
   outline: none;
 }
 
-#filtro_tipo{
+#filtro_tipo {
   background-color: var(--bg);
   color: var(--text-color);
   font-size: 1vw !important;
@@ -205,6 +211,9 @@ body {
   outline: none;
 }
 
+.charts-card {
+  text-align: center;
+}
 
 
 /* ---------- MAIN ---------- */
@@ -245,7 +254,7 @@ body {
     display: inline;
   }
 
-  .sidebar-title > span {
+  .sidebar-title>span {
     display: inline;
   }
 }
@@ -254,7 +263,7 @@ body {
 
 @media screen and (max-width: 768px) {
 
-  body{
+  body {
     height: 110vh;
   }
 
@@ -265,21 +274,22 @@ body {
     margin-bottom: 0;
   }
 
-  .charts-card{
+  .charts-card {
     text-align: center;
   }
 
-  #close{
+  #close {
     position: absolute;
     right: 2vw;
     top: 10vw;
   }
 
-  #photo{
+  #photo {
     width: 30vw !important;
   }
 
-  #filtro_mes, #filtro_ano{
+  #filtro_mes,
+  #filtro_ano {
     background-color: var(--bg);
     color: var(--text-color);
     font-size: 4vw;
@@ -288,7 +298,7 @@ body {
     outline: none;
   }
 
-  #filtro_tipo{
+  #filtro_tipo {
     background-color: var(--bg);
     color: var(--text-color);
     font-size: 4vw !important;
@@ -298,7 +308,7 @@ body {
     outline: none;
   }
 
-  #title{
+  #title {
     display: none;
   }
 
@@ -312,55 +322,54 @@ body {
     padding: 2vw;
     box-sizing: border-box;
     margin-top: 10vw;
-}
+  }
 
-.card{
+  .card {
     height: 90vw;
     width: 80vw;
     padding: 2vw 2vw;
-}
+  }
 
 
-.card img{
-  width: 50vw;
-}
+  .card img {
+    width: 50vw;
+  }
 
-.tamanhos-info{
+  .tamanhos-info {
     font-size: 5vw;
-}
+  }
 
-header{
+  header {
     display: flex;
     align-items: center;
     flex-direction: row;
     padding: 2vw;
     justify-content: space-between;
-}
+  }
 
-.logo{
+  .logo {
     display: flex;
-}
+  }
 
-.pequisa{
+  .pequisa {
     display: flex;
     flex-direction: column;
     gap: 3vw;
     align-items: center;
     width: 90vw;
-} 
+  }
 
-.pesquisar-text{
+  .pesquisar-text {
     color: #fff;
     font-size: 5vw;
     margin-bottom: 3vw;
-}
+  }
 
 
-#filterInput{
+  #filterInput {
     font-size: 4vw;
     padding: 3vw;
     width: 70vw;
-}
+  }
 
 }
-
