@@ -8,33 +8,20 @@ window.addEventListener("DOMContentLoaded", async function () {
         document.getElementById("photo").src = imagem;
     }
 
-    async function getApiUrlFromBase() {
-        try {
-            const response = await fetch(`https://api-webstore.onrender.com/array/${name}`);
-            if (!response.ok) throw new Error(`Erro ao carregar base.json: ${response.statusText}`);
-
-            const data = await response.json();
-            if (!data.url) throw new Error("URL da API não encontrada em base.json.");
-
-            return data.url;
-        } catch (error) {
-            console.error("Erro ao obter URL da API:", error);
-            return null;
-        }
-    }
-
     async function fetchDataAndStore() {
         document.getElementById('spinner').style.display = 'flex';
-    
+
         try {
-            const apiUrl = await getApiUrlFromBase();
-            if (!apiUrl) return;
-    
+
+            const apiUrl = `https://api-webstore.onrender.com/array/${name}`;
+
             const response = await fetch(apiUrl);
             if (!response.ok) throw new Error(`Erro ao carregar JSON do endpoint: ${response.statusText}`);
-    
+
             const data = await response.json();
             localStorage.setItem('database', JSON.stringify(data));
+
+  
             montarGraficoComFiltro();
         } catch (error) {
             console.error("Erro ao obter dados do endpoint:", error);
@@ -42,19 +29,18 @@ window.addEventListener("DOMContentLoaded", async function () {
             document.getElementById('spinner').style.display = 'none';
         }
     }
-    
+
     function montarGraficoComFiltro() {
         const dataFromLocalStorage = JSON.parse(localStorage.getItem('database'));
         if (!dataFromLocalStorage || !Array.isArray(dataFromLocalStorage)) return;
-    
+
         const anoSelecionado = document.getElementById('filtro_ano').value.trim();
         const mesSelecionado = document.getElementById('filtro_mes').value.trim();
-        
         const nomeRep = name ? name.trim().toLowerCase() : "";
-    
-        const dadosFiltrados = dataFromLocalStorage.filter(item => 
-            item.ano.trim() === anoSelecionado &&
-            item.mes.trim() === mesSelecionado &&
+
+        const dadosFiltrados = dataFromLocalStorage.filter(item =>
+            (anoSelecionado === '' || item.ano.trim() === anoSelecionado) &&
+            (mesSelecionado === '' || item.mes.trim() === mesSelecionado) &&
             item.REP.trim().toLowerCase() === nomeRep
         );
 
@@ -77,11 +63,10 @@ window.addEventListener("DOMContentLoaded", async function () {
             }
             return acc;
         }, []);
-    
-      
+
         atualizarTabelaPedidos(dadosAgrupados);
     }
-    
+
     function atualizarTabelaPedidos(dados) {
         const tabela = document.getElementById('tabela_pedidos');
         if (!tabela) return;
@@ -108,9 +93,11 @@ window.addEventListener("DOMContentLoaded", async function () {
         });
     }
 
+
+    fetchDataAndStore();
+    montarGraficoComFiltro();
+
     document.getElementById('filtro_ano')?.addEventListener('change', montarGraficoComFiltro);
     document.getElementById('filtro_mes')?.addEventListener('change', montarGraficoComFiltro);
     document.getElementById('filtro_tipo')?.addEventListener('change', montarGraficoComFiltro);
- 
-    fetchDataAndStore();
 });
