@@ -1,3 +1,5 @@
-{
-    "url": "https://api-webstore.onrender.com/powerbi"
-}
+[
+    {
+        "url" : "https://api-webstore.onrender.com/powerbi"
+    }
+]
