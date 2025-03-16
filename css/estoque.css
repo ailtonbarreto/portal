@@ -46,6 +46,59 @@ body {
   display: none;
 }
 
+.card img{
+  width: 10vw;
+}
+
+
+.section {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15vw, 1fr));
+  padding: 2vw 0 0 0;
+  box-sizing: border-box;
+  margin: 0;
+  gap: 1vw;
+}
+
+.card{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  margin: 0;
+  background-color: black;
+  border-radius: 0.4vw;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.tamanhos-info{
+  font-size: 0.8vw;
+}
+
+
+.pequisa{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1vw 0;
+}
+
+.pesquisar-text{
+  color: #fff;
+  font-size: 1.5vw;
+  margin-bottom: 0.3vw;
+}
+
+#filterInput{
+  outline: none;
+  padding: 0.5vw;
+  width: 20vw;
+  height: 1.2vw;
+  font-size: 1vw;
+  border: none;
+  border-radius: 0.3vw;
+}
 /* ---------- SPINNER ---------- */
 #spinner {
   position: fixed;
@@ -152,16 +205,6 @@ body {
   outline: none;
 }
 
-.chart{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-#pizza-chart {
-  width: 17vw !important;
-  height: 17vw !important;
-}
 
 
 /* ---------- MAIN ---------- */
@@ -178,104 +221,7 @@ body {
   justify-content: space-between;
 }
 
-.main-cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 20px;
-  margin: 0 0 2vw 0;
-}
 
-.card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  padding: 0.2vw 3vw;
-  border-radius: 5px;
-  background-color: var(--sidebar-color);
-  box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
-}
-
-
-.card-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 1.3vw;
-
-}
-
-#ticket_medio, #valor_vendido, #qtd_pedidos, #qtd_clientes{
-  font-size: 1.3vw;
-}
-
-.charts {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-top: 1vw;
-}
-
-.charts-card {
-  background-color: var(--sidebar-color);
-  text-align: center;
-  /* margin-bottom: 1vw; */
-  padding: 1vw;
-  box-sizing: border-box;
-  -webkit-column-break-inside: avoid;
-  border-radius: 5px;
-  box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
-}
-
-.pizza {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: var(--sidebar-color);
-  text-align: center;
-  /* margin-bottom: 1vw; */
-  padding: 1vw;
-  box-sizing: border-box;
-  -webkit-column-break-inside: avoid;
-  border-radius: 5px;
-  box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
-}
-
-.chart-title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* ----------TABELA DE PEDIDOS---------- */
-
-table {
-  width: 96%;
-  margin: 2vw auto;
-  border-collapse: collapse;
-  box-shadow:  -2px 0 5px rgba(0, 0, 0, 0.5);
-  /* border-radius: 1vw; */
-  overflow: hidden;
-}
-
-table th{
-  background-color: var(--bg);
-  padding: 0.5vw 0 0.5vw 0 ;
-}
-
-
-table td {
-  padding: 1vw;
-  text-align: center;
-}
-
-
-/* table tbody tr:nth-child(even) {
-  background-color: var(--bg);
-} */
-
-table tbody tr:hover {
-  background-color: var(--bg);
-}
 
 
 /* ---------- MEDIA QUERIES ---------- */
@@ -304,7 +250,7 @@ table tbody tr:hover {
   }
 }
 
-/* Small <= 768px */
+/* VERSAO MOBILE------------------- */
 
 @media screen and (max-width: 768px) {
 
@@ -317,6 +263,10 @@ table tbody tr:hover {
     grid-template-columns: 1fr;
     gap: 10px;
     margin-bottom: 0;
+  }
+
+  .charts-card{
+    text-align: center;
   }
 
   #close{
@@ -348,33 +298,69 @@ table tbody tr:hover {
     outline: none;
   }
 
-  .card-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 5vw;
-  }
-  
-  #ticket_medio, #valor_vendido, #qtd_pedidos, #qtd_clientes{
-    font-size: 5vw;
-  }
-  
-
   #title{
     display: none;
   }
 
-  .charts {
-    grid-template-columns: 1fr;
-    margin-top: 30px;
-  }
 
-  #pizza-chart {
-    width: 50vw !important;
-    height: 50vw !important;
-    padding-bottom: 2vw;
-  }
+  .section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 5vw;
+    padding: 2vw;
+    box-sizing: border-box;
+    margin-top: 10vw;
+}
 
-  
+.card{
+    height: 90vw;
+    width: 80vw;
+    padding: 2vw 2vw;
+}
+
+
+.card img{
+  width: 50vw;
+}
+
+.tamanhos-info{
+    font-size: 5vw;
+}
+
+header{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    padding: 2vw;
+    justify-content: space-between;
+}
+
+.logo{
+    display: flex;
+}
+
+.pequisa{
+    display: flex;
+    flex-direction: column;
+    gap: 3vw;
+    align-items: center;
+    width: 90vw;
+} 
+
+.pesquisar-text{
+    color: #fff;
+    font-size: 5vw;
+    margin-bottom: 3vw;
+}
+
+
+#filterInput{
+    font-size: 4vw;
+    padding: 3vw;
+    width: 70vw;
+}
+
 }
 

@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
     rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/estoque.css">
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script defer src="./js/estoque.js"></script>
@@ -16,133 +16,6 @@
   <script defer src="js/scripts.js"></script>
 
 </head>
-
-<style>
-
-
-.card img{
-  width: 10vw;
-}
-
-
-.section {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(15vw, 1fr));
-  padding: 2vw 0 0 0;
-  box-sizing: border-box;
-  margin: 0;
-  gap: 1vw;
-}
-
-.card{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  text-align: center;
-  margin: 0;
-  background-color: black;
-  border-radius: 0.4vw;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-}
-
-.tamanhos-info{
-  font-size: 0.8vw;
-}
-
-
-.pequisa{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1vw 0;
-}
-
-.pesquisar-text{
-  color: #fff;
-  font-size: 1.5vw;
-  margin-bottom: 0.3vw;
-}
-
-#filterInput{
-  outline: none;
-  padding: 0.5vw;
-  width: 20vw;
-  height: 1.2vw;
-  font-size: 1vw;
-  border: none;
-  border-radius: 0.3vw;
-}
-
-/* ---------------------------------------------------------------------------------- */
-/* VERSAO MOBILE */
-
-@media screen and (max-width: 728px){
-
-  .section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 5vw;
-      padding: 2vw;
-      box-sizing: border-box;
-      margin-top: 10vw;
-  }
-  
-  .card{
-      height: 90vw;
-      width: 80vw;
-      padding: 2vw 2vw;
-  }
-
-
-  .card img{
-    width: 50vw;
-  }
-  
-  .tamanhos-info{
-      font-size: 5vw;
-  }
-  
-  header{
-      display: flex;
-      align-items: center;
-      flex-direction: row;
-      padding: 2vw;
-      justify-content: space-between;
-  }
-
-  .logo{
-      display: flex;
-  }
-
-  .pequisa{
-      display: flex;
-      flex-direction: column;
-      gap: 3vw;
-      align-items: center;
-      width: 90vw;
-  } 
-  
-  .pesquisar-text{
-      color: #fff;
-      font-size: 5vw;
-      margin-bottom: 0.3vw;
-  }
-  
-
-  #filterInput{
-      font-size: 4vw;
-      padding: 3vw;
-      width: 70vw;
-  }
-  
-}
-
-
-
-</style>
 
 <body>
 
@@ -165,14 +38,7 @@
 
       <h2 id="title">Portal do Representante</h2>
 
-      <div class="filtros" style="visibility: hidden;">
-
-        <select id="filtro_tipo">
-
-          <option value="quantidade">Quantidade</option>
-          <option value="valor">Valor</option>
-
-        </select>
+      <div class="filtros">
 
 
         <select id="filtro_mes">
