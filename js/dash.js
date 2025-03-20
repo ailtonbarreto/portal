@@ -136,11 +136,21 @@ window.addEventListener("DOMContentLoaded", async function () {
                     tooltip: {
                         enabled: true,
                         callbacks: {
-                            label: context => `Quantidade: ${context.raw}`
+                            label: context => {
+                                let value = context.raw;
+                                let tipoAnalise = document.getElementById('filtro_tipo').value;
+                                
+                                if (tipoAnalise === "valor") {
+                                    return `Valor: R$ ${parseFloat(value).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                                } else {
+                                    return `Quantidade: ${value}`;
+                                }
+                            }
                         }
                     }
                 }
             }
+            
         });
     }
 
@@ -192,11 +202,21 @@ window.addEventListener("DOMContentLoaded", async function () {
                     tooltip: {
                         enabled: true,
                         callbacks: {
-                            label: context => `Valor: ${context.raw}`
+                            label: context => {
+                                let value = context.raw;
+                                let tipoAnalise = document.getElementById('filtro_tipo').value;
+                                
+                                if (tipoAnalise === "valor") {
+                                    return `Valor: R$ ${parseFloat(value).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                                } else {
+                                    return `Quantidade: ${value}`;
+                                }
+                            }
                         }
                     }
                 }
             }
+            
         });
     }
 
@@ -351,7 +371,13 @@ window.addEventListener("DOMContentLoaded", async function () {
                                 const index = context.dataIndex;
                                 const cliente = vendasPorCliente[index].cliente;
                                 const totalVendas = vendasPorCliente[index].totalVendas;
-                                return `${cliente}: ${totalVendas.toFixed(2)}`;
+                                let tipoAnalise = document.getElementById('filtro_tipo').value;
+            
+                                if (tipoAnalise === "valor") {
+                                    return `${cliente}: R$ ${totalVendas.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                                } else {
+                                    return `${cliente}: ${totalVendas}`;
+                                }
                             }
                         }
                     }
