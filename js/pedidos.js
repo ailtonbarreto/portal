@@ -8,28 +8,6 @@ window.addEventListener("DOMContentLoaded", async function () {
         document.getElementById("photo").src = imagem;
     }
 
-    // async function fetchDataAndStore() {
-    //     document.getElementById('spinner').style.display = 'flex';
-
-    //     try {
-
-    //         const apiUrl = `https://api-webstore.onrender.com/array/${name}`;
-
-    //         const response = await fetch(apiUrl);
-    //         if (!response.ok) throw new Error(`Erro ao carregar JSON do endpoint: ${response.statusText}`);
-
-    //         const data = await response.json();
-    //         sessionStorage.setItem('database', JSON.stringify(data));
-
-  
-    //         montarGraficoComFiltro();
-    //     } catch (error) {
-    //         console.error("Erro ao obter dados do endpoint:", error);
-    //     } finally {
-    //         document.getElementById('spinner').style.display = 'none';
-    //     }
-    // }
-
     async function fetchDataAndStore() {
         document.getElementById('spinner').style.display = 'flex';
 
@@ -55,7 +33,6 @@ window.addEventListener("DOMContentLoaded", async function () {
             document.getElementById('spinner').style.display = 'none';
         }
     }
-    
     
 
     function montarGraficoComFiltro() {
@@ -86,7 +63,8 @@ window.addEventListener("DOMContentLoaded", async function () {
                     QTD: item.QTD,
                     VR_UNIT: item.VR_UNIT,
                     STATUS: item.STATUS || "Não Definido",
-                    TOTAL: item.VR_UNIT * item.QTD
+                    TOTAL: item.VR_UNIT * item.QTD,
+                    EMISSAO: item.EMISSAO
                 });
             }
             return acc;
@@ -112,39 +90,95 @@ window.addEventListener("DOMContentLoaded", async function () {
     
         dados.forEach(pedido => {
             const row = document.createElement('tr');
+            row.style.cursor = "pointer";
+            row.addEventListener("click", () => abrirPopup(pedido.PEDIDO));
     
             let corStatus = "";
             switch (pedido.STATUS) {
-                case "AGUARDANDO APROVAÇÃO":
-                    corStatus = "#E1FF02";
-                    break;
-                case "AGUARDANDO PAGAMENTO":
-                    corStatus = "#07A2DB";
-                    break;
-                case "PLANEJADO":
-                    corStatus = "#DD02FF";
-                    break;
-                case "CANCELADO":
-                    corStatus = "#FF0206";
-                    break;
-                case "CONCLUIDO":
-                    corStatus = "#54D326";
-                    break;
-                default:
-                    corStatus = "#FFFFFF";
+                case "AGUARDANDO APROVAÇÃO": corStatus = "#E1FF02"; break;
+                case "AGUARDANDO PAGAMENTO": corStatus = "#07A2DB"; break;
+                case "PLANEJADO": corStatus = "#DD02FF"; break;
+                case "CANCELADO": corStatus = "#FF0206"; break;
+                case "CONCLUIDO": corStatus = "#54D326"; break;
+                default: corStatus = "#FFFFFF";
             }
     
             row.innerHTML = `
-                <td style="color: ${corStatus};font-weight: bold">${pedido.PEDIDO}</td>
-                <td style="color: ${corStatus};font-weight: bold">${pedido.CLIENTE}</td>
-                <td style="color: ${corStatus};font-weight: bold">R$ ${parseFloat(pedido.TOTAL).toLocaleString('pt-BR')}</td>
-                <td style="color: ${corStatus};font-weight: bold">${pedido.STATUS}</td>
+                <td style="color: ${corStatus}; font-weight: bold">${pedido.PEDIDO}</td>
+                <td style="color: ${corStatus}; font-weight: bold">${pedido.CLIENTE}</td>
+                <td style="color: ${corStatus}; font-weight: bold">R$ ${parseFloat(pedido.TOTAL).toLocaleString('pt-BR')}</td>
+                <td style="color: ${corStatus}; font-weight: bold">${new Date(pedido.EMISSAO).toLocaleDateString("pt-BR")}</td>
+                <td style="color: ${corStatus}; font-weight: bold">${pedido.STATUS}</td>
             `;
     
             tbody.appendChild(row);
         });
     }
     
+
+    function abrirPopup(pedidoId) {
+        let pedidos = JSON.parse(sessionStorage.getItem("database")) || [];
+    
+  
+        let itensPedido = pedidos.filter(p => p.PEDIDO === pedidoId);
+
+        if (itensPedido.length > 0) {
+            document.getElementById("popup-id").innerText = itensPedido[0].PEDIDO;
+            document.getElementById("popup-data").innerText = new Date(itensPedido[0].EMISSAO).toLocaleDateString("pt-BR");
+            document.getElementById("popup-cliente").innerText = itensPedido[0].CLIENTE;
+            
+
+            let status_ped = document.getElementById("popup-status");
+            status_ped.innerText = itensPedido[0].STATUS;
+            
+
+            let corStatus = "";
+            switch (itensPedido[0].STATUS) {
+                case "AGUARDANDO APROVAÇÃO": 
+                    corStatus = "#E1FF02"; 
+                    break;
+                case "AGUARDANDO PAGAMENTO": 
+                    corStatus = "#07A2DB"; 
+                    break;
+                case "PLANEJADO": 
+                    corStatus = "#DD02FF"; 
+                    break;
+                case "CANCELADO": 
+                    corStatus = "#FF0206"; 
+                    break;
+                case "CONCLUIDO": 
+                    corStatus = "#54D326"; 
+                    break;
+                default: 
+                    corStatus = "#FFFFFF";
+            }
+        
+            status_ped.style.color = corStatus;
+        
+        
+            const tbody = document.getElementById("popup-itens-body");
+            tbody.innerHTML = '';
+    
+            itensPedido.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.DESCRICAO}</td>
+                    <td>${item.QTD}</td>
+                    <td>R$ ${parseFloat(item.VR_UNIT).toLocaleString('pt-BR')}</td>
+                `;
+                tbody.appendChild(row);
+            });
+    
+         
+            document.getElementById("popup").style.display = "block";
+        } else {
+            alert("Pedido não encontrado!");
+        }
+    }
+    
+
+
+    // ---------------------------------------------------------------------------
 
     fetchDataAndStore();
     montarGraficoComFiltro();

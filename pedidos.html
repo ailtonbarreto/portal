@@ -57,7 +57,7 @@
         </select>
 
         <select id="filtro_ano">
-          
+
           <option value="2025">2025</option>
           <option value="2024">2024</option>
           <option value="2023">2023</option>
@@ -153,6 +153,48 @@
 
       <div class="charts-card">
 
+        <div id="popup">
+
+          <div class="close-btn">
+
+            <h2>Detalhes do Pedidos</h2>
+
+            <button onclick="fecharPopup()">Fechar</button>
+
+          </div>
+        
+
+          <table>
+
+              <thead>
+
+                  <tr>
+                      <th>Descrição</th>
+                      <th>Quantidade</th>
+                      <th>Valor Unitário</th>
+                  </tr>
+
+              </thead>
+
+              <tbody id="popup-itens-body">
+
+              </tbody>
+
+          </table>
+
+          <div class="card_items">
+
+            <p>ID do Pedido: <span id="popup-id"></span></p>
+            <p>Data de Emissão: <span id="popup-data"></span></p>
+            <p>Cliente: <span id="popup-cliente"></span></p>
+            <p>Status: <span id="popup-status"></span></p>
+
+
+          </div>
+          
+      </div>
+      
+
 
         <table id="tabela_pedidos">
 
@@ -163,6 +205,7 @@
               <th>PEDIDO</th>
               <th>CLIENTE</th>
               <th>TOTAL</th>
+              <th>EMISSÃO</th>
               <th>STATUS</th>
 
             </tr>
@@ -182,5 +225,14 @@
   </div>
 
 </body>
+<script>
+
+  function fecharPopup() {
+    document.getElementById("popup").style.display = "none";
+  }
+
+</script>
+
+
 
 </html>

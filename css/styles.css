@@ -218,7 +218,6 @@ body {
 .charts-card {
   background-color: var(--sidebar-color);
   text-align: center;
-  /* margin-bottom: 1vw; */
   padding: 1vw;
   box-sizing: border-box;
   -webkit-column-break-inside: avoid;
@@ -232,7 +231,6 @@ body {
   align-items: center;
   background-color: var(--sidebar-color);
   text-align: center;
-  /* margin-bottom: 1vw; */
   padding: 1vw;
   box-sizing: border-box;
   -webkit-column-break-inside: avoid;
@@ -253,8 +251,7 @@ table {
   margin: 2vw auto;
   border-collapse: collapse;
   box-shadow:  -2px 0 5px rgba(0, 0, 0, 0.5);
-  /* border-radius: 1vw; */
-  overflow: hidden;
+  overflow-y: scroll;
 }
 
 table th{
@@ -269,14 +266,93 @@ table td {
 }
 
 
-/* table tbody tr:nth-child(even) {
-  background-color: var(--bg);
-} */
-
 table tbody tr:hover {
   background-color: var(--bg);
 }
 
+/* ---------- POPUP ---------- */
+
+#popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--bg);
+  padding: 20px;
+  border-radius: 12px;
+  border: solid var(--cards-color);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.4);
+  z-index: 10000;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  overflow-y: scroll;
+}
+
+
+#popup p {
+  margin: 15px 0;
+  font-size: 16px;
+  color: var(--text-color);
+  font-weight: normal;
+}
+
+#popup p span {
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+#popup .card-content {
+  background-color: var(--bg);
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+  margin: 10px 0;
+}
+
+#popup .popup-itens {
+  max-height: 50vh;
+  padding: 10px;
+  border-top: 1px solid var(--cards-color);
+  margin-top: 15px;
+}
+
+
+#popup th, #popup td {
+  padding: 10px;
+  border: 1px solid var(--cards-color);
+}
+
+#popup th {
+  background-color: var(--cards-color);
+  color: #fff;
+}
+
+
+#popup button {
+  font-size: 1vw;
+  padding: 0.5vw;
+  background-color: #e00000;
+  color: white;
+  border: none;
+  border-radius: 0.4vw;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.close-btn{
+  margin-top: 1vw;
+  padding: 0 3vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card_items{
+  display: flex;
+  justify-content: space-evenly;
+}
 
 /* ---------- MEDIA QUERIES ---------- */
 
