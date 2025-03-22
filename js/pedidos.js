@@ -8,20 +8,46 @@ window.addEventListener("DOMContentLoaded", async function () {
         document.getElementById("photo").src = imagem;
     }
 
+    // async function fetchDataAndStore() {
+    //     document.getElementById('spinner').style.display = 'flex';
+
+    //     try {
+
+    //         const apiUrl = `https://api-webstore.onrender.com/array/${name}`;
+
+    //         const response = await fetch(apiUrl);
+    //         if (!response.ok) throw new Error(`Erro ao carregar JSON do endpoint: ${response.statusText}`);
+
+    //         const data = await response.json();
+    //         sessionStorage.setItem('database', JSON.stringify(data));
+
+  
+    //         montarGraficoComFiltro();
+    //     } catch (error) {
+    //         console.error("Erro ao obter dados do endpoint:", error);
+    //     } finally {
+    //         document.getElementById('spinner').style.display = 'none';
+    //     }
+    // }
+
     async function fetchDataAndStore() {
         document.getElementById('spinner').style.display = 'flex';
 
         try {
+            const storedData = sessionStorage.getItem('database');
+
+            if (storedData) {
+                montarGraficoComFiltro();
+                return;
+            }
 
             const apiUrl = `https://api-webstore.onrender.com/array/${name}`;
-
             const response = await fetch(apiUrl);
             if (!response.ok) throw new Error(`Erro ao carregar JSON do endpoint: ${response.statusText}`);
 
             const data = await response.json();
-            sessionStorage.setItem('database', JSON.stringify(data));
 
-  
+            sessionStorage.setItem('database', JSON.stringify(data));
             montarGraficoComFiltro();
         } catch (error) {
             console.error("Erro ao obter dados do endpoint:", error);
@@ -29,6 +55,8 @@ window.addEventListener("DOMContentLoaded", async function () {
             document.getElementById('spinner').style.display = 'none';
         }
     }
+    
+    
 
     function montarGraficoComFiltro() {
         const dataFromLocalStorage = JSON.parse(sessionStorage.getItem('database'));
@@ -67,32 +95,56 @@ window.addEventListener("DOMContentLoaded", async function () {
         atualizarTabelaPedidos(dadosAgrupados);
     }
 
+
     function atualizarTabelaPedidos(dados) {
         const tabela = document.getElementById('tabela_pedidos');
         if (!tabela) return;
-
+    
         const tbody = tabela.querySelector('tbody');
         tbody.innerHTML = '';
-
+    
         if (dados.length === 0) {
             const row = document.createElement('tr');
             row.innerHTML = `<td colspan="6" style="text-align: center;">Nenhum pedido encontrado.</td>`;
             tbody.appendChild(row);
             return;
         }
-
+    
         dados.forEach(pedido => {
             const row = document.createElement('tr');
+    
+            let corStatus = "";
+            switch (pedido.STATUS) {
+                case "AGUARDANDO APROVAÇÃO":
+                    corStatus = "#E1FF02";
+                    break;
+                case "AGUARDANDO PAGAMENTO":
+                    corStatus = "#07A2DB";
+                    break;
+                case "PLANEJADO":
+                    corStatus = "#DD02FF";
+                    break;
+                case "CANCELADO":
+                    corStatus = "#FF0206";
+                    break;
+                case "CONCLUIDO":
+                    corStatus = "#54D326";
+                    break;
+                default:
+                    corStatus = "#FFFFFF";
+            }
+    
             row.innerHTML = `
-                <td>${pedido.PEDIDO}</td>
-                <td>${pedido.CLIENTE}</td>
-                <td>R$ ${parseFloat(pedido.TOTAL).toLocaleString('pt-BR')}</td>
-                <td>${pedido.STATUS}</td>
+                <td style="color: ${corStatus};font-weight: bold">${pedido.PEDIDO}</td>
+                <td style="color: ${corStatus};font-weight: bold">${pedido.CLIENTE}</td>
+                <td style="color: ${corStatus};font-weight: bold">R$ ${parseFloat(pedido.TOTAL).toLocaleString('pt-BR')}</td>
+                <td style="color: ${corStatus};font-weight: bold">${pedido.STATUS}</td>
             `;
+    
             tbody.appendChild(row);
         });
     }
-
+    
 
     fetchDataAndStore();
     montarGraficoComFiltro();

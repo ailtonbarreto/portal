@@ -252,11 +252,11 @@ window.addEventListener("DOMContentLoaded", async function () {
     }
 
     const coresPorStatus = {
-        "AGUARDANDO APROVAÇÃO": "#96A00A",
-        "CONCLUIDO": "#00680C",
-        "CANCELADO": "#820505",
-        "AGUARDANDO PAGAMENTO": "#0E6D74",
-        "PLANEJADO": "#5B045C",
+        "AGUARDANDO APROVAÇÃO": "#E1FF02",
+        "AGUARDANDO PAGAMENTO": "#07A2DB",
+        "PLANEJADO": "#DD02FF",
+        "CANCELADO": "#FF0206",
+        "CONCLUIDO": "#54D326",
     };
     
     function criarGraficoPizzaDeStatus(idCanvas, dadosFiltrados) {
