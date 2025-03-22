@@ -8,18 +8,25 @@ window.addEventListener("DOMContentLoaded", async function () {
         document.getElementById("photo").src = imagem;
     }
 
-
+    
     async function fetchDataAndStore() {
         document.getElementById('spinner').style.display = 'flex';
-        
+
         try {
+            const storedData = sessionStorage.getItem('database');
+
+            if (storedData) {
+                montarGraficoComFiltro();
+                return;
+            }
+
             const apiUrl = `https://api-webstore.onrender.com/array/${name}`;
-            
             const response = await fetch(apiUrl);
             if (!response.ok) throw new Error(`Erro ao carregar JSON do endpoint: ${response.statusText}`);
-    
+
             const data = await response.json();
-            localStorage.setItem('database', JSON.stringify(data));
+
+            sessionStorage.setItem('database', JSON.stringify(data));
             montarGraficoComFiltro();
         } catch (error) {
             console.error("Erro ao obter dados do endpoint:", error);
@@ -49,7 +56,7 @@ window.addEventListener("DOMContentLoaded", async function () {
     
 
     function montarGraficoComFiltro() {
-        const dataFromLocalStorage = JSON.parse(localStorage.getItem('database'));
+        const dataFromLocalStorage = JSON.parse(sessionStorage.getItem('database'));
         if (!dataFromLocalStorage || !Array.isArray(dataFromLocalStorage)) return;
     
         const anoSelecionado = parseInt(document.getElementById('filtro_ano').value, 10);

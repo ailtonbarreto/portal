@@ -19,7 +19,7 @@ window.addEventListener("DOMContentLoaded", async function () {
             if (!response.ok) throw new Error(`Erro ao carregar JSON do endpoint: ${response.statusText}`);
 
             const data = await response.json();
-            localStorage.setItem('database', JSON.stringify(data));
+            sessionStorage.setItem('database', JSON.stringify(data));
 
   
             montarGraficoComFiltro();
@@ -31,7 +31,7 @@ window.addEventListener("DOMContentLoaded", async function () {
     }
 
     function montarGraficoComFiltro() {
-        const dataFromLocalStorage = JSON.parse(localStorage.getItem('database'));
+        const dataFromLocalStorage = JSON.parse(sessionStorage.getItem('database'));
         if (!dataFromLocalStorage || !Array.isArray(dataFromLocalStorage)) return;
 
         const anoSelecionado = document.getElementById('filtro_ano').value.trim();
