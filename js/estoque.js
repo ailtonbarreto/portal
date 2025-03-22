@@ -6,18 +6,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function Load_Data() {
         try {
+    
+            document.getElementById('spinner_estoque').style.display = 'block';
+            
             const response = await fetch(url);
+            
             if (!response.ok) {
                 throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
             }
             const dados = await response.json();
+
             console.log("Dados carregados:", dados);
+
             dadosSalvos = dados;
+
             load_products();
+
         } catch (error) {
+
             console.error("Erro ao carregar dados:", error.message);
+
+        } finally {
+    
+            document.getElementById('spinner_estoque').style.display = 'none';
         }
     }
+    
 
     function criarCardProduto(produto) {
         const card = document.createElement("figure");
