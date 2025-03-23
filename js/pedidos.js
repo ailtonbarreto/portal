@@ -125,6 +125,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         if (itensPedido.length > 0) {
             document.getElementById("popup-id").innerText = itensPedido[0].PEDIDO;
             document.getElementById("popup-data").innerText = new Date(itensPedido[0].EMISSAO).toLocaleDateString("pt-BR");
+            document.getElementById("popup-data-entrega").innerText = new Date(itensPedido[0].ENTREGA).toLocaleDateString("pt-BR");
             document.getElementById("popup-cliente").innerText = itensPedido[0].CLIENTE;
             
 
@@ -186,4 +187,15 @@ window.addEventListener("DOMContentLoaded", async function () {
     document.getElementById('filtro_ano')?.addEventListener('change', montarGraficoComFiltro);
     document.getElementById('filtro_mes')?.addEventListener('change', montarGraficoComFiltro);
     document.getElementById('filtro_tipo')?.addEventListener('change', montarGraficoComFiltro);
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const filtroMes = document.getElementById("filtro_mes");
+    const filtroAno = document.getElementById("filtro_ano");
+
+    const mesAtual = String(new Date().getMonth() + 1).padStart(2, "0");
+    const anoAtual = String(new Date().getFullYear());
+
+    filtroMes.value = mesAtual;
+    filtroAno.value = anoAtual;
 });

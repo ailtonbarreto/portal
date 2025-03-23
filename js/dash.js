@@ -399,3 +399,14 @@ window.addEventListener("DOMContentLoaded", async function () {
     document.getElementById('filtro_ano').addEventListener('change', montarGraficoComFiltro);
     document.getElementById('filtro_tipo').addEventListener('change', montarGraficoComFiltro);
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const filtroMes = document.getElementById("filtro_mes");
+    const filtroAno = document.getElementById("filtro_ano");
+
+    const mesAtual = String(new Date().getMonth() + 1).padStart(2, "0");
+    const anoAtual = String(new Date().getFullYear());
+
+    filtroMes.value = mesAtual;
+    filtroAno.value = anoAtual;
+});

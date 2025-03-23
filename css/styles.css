@@ -281,13 +281,22 @@ table tbody tr:hover {
   background-color: var(--bg);
   padding: 20px;
   border-radius: 12px;
-  border: solid var(--cards-color);
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.4);
   z-index: 10000;
   width: 100vw;
   height: 100vh;
   text-align: center;
   overflow-y: scroll;
+}
+
+#popup table{
+  background-color: var(--sidebar-color);
+  box-shadow:  -2px 0 5px rgba(0, 0, 0, 0.5);
+  width: 80vw;
+  border: 1vw solid var(--sidebar-color);
+}
+
+#popup table td:nth-child(1) {
+  text-align: left;
 }
 
 
@@ -314,24 +323,13 @@ table tbody tr:hover {
 #popup .popup-itens {
   max-height: 50vh;
   padding: 10px;
-  border-top: 1px solid var(--cards-color);
   margin-top: 15px;
 }
 
 
-#popup th, #popup td {
-  padding: 10px;
-  border: 1px solid var(--cards-color);
-}
-
-#popup th {
-  background-color: var(--cards-color);
-  color: #fff;
-}
-
 
 #popup button {
-  font-size: 1vw;
+  font-size: 0.7vw;
   padding: 0.5vw;
   background-color: #e00000;
   color: white;
