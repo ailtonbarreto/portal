@@ -119,8 +119,8 @@ window.addEventListener("DOMContentLoaded", async function () {
                 datasets: [{
                     label: labelDataset,
                     data: valores,
-                    borderColor: '#0DB8E8',
-                    backgroundColor: '#0e1218',
+                    borderColor: '#ffffff',
+                    backgroundColor: '#ffffff',
                     borderWidth: 1
                 }]
             },
@@ -192,8 +192,8 @@ window.addEventListener("DOMContentLoaded", async function () {
                 datasets: [{
                     label: `Vendas por Dia (${tipoAnalise})`,
                     data: valoresOrdenados,
-                    borderColor: '#0DB8E8',
-                    backgroundColor: 'rgba(13, 184, 232, 0.2)',
+                    borderColor: '#0F8F8F',
+                    backgroundColor: '#ffffff',
                     fill: true,
                     borderWidth: 2
                 }]
@@ -350,8 +350,8 @@ window.addEventListener("DOMContentLoaded", async function () {
                         y: item.totalVendas,
                         r: Math.sqrt(item.totalVendas) * 0.5
                     })),
-                    backgroundColor: 'rgba(13, 184, 232, 0.2)',
-                    borderColor: '#0DB8E8',
+                    backgroundColor: '#ffffff',
+                    borderColor: '#0F8F8F',
                     borderWidth: 1
                 }]
             },

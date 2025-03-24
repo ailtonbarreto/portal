@@ -1,9 +1,12 @@
 
 :root{
-  --bg: #0e1218;
-  --text-color: #9e9ea4;
+  /* --bg: #0e1218; */
+  --bg: #EAF7F5;
+  /* --text-color: #9e9ea4; */
+  --text-color: #0F8F8F;
+  --sidebar-color: #0F8F8F;
   --cards-color: #000;
-  --sidebar-color: #000000;
+  /* --sidebar-color: #000000; */
 }
 
 
@@ -93,6 +96,10 @@ body {
   margin-bottom: 30px;
 }
 
+#nome{
+  color: #ffffff;
+}
+
 .sidebar-title > span {
   display: none;
 }
@@ -120,10 +127,12 @@ body {
   cursor: pointer;
 }
 
+
 .sidebar-list-item > a {
   text-decoration: none;
-  color: var(--text-color);
+  color: #ffffff;
 }
+
 
 .sidebar-responsive {
   display: inline !important;
@@ -175,6 +184,7 @@ body {
 
 .main-title {
   display: flex;
+  color: var(--text-color);
   justify-content: space-between;
 }
 

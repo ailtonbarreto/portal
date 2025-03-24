@@ -1,8 +1,8 @@
 :root {
-  --bg: #0e1218;
-  --text-color: #9e9ea4;
-  --cards-color: #000;
-  --sidebar-color: #000000;
+  --bg: #EAF7F5;
+  --text-color: #0F8F8F;
+  --cards-color: #ffffff;
+  --sidebar-color: #0F8F8F;
 }
 
 
@@ -67,7 +67,8 @@ body {
   text-align: center;
   margin: 0;
   padding: 0 2vw;
-  background-color: black;
+  color: var(--text-color);
+  background-color: #fff;
   border-radius: 0.4vw;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
 }
@@ -85,7 +86,7 @@ body {
 }
 
 .pesquisar-text {
-  color: #fff;
+  color: var(--text-color);
   font-size: 1.5vw;
   margin-bottom: 0.3vw;
 }
@@ -151,6 +152,7 @@ body {
   align-items: center;
   padding: 30px 30px 30px 30px;
   margin-bottom: 30px;
+  color: #ffffff;
 }
 
 .sidebar-title>span {
@@ -230,6 +232,7 @@ body {
 .main-title {
   display: flex;
   justify-content: space-between;
+  color: var(--text-color);
 }
 
 
