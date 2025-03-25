@@ -11,6 +11,8 @@ window.addEventListener("DOMContentLoaded", async function () {
     
     async function fetchDataAndStore() {
         document.getElementById('spinner').style.display = 'flex';
+        // document.getElementById('body').style.display = 'none';
+
 
         try {
             const storedData = sessionStorage.getItem('database');
@@ -32,6 +34,7 @@ window.addEventListener("DOMContentLoaded", async function () {
             console.error("Erro ao obter dados do endpoint:", error);
         } finally {
             document.getElementById('spinner').style.display = 'none';
+            // document.getElementById('body').style.display = 'block';
         }
     }
     
@@ -112,6 +115,8 @@ window.addEventListener("DOMContentLoaded", async function () {
             window[idCanvas].destroy();
         }
 
+        const cores = ['#1EC1B4', '#33F1FF', '#33C2FF', '#C469D7'];
+
         window[idCanvas] = new Chart(context, {
             type: 'bar',
             data: {
@@ -119,8 +124,8 @@ window.addEventListener("DOMContentLoaded", async function () {
                 datasets: [{
                     label: labelDataset,
                     data: valores,
-                    borderColor: '#ffffff',
-                    backgroundColor: '#ffffff',
+                    borderColor: 'transparent',
+                    backgroundColor: valores.map((_, i) => cores[i % cores.length]),
                     borderWidth: 1
                 }]
             },
@@ -129,6 +134,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                 indexAxis: 'y',
                 scales: {
                     x: {
+                        display: false,
                         beginAtZero: true,
                         grid: { display: false },
                         ticks: { color: 'white' }
@@ -193,7 +199,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                     label: `Vendas por Dia (${tipoAnalise})`,
                     data: valoresOrdenados,
                     borderColor: '#0F8F8F',
-                    backgroundColor: '#ffffff',
+                    backgroundColor: '#0DEDC8',
                     fill: true,
                     borderWidth: 2
                 }]
@@ -202,7 +208,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                 responsive: true,
                 scales: {
                     x: { grid: { display: false }, ticks: { color: 'white' } },
-                    y: { grid: { display: false }, ticks: { color: 'white' } }
+                    y: { display: false },
                 },
                 plugins: {
                     legend: { display: false },
@@ -350,8 +356,10 @@ window.addEventListener("DOMContentLoaded", async function () {
                         y: item.totalVendas,
                         r: Math.sqrt(item.totalVendas) * 0.5
                     })),
-                    backgroundColor: '#ffffff',
-                    borderColor: '#0F8F8F',
+                    backgroundColor: vendasPorCliente.map(() => 
+                        `hsl(${Math.random() * 360}, 70%, 60%)`
+                    ),
+                    borderColor: 'transparent',
                     borderWidth: 1
                 }]
             },
@@ -359,6 +367,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                 responsive: true,
                 scales: {
                     x: { 
+                        display: false,
                         grid: { display: false }, 
                         ticks: { color: 'white' },
                         title: { display: true, text: 'Clientes', color: 'white' }

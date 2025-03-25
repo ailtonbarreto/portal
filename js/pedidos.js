@@ -104,10 +104,10 @@ window.addEventListener("DOMContentLoaded", async function () {
             }
     
             row.innerHTML = `
-                <td style="color: ${corStatus}; font-weight: bold">${pedido.PEDIDO}</td>
-                <td style="color: ${corStatus}; font-weight: bold">${pedido.CLIENTE}</td>
-                <td style="color: ${corStatus}; font-weight: bold">R$ ${parseFloat(pedido.TOTAL).toLocaleString('pt-BR')}</td>
-                <td style="color: ${corStatus}; font-weight: bold">${new Date(pedido.EMISSAO).toLocaleDateString("pt-BR")}</td>
+                <td>${pedido.PEDIDO}</td>
+                <td>${pedido.CLIENTE}</td>
+                <td>R$ ${parseFloat(pedido.TOTAL).toLocaleString('pt-BR')}</td>
+                <td>${new Date(pedido.EMISSAO).toLocaleDateString("pt-BR")}</td>
                 <td style="color: ${corStatus}; font-weight: bold">${pedido.STATUS}</td>
             `;
     
