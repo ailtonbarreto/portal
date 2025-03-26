@@ -258,11 +258,11 @@ window.addEventListener("DOMContentLoaded", async function () {
     }
 
     const coresPorStatus = {
-        "AGUARDANDO APROVAÇÃO": "#E1FF02",
-        "AGUARDANDO PAGAMENTO": "#07A2DB",
-        "PLANEJADO": "#DD02FF",
-        "CANCELADO": "#FF0206",
-        "CONCLUIDO": "#54D326",
+        "AGUARDANDO APROVAÇÃO": "#EEFF6C",
+        "AGUARDANDO PAGAMENTO": "#0B81AC",
+        "PLANEJADO": "#C063CE",
+        "CANCELADO": "#F56C6F",
+        "CONCLUIDO": "#46E0A3",
     };
     
     function criarGraficoPizzaDeStatus(idCanvas, dadosFiltrados) {
@@ -319,7 +319,6 @@ window.addEventListener("DOMContentLoaded", async function () {
         });
     }
     
-    
     function criarGraficoDispersaoPorCliente(idCanvas, dadosFiltrados, tipoAnalise) {
         const getMetric = item => tipoAnalise === "quantidade" ? item.QTD : item.QTD * item.VR_UNIT;
     
@@ -354,7 +353,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                     data: vendasPorCliente.map((item, index) => ({
                         x: index + 1,
                         y: item.totalVendas,
-                        r: Math.sqrt(item.totalVendas) * 0.5
+                        r: Math.sqrt(item.totalVendas) * (tipoAnalise === "quantidade" ? 2.5 : 0.3)
                     })),
                     backgroundColor: vendasPorCliente.map(() => 
                         `hsl(${Math.random() * 360}, 70%, 60%)`
@@ -388,7 +387,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                                 const cliente = vendasPorCliente[index].cliente;
                                 const totalVendas = vendasPorCliente[index].totalVendas;
                                 let tipoAnalise = document.getElementById('filtro_tipo').value;
-            
+    
                                 if (tipoAnalise === "valor") {
                                     return `${cliente}: R$ ${totalVendas.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
                                 } else {
@@ -401,6 +400,7 @@ window.addEventListener("DOMContentLoaded", async function () {
             }
         });
     }
+    
     
     await fetchDataAndStore();
 
