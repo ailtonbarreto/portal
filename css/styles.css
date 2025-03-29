@@ -1,12 +1,10 @@
 
 :root{
-  --bg: #ffffff;
+  --bg: #EAF7F5;
   --text-color: #0F8F8F;
   --text-color-hover: #fff;
-  --sidebar-color: #EAF7F5;
-  --cards-color: #000;
+  --sidebar-color: #ffffff;
 }
-
 
 
 body {
