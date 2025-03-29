@@ -1,8 +1,9 @@
-:root {
-  --bg: #EAF7F5;
+:root{
+  --bg: #ffffff;
   --text-color: #0F8F8F;
-  --cards-color: #ffffff;
-  --sidebar-color: #0F8F8F;
+  --text-color-hover: #fff;
+  --sidebar-color: #EAF7F5;
+  --cards-color: #000;
 }
 
 
@@ -68,7 +69,7 @@ body {
   margin: 0;
   padding: 0 2vw;
   color: var(--text-color);
-  background-color: #fff;
+  background-color: var(--sidebar-color);
   border-radius: 0.4vw;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
 }
@@ -92,6 +93,7 @@ body {
 }
 
 #filterInput {
+  background-color: var(--sidebar-color);
   outline: none;
   padding: 0.5vw;
   width: 20vw;
@@ -153,7 +155,7 @@ body {
   align-items: center;
   padding: 30px 30px 30px 30px;
   margin-bottom: 30px;
-  color: #ffffff;
+  color: var(--text-color);
 }
 
 .sidebar-title>span {
@@ -182,14 +184,11 @@ body {
   background-color: var(--bg);
   cursor: pointer;
 
-  & a{
-    color: var(--text-color);
-  }
 }
 
 .sidebar-list-item>a {
   text-decoration: none;
-  color: var(--cards-color);
+  color: var(--text-color);
 }
 
 .sidebar-responsive {

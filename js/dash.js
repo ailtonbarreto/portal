@@ -137,11 +137,11 @@ window.addEventListener("DOMContentLoaded", async function () {
                         display: false,
                         beginAtZero: true,
                         grid: { display: false },
-                        ticks: { color: 'white' }
+                        ticks: { color: '#0F8F8F' }
                     },
                     y: {
                         grid: { display: false },
-                        ticks: { color: 'white' }
+                        ticks: { color: '#0F8F8F' }
                     }
                 },
                 plugins: {
@@ -207,7 +207,7 @@ window.addEventListener("DOMContentLoaded", async function () {
             options: {
                 responsive: true,
                 scales: {
-                    x: { grid: { display: false }, ticks: { color: 'white' } },
+                    x: { grid: { display: false }, ticks: { color: '#0F8F8F' } },
                     y: { display: false },
                 },
                 plugins: {
@@ -311,7 +311,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                         labels: {
                             boxWidth: 20,
                             padding: 10,
-                            color: 'white'
+                            color: '#0F8F8F'
                         }
                     }
                 }
