@@ -179,12 +179,6 @@ body {
   color: var(--text-color);
 }
 
-.main-title {
-  display: flex;
-  color: var(--text-color);
-  justify-content: space-between;
-}
-
 .main-cards {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;

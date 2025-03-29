@@ -232,15 +232,6 @@ body {
   color: rgba(255, 255, 255, 0.95);
 }
 
-.main-title {
-  display: flex;
-  justify-content: space-between;
-  color: var(--text-color);
-}
-
-
-
-
 /* ---------- MEDIA QUERIES ---------- */
 
 /* Medium <= 992px */
