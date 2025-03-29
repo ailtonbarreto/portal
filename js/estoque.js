@@ -16,8 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             const dados = await response.json();
 
-            console.log("Dados carregados:", dados);
-
             dadosSalvos = dados;
 
             load_products();

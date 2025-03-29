@@ -368,7 +368,7 @@ body {
   }
 
   .pesquisar-text {
-    color: #fff;
+    color: var(--text-color);
     font-size: 5vw;
     margin-bottom: 3vw;
   }
