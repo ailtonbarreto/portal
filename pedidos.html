@@ -108,15 +108,15 @@
 
         </li>
 
-        <!-- <li class="sidebar-list-item">
+        <li class="sidebar-list-item">
 
           <a href="#">
 
-            <span class="material-icons-outlined">groups</span> Clientes
+            <span class="material-icons-outlined">person</span> Clientes
 
           </a>
 
-        </li> -->
+        </li>
 
         <li class="sidebar-list-item" onclick="window.location.href='./estoque.html'">
 
@@ -145,15 +145,17 @@
 
     <main class="main-container">
 
+      <div id="container_cards"></div>
+
       <div class="charts-card">
 
         <div id="popup">
 
           <div class="close-btn">
 
-            <h2>Detalhes do Pedidos</h2>
+            <button onclick="fecharPopup()"> << Voltar </button>
 
-            <button onclick="fecharPopup()">X</button>
+            <h2>Detalhes do Pedidos</h2>
 
           </div>
         
@@ -167,6 +169,7 @@
 
 
           </div>
+
 
           <table>
 

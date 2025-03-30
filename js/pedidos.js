@@ -49,6 +49,8 @@ window.addEventListener("DOMContentLoaded", async function () {
             item.REP.trim().toLowerCase() === nomeRep
         );
 
+        dadosFiltrados.sort((b, a) => new Date(a.EMISSAO) - new Date(b.EMISSAO));
+
         const dadosAgrupados = dadosFiltrados.reduce((acc, item) => {
             const pedidoExistente = acc.find(p => p.PEDIDO === item.PEDIDO);
             if (pedidoExistente) {
@@ -73,49 +75,68 @@ window.addEventListener("DOMContentLoaded", async function () {
         atualizarTabelaPedidos(dadosAgrupados);
     }
 
-
     function atualizarTabelaPedidos(dados) {
+        const isMobile = window.innerWidth <= 768;
         const tabela = document.getElementById('tabela_pedidos');
-        if (!tabela) return;
+        const containerPedidos = isMobile ? document.getElementById('container_cards') : tabela.querySelector('tbody');
     
-        const tbody = tabela.querySelector('tbody');
-        tbody.innerHTML = '';
+        if (!containerPedidos) return;
+        containerPedidos.innerHTML = '';
     
         if (dados.length === 0) {
             const row = document.createElement('tr');
             row.innerHTML = `<td colspan="6" style="text-align: center;">Nenhum pedido encontrado.</td>`;
-            tbody.appendChild(row);
+            containerPedidos.appendChild(row);
             return;
         }
     
         dados.forEach(pedido => {
-            const row = document.createElement('tr');
-            row.style.cursor = "pointer";
-            row.addEventListener("click", () => abrirPopup(pedido.PEDIDO));
+            if (isMobile) {
+
+                const card = document.createElement('div');
+                card.className = 'card-pedido';
+                card.innerHTML = `
+                    <div class="card-header" style="background-color: ${getStatusColor(pedido.STATUS)};">
+                        <h3>${pedido.PEDIDO}</h3>
+                        <p>Status: ${pedido.STATUS}</p>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Cliente:</strong> ${pedido.CLIENTE}</p>
+                        <p><strong>Total:</strong> R$ ${parseFloat(pedido.TOTAL).toLocaleString('pt-BR')}</p>
+                        <p><strong>Emissão:</strong> ${new Date(pedido.EMISSAO).toLocaleDateString("pt-BR")}</p>
+                    </div>
+                `;
+                card.addEventListener('click', () => abrirPopup(pedido.PEDIDO));
+                containerPedidos.appendChild(card);
+            } else {
+
+                const row = document.createElement('tr');
+                row.style.cursor = "pointer";
+                row.addEventListener("click", () => abrirPopup(pedido.PEDIDO));
     
-            let corStatus = "";
-            switch (pedido.STATUS) {
-                case "AGUARDANDO APROVAÇÃO": corStatus = "#E1FF02"; break;
-                case "AGUARDANDO PAGAMENTO": corStatus = "#07A2DB"; break;
-                case "PLANEJADO": corStatus = "#DD02FF"; break;
-                case "CANCELADO": corStatus = "#FF0206"; break;
-                case "CONCLUIDO": corStatus = "#54D326"; break;
-                default: corStatus = "#FFFFFF";
+                row.innerHTML = `
+                    <td>${pedido.PEDIDO}</td>
+                    <td>${pedido.CLIENTE}</td>
+                    <td>R$ ${parseFloat(pedido.TOTAL).toLocaleString('pt-BR')}</td>
+                    <td>${new Date(pedido.EMISSAO).toLocaleDateString("pt-BR")}</td>
+                    <td style="color: ${getStatusColor(pedido.STATUS)}; font-weight: bold">${pedido.STATUS}</td>
+                `;
+                tabela.querySelector('tbody').appendChild(row);
             }
-    
-            row.innerHTML = `
-                <td>${pedido.PEDIDO}</td>
-                <td>${pedido.CLIENTE}</td>
-                <td>R$ ${parseFloat(pedido.TOTAL).toLocaleString('pt-BR')}</td>
-                <td>${new Date(pedido.EMISSAO).toLocaleDateString("pt-BR")}</td>
-                <td style="color: ${corStatus}; font-weight: bold">${pedido.STATUS}</td>
-            `;
-    
-            tbody.appendChild(row);
         });
     }
     
-
+    function getStatusColor(status) {
+        switch (status) {
+            case "AGUARDANDO APROVAÇÃO": return "#E1FF02";
+            case "AGUARDANDO PAGAMENTO": return "#07A2DB";
+            case "PLANEJADO": return "#DD02FF";
+            case "CANCELADO": return "#FF0206";
+            case "CONCLUIDO": return "#54D326";
+            default: return "#FFFFFF";
+        }
+    }
+    
     function abrirPopup(pedidoId) {
         let pedidos = JSON.parse(sessionStorage.getItem("database")) || [];
     

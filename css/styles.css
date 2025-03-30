@@ -335,14 +335,16 @@ table tbody tr:hover {
 
 
 #popup button {
+  display: flex;
   font-size: 1vw;
-  padding: 0.5vw 1vw;
-  background-color: #e00000;
+  padding: 0.2vw 1vw;
+  background-color: var(--text-color);
   color: var(--bg);
   border: none;
   border-radius: 0.4vw;
   cursor: pointer;
   font-weight: bold;
+  align-items: center;
 }
 
 .close-btn{
