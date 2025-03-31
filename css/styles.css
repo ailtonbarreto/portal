@@ -40,6 +40,8 @@ body {
   justify-content: space-between;
   padding: 0 30px 0 30px;
   box-shadow: 0 6px 7px -3px rgba(0, 0, 0, 0.35);
+  color: var(--text-color-hover);
+  background-color: var(--text-color);
 }
 
 .menu-icon {
@@ -148,13 +150,13 @@ body {
 }
 
 #filtro_tipo{
-  background-color: var(--bg);
-  color: var(--text-color);
   font-size: 1vw !important;
   font-weight: bold;
   padding: 0.3vw;
   border: none;
   outline: none;
+  background-color: var(--bg);
+  color: var(--text-color);
 }
 
 .chart{

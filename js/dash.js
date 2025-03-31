@@ -125,7 +125,8 @@ window.addEventListener("DOMContentLoaded", async function () {
                     label: labelDataset,
                     data: valores,
                     borderColor: 'transparent',
-                    backgroundColor: valores.map((_, i) => cores[i % cores.length]),
+                    // backgroundColor: valores.map((_, i) => cores[i % cores.length]),
+                    backgroundColor: '#0F8F8F',
                     borderWidth: 1
                 }]
             },
