@@ -144,15 +144,17 @@ body {
   color: var(--text-color);
   font-size: 1vw;
   font-weight: bold;
-  padding: 0.3vw;
+  padding: 0.1vw 0.5vw;
   border: none;
   outline: none;
+  border-radius: 0.3vw;
 }
 
 #filtro_tipo{
   font-size: 1vw !important;
   font-weight: bold;
-  padding: 0.3vw;
+  padding: 0.1vw 0.5vw;
+  border-radius: 0.3vw;
   border: none;
   outline: none;
   background-color: var(--bg);
