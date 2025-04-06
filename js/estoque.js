@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const url = "https://api-webstore.onrender.com/estoque";
+    const url = "https://barretoapps.com.br/estoque";
     const section_data = document.querySelector(".section");
     const filterInput = document.getElementById("filterInput");
     let dadosSalvos = [];
