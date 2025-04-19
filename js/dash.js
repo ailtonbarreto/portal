@@ -10,9 +10,8 @@ window.addEventListener("DOMContentLoaded", async function () {
 
     
     async function fetchDataAndStore() {
+        
         document.getElementById('spinner').style.display = 'flex';
-
-
 
         try {
             const storedData = sessionStorage.getItem('database');
