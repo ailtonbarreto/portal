@@ -11,7 +11,7 @@ window.addEventListener("DOMContentLoaded", async function () {
     
     async function fetchDataAndStore() {
         document.getElementById('spinner').style.display = 'flex';
-        // document.getElementById('body').style.display = 'none';
+
 
 
         try {
