@@ -277,6 +277,23 @@ table tbody tr:hover {
   background-color: var(--bg);
 }
 
+.card-pedido{
+  background-color: var(--text-color-hover);
+  color: var(--text-color);
+  padding: 2vw;
+  border-radius: 1vw;
+  margin-bottom: 5vw;
+  box-shadow: 0 6px 7px 3px rgba(0, 0, 0, 0.2);
+}
+
+.card-header{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: var(--sidebar-color);
+  border-radius: 1vw;
+}
+
 /* ---------- POPUP ---------- */
 
 #popup {

@@ -33,7 +33,7 @@ window.addEventListener("DOMContentLoaded", async function () {
             console.error("Erro ao obter dados do endpoint:", error);
         } finally {
             document.getElementById('spinner').style.display = 'none';
-            // document.getElementById('body').style.display = 'block';
+
         }
     }
     
