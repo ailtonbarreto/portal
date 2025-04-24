@@ -1,8 +1,8 @@
 
 :root{
-    --bg : #0B1548;
+    --bg : #ffffff;
     --cor-texto: #ffffff;
-    --cor-container: #ffffff;
+    --cor-container: #0F8F8F;
 }
 
 *{
@@ -21,8 +21,8 @@ body{
 }
 
 .logo{
-    width: 20vw;
-    margin-bottom: 3vw;
+    width: 8vw;
+    margin: 2vw;
 }
 
 .container{
@@ -162,7 +162,7 @@ iframe{
     }
 
     .form img{
-        width: 50vw;
+        width: 30vw;
         margin-top: 30vw;
     }
 
@@ -177,13 +177,17 @@ iframe{
         height: 8vw;
         width: 100%;
         color: var(--bg);
+        border-radius: 3px;
+        border: none;
     } 
     
     button{
         border: none;
-        height: 10vw;
-        width: 40%;
+        width: 90%;
         border-radius: 3px;
+        margin-top: 10vw;
+        padding: 4vw;
+        font-size: 4vw;
     }
 
     iframe{
