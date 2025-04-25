@@ -383,7 +383,6 @@ table tbody tr:hover {
 
 /* ---------- MEDIA QUERIES ---------- */
 
-/* Medium <= 992px */
 
 @media screen and (max-width: 992px) {
   .grid-container {
@@ -394,7 +393,7 @@ table tbody tr:hover {
       'main';
   }
 
-  .charts-card{
+  .main-container table{
     display: none;
 }
 
