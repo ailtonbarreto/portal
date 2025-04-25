@@ -161,6 +161,7 @@ iframe{
         margin: 0;
     }
 
+
     .form img{
         width: 30vw;
         margin-top: 30vw;
@@ -176,7 +177,7 @@ iframe{
         outline: none;
         height: 8vw;
         width: 100%;
-        color: var(--bg);
+        color: var(--cor-container);
         border-radius: 3px;
         border: none;
     } 

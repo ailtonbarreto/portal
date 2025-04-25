@@ -394,6 +394,10 @@ table tbody tr:hover {
       'main';
   }
 
+  .charts-card{
+    display: none;
+}
+
   #sidebar {
     display: none;
   }
