@@ -406,6 +406,8 @@ window.addEventListener("DOMContentLoaded", async function () {
         });
     }
 
+    
+
 
     await fetchDataAndStore();
 
