@@ -410,8 +410,12 @@ table tbody tr:hover {
     height: 100vh;
   }
 
+  .main-container{
+    margin-bottom: 10vh;
+  }
+
   .charts-card{
-    margin-bottom: 10vw;
+    margin-bottom: 1vh;
   }
 
   .card-header{
