@@ -4,6 +4,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const filterInput = document.getElementById("filterInput");
     let dadosSalvos = [];
 
+    let user = sessionStorage.getItem("currentUser");
+    let name = sessionStorage.getItem("name");
+    let imagem = sessionStorage.getItem("img");
+
+    if (user) {
+        document.getElementById("nome").innerHTML = user.charAt(0).toUpperCase() + user.slice(1).toLowerCase();
+        document.getElementById("photo").src = imagem;
+    }
+
+
     async function Load_Data() {
         try {
     
