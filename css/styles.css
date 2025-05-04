@@ -482,6 +482,7 @@ table tbody tr:hover {
     flex-direction: column;
     gap: 12px;
     margin-top: 15px;
+    margin-bottom: 10vw;
   }
 
   .card_items{

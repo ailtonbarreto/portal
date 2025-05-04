@@ -3,15 +3,19 @@ window.addEventListener("DOMContentLoaded", async function () {
     let name = sessionStorage.getItem("name");
     let imagem = sessionStorage.getItem("img");
 
+
+
     if (user) {
         document.getElementById("nome").innerHTML = user.charAt(0).toUpperCase() + user.slice(1).toLowerCase();
         document.getElementById("photo").src = imagem;
     }
 
-    
+
+
     async function fetchDataAndStore() {
-        
+
         document.getElementById('spinner').style.display = 'flex';
+
 
         try {
             const storedData = sessionStorage.getItem('database');
@@ -36,50 +40,50 @@ window.addEventListener("DOMContentLoaded", async function () {
 
         }
     }
-    
-    
+
+
 
     function calcularIndicadores(dadosFiltrados) {
-        
+
         const totalVendido = dadosFiltrados.reduce((acc, item) => acc + (item.QTD * item.VR_UNIT), 0).toFixed(2);
-    
+
         const pedidosUnicos = new Set(dadosFiltrados.map(item => item.PEDIDO));
         const totalPedidos = pedidosUnicos.size;
-       
+
         const totalClientes = new Set(dadosFiltrados.map(item => item.CLIENTE)).size;
-      
+
         const ticketMedio = (totalVendido / totalPedidos).toFixed(2);
-    
+
         document.getElementById('valor_vendido').innerHTML = `R$ ${parseFloat(totalVendido).toLocaleString('pt-BR')}`;
         document.getElementById('qtd_pedidos').innerHTML = totalPedidos;
         document.getElementById('qtd_clientes').innerHTML = totalClientes;
         document.getElementById('ticket_medio').innerHTML = `R$ ${parseFloat(ticketMedio).toLocaleString('pt-BR')}`;
     }
-    
+
 
     function montarGraficoComFiltro() {
         const dataFromLocalStorage = JSON.parse(sessionStorage.getItem('database'));
         if (!dataFromLocalStorage || !Array.isArray(dataFromLocalStorage)) return;
-    
+
         const anoSelecionado = parseInt(document.getElementById('filtro_ano').value, 10);
         const mesSelecionado = parseInt(document.getElementById('filtro_mes').value, 10);
         const tipoAnalise = document.getElementById('filtro_tipo').value;
-    
+
         const dadosFiltrados = dataFromLocalStorage.filter(item =>
             parseInt(item.mes, 10) === mesSelecionado &&
             parseInt(item.ano, 10) === anoSelecionado &&
             item.REP === name
         );
-    
+
         calcularIndicadores(dadosFiltrados);
         atualizarGraficos(dadosFiltrados, tipoAnalise);
-    
-       
+
+
         criarGraficoPizzaDeStatus('pizza-chart', dadosFiltrados);
-    
+
         criarGraficoDispersaoPorCliente('scatter-chart', dadosFiltrados, tipoAnalise);
     }
-    
+
 
     function atualizarGraficos(dadosFiltrados, tipoAnalise) {
         const getMetric = item => tipoAnalise === "quantidade" ? item.QTD : item.QTD * item.VR_UNIT;
@@ -152,7 +156,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                             label: context => {
                                 let value = context.raw;
                                 let tipoAnalise = document.getElementById('filtro_tipo').value;
-                                
+
                                 if (tipoAnalise === "valor") {
                                     return `Valor: R$ ${parseFloat(value).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
                                 } else {
@@ -163,7 +167,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                     }
                 }
             }
-            
+
         });
     }
 
@@ -218,7 +222,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                             label: context => {
                                 let value = context.raw;
                                 let tipoAnalise = document.getElementById('filtro_tipo').value;
-                                
+
                                 if (tipoAnalise === "valor") {
                                     return `Valor: R$ ${parseFloat(value).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
                                 } else {
@@ -229,31 +233,31 @@ window.addEventListener("DOMContentLoaded", async function () {
                     }
                 }
             }
-            
+
         });
     }
 
     function contarStatus(dadosFiltrados) {
         const statusCount = {};
         const pedidosContados = new Set();
-    
+
         dadosFiltrados.forEach(pedido => {
             const status = pedido.STATUS;
             const pedidoId = pedido.PEDIDO;
-    
+
             if (pedidosContados.has(pedidoId)) {
                 return;
             }
-    
+
             if (statusCount[status]) {
                 statusCount[status] += 1;
             } else {
                 statusCount[status] = 1;
             }
-    
+
             pedidosContados.add(pedidoId);
         });
-    
+
         return statusCount;
     }
 
@@ -264,27 +268,27 @@ window.addEventListener("DOMContentLoaded", async function () {
         "CANCELADO": "#F56C6F",
         "CONCLUIDO": "#46E0A3",
     };
-    
+
     function criarGraficoPizzaDeStatus(idCanvas, dadosFiltrados) {
         const statusCount = contarStatus(dadosFiltrados);
         const labels = Object.keys(statusCount);
         const valores = Object.values(statusCount);
-    
+
         const cores = labels.map(status => coresPorStatus[status] || "#CCCCCC");
-    
+
         const ctx = document.getElementById(idCanvas);
-    
+
         if (!ctx) {
             console.error(`Canvas ${idCanvas} não encontrado!`);
             return;
         }
-    
+
         const context = ctx.getContext('2d');
-    
+
         if (window[idCanvas] instanceof Chart) {
             window[idCanvas].destroy();
         }
-    
+
         window[idCanvas] = new Chart(context, {
             type: 'doughnut',
             data: {
@@ -301,7 +305,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                 plugins: {
                     tooltip: {
                         callbacks: {
-                            label: function(context) {
+                            label: function (context) {
                                 return `${context.label}: ${context.raw} pedidos`;
                             }
                         }
@@ -318,10 +322,10 @@ window.addEventListener("DOMContentLoaded", async function () {
             }
         });
     }
-    
+
     function criarGraficoDispersaoPorCliente(idCanvas, dadosFiltrados, tipoAnalise) {
         const getMetric = item => tipoAnalise === "quantidade" ? item.QTD : item.QTD * item.VR_UNIT;
-    
+
         const clientes = [...new Set(dadosFiltrados.map(item => item.CLIENTE))];
         const vendasPorCliente = clientes.map(cliente => {
             const vendasCliente = dadosFiltrados.filter(item => item.CLIENTE === cliente);
@@ -331,20 +335,20 @@ window.addEventListener("DOMContentLoaded", async function () {
                 totalVendas
             };
         });
-    
+
         const ctx = document.getElementById(idCanvas);
-    
+
         if (!ctx) {
             console.error(`Canvas ${idCanvas} não encontrado!`);
             return;
         }
-    
+
         const context = ctx.getContext('2d');
-    
+
         if (window[idCanvas] instanceof Chart) {
             window[idCanvas].destroy();
         }
-    
+
         window[idCanvas] = new Chart(context, {
             type: 'bubble',
             data: {
@@ -355,7 +359,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                         y: item.totalVendas,
                         r: Math.sqrt(item.totalVendas) * (tipoAnalise === "quantidade" ? 2.5 : 0.3)
                     })),
-                    backgroundColor: vendasPorCliente.map(() => 
+                    backgroundColor: vendasPorCliente.map(() =>
                         `hsl(${Math.random() * 360}, 70%, 60%)`
                     ),
                     borderColor: 'transparent',
@@ -365,14 +369,14 @@ window.addEventListener("DOMContentLoaded", async function () {
             options: {
                 responsive: true,
                 scales: {
-                    x: { 
+                    x: {
                         display: false,
-                        grid: { display: false }, 
+                        grid: { display: false },
                         ticks: { color: 'white' },
                         title: { display: true, text: 'Clientes', color: 'white' }
                     },
-                    y: { 
-                        grid: { display: false }, 
+                    y: {
+                        grid: { display: false },
                         ticks: { display: false },
                         title: { display: false, text: 'Total de Vendas', color: 'white' }
                     }
@@ -387,7 +391,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                                 const cliente = vendasPorCliente[index].cliente;
                                 const totalVendas = vendasPorCliente[index].totalVendas;
                                 let tipoAnalise = document.getElementById('filtro_tipo').value;
-    
+
                                 if (tipoAnalise === "valor") {
                                     return `${cliente}: R$ ${totalVendas.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
                                 } else {
@@ -400,8 +404,8 @@ window.addEventListener("DOMContentLoaded", async function () {
             }
         });
     }
-    
-    
+
+
     await fetchDataAndStore();
 
     document.getElementById('filtro_mes').addEventListener('change', montarGraficoComFiltro);
