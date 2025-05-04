@@ -3,10 +3,12 @@ window.addEventListener("DOMContentLoaded", async function () {
     let name = sessionStorage.getItem("name");
     let imagem = sessionStorage.getItem("img");
 
+  
     if (user) {
         document.getElementById("nome").innerHTML = user.charAt(0).toUpperCase() + user.slice(1).toLowerCase();
         document.getElementById("photo").src = imagem;
     }
+
 
     async function fetchDataAndStore() {
         document.getElementById('spinner').style.display = 'flex';
@@ -24,7 +26,6 @@ window.addEventListener("DOMContentLoaded", async function () {
             if (!response.ok) throw new Error(`Erro ao carregar JSON do endpoint: ${response.statusText}`);
 
             const data = await response.json();
-
             sessionStorage.setItem('database', JSON.stringify(data));
             montarGraficoComFiltro();
         } catch (error) {
@@ -33,8 +34,8 @@ window.addEventListener("DOMContentLoaded", async function () {
             document.getElementById('spinner').style.display = 'none';
         }
     }
-    
 
+  
     function montarGraficoComFiltro() {
         const dataFromLocalStorage = JSON.parse(sessionStorage.getItem('database'));
         if (!dataFromLocalStorage || !Array.isArray(dataFromLocalStorage)) return;
@@ -75,24 +76,24 @@ window.addEventListener("DOMContentLoaded", async function () {
         atualizarTabelaPedidos(dadosAgrupados);
     }
 
+    
     function atualizarTabelaPedidos(dados) {
         const isMobile = window.innerWidth <= 768;
         const tabela = document.getElementById('tabela_pedidos');
         const containerPedidos = isMobile ? document.getElementById('container_cards') : tabela.querySelector('tbody');
-    
+
         if (!containerPedidos) return;
         containerPedidos.innerHTML = '';
-    
+
         if (dados.length === 0) {
             const row = document.createElement('tr');
             row.innerHTML = `<td colspan="6" style="text-align: center;">Nenhum pedido encontrado.</td>`;
             containerPedidos.appendChild(row);
             return;
         }
-    
+
         dados.forEach(pedido => {
             if (isMobile) {
-
                 const card = document.createElement('div');
                 card.className = 'card-pedido';
                 card.innerHTML = `
@@ -109,11 +110,10 @@ window.addEventListener("DOMContentLoaded", async function () {
                 card.addEventListener('click', () => abrirPopup(pedido.PEDIDO));
                 containerPedidos.appendChild(card);
             } else {
-
                 const row = document.createElement('tr');
                 row.style.cursor = "pointer";
                 row.addEventListener("click", () => abrirPopup(pedido.PEDIDO));
-    
+
                 row.innerHTML = `
                     <td>${pedido.PEDIDO}</td>
                     <td>${pedido.CLIENTE}</td>
@@ -125,7 +125,70 @@ window.addEventListener("DOMContentLoaded", async function () {
             }
         });
     }
-    
+
+ 
+    function abrirPopup(pedidoId) {
+        let pedidos = JSON.parse(sessionStorage.getItem("database")) || [];
+        let itensPedido = pedidos.filter(p => p.PEDIDO === pedidoId);
+
+        if (itensPedido.length > 0) {
+            document.getElementById("popup-id").innerText = itensPedido[0].PEDIDO;
+            document.getElementById("popup-data").innerText = new Date(itensPedido[0].EMISSAO).toLocaleDateString("pt-BR");
+            document.getElementById("popup-data-entrega").innerText = new Date(itensPedido[0].ENTREGA).toLocaleDateString("pt-BR");
+            document.getElementById("popup-cliente").innerText = itensPedido[0].CLIENTE;
+
+            let status_ped = document.getElementById("popup-status");
+            status_ped.innerText = itensPedido[0].STATUS;
+
+            let corStatus = "";
+            switch (itensPedido[0].STATUS) {
+                case "AGUARDANDO APROVAÇÃO": corStatus = "#E1FF02"; break;
+                case "AGUARDANDO PAGAMENTO": corStatus = "#07A2DB"; break;
+                case "PLANEJADO": corStatus = "#DD02FF"; break;
+                case "CANCELADO": corStatus = "#FF0206"; break;
+                case "CONCLUIDO": corStatus = "#54D326"; break;
+                default: corStatus = "#FFFFFF";
+            }
+
+            status_ped.style.color = corStatus;
+
+ 
+            const tbody = document.getElementById("popup-itens-body");
+            tbody.innerHTML = '';
+            itensPedido.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.DESCRICAO}</td>
+                    <td>${item.QTD}</td>
+                    <td>R$ ${parseFloat(item.VR_UNIT).toLocaleString('pt-BR')}</td>
+                `;
+                tbody.appendChild(row);
+            });
+
+ 
+            const cardsContainer = document.getElementById("popup-itens-cards");
+            cardsContainer.innerHTML = "";
+
+            if (window.innerWidth <= 768) {
+                itensPedido.forEach(item => {
+                    const card = document.createElement("div");
+                    card.className = "item-card";
+                    card.innerHTML = `
+                        <p><strong>Descrição:</strong> ${item.DESCRICAO}</p>
+                        <p><strong>Quantidade:</strong> ${item.QTD}</p>
+                        <p><strong>Valor Unitário:</strong> R$ ${parseFloat(item.VR_UNIT).toLocaleString('pt-BR')}</p>
+                    `;
+                    cardsContainer.appendChild(card);
+                });
+            }
+
+            document.getElementById("popup").style.display = "block";
+        } else {
+            alert("Pedido não encontrado!");
+        }
+    }
+
+ 
     function getStatusColor(status) {
         switch (status) {
             case "AGUARDANDO APROVAÇÃO": return "#E1FF02";
@@ -136,78 +199,13 @@ window.addEventListener("DOMContentLoaded", async function () {
             default: return "#FFFFFF";
         }
     }
-    
-    function abrirPopup(pedidoId) {
-        let pedidos = JSON.parse(sessionStorage.getItem("database")) || [];
-    
-  
-        let itensPedido = pedidos.filter(p => p.PEDIDO === pedidoId);
 
-        if (itensPedido.length > 0) {
-            document.getElementById("popup-id").innerText = itensPedido[0].PEDIDO;
-            document.getElementById("popup-data").innerText = new Date(itensPedido[0].EMISSAO).toLocaleDateString("pt-BR");
-            document.getElementById("popup-data-entrega").innerText = new Date(itensPedido[0].ENTREGA).toLocaleDateString("pt-BR");
-            document.getElementById("popup-cliente").innerText = itensPedido[0].CLIENTE;
-            
-
-            let status_ped = document.getElementById("popup-status");
-            status_ped.innerText = itensPedido[0].STATUS;
-            
-
-            let corStatus = "";
-            switch (itensPedido[0].STATUS) {
-                case "AGUARDANDO APROVAÇÃO": 
-                    corStatus = "#E1FF02"; 
-                    break;
-                case "AGUARDANDO PAGAMENTO": 
-                    corStatus = "#07A2DB"; 
-                    break;
-                case "PLANEJADO": 
-                    corStatus = "#DD02FF"; 
-                    break;
-                case "CANCELADO": 
-                    corStatus = "#FF0206"; 
-                    break;
-                case "CONCLUIDO": 
-                    corStatus = "#54D326"; 
-                    break;
-                default: 
-                    corStatus = "#FFFFFF";
-            }
-        
-            status_ped.style.color = corStatus;
-        
-        
-            const tbody = document.getElementById("popup-itens-body");
-            tbody.innerHTML = '';
-    
-            itensPedido.forEach(item => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${item.DESCRICAO}</td>
-                    <td>${item.QTD}</td>
-                    <td>R$ ${parseFloat(item.VR_UNIT).toLocaleString('pt-BR')}</td>
-                `;
-                tbody.appendChild(row);
-            });
-    
-         
-            document.getElementById("popup").style.display = "block";
-        } else {
-            alert("Pedido não encontrado!");
-        }
-    }
-    
-
-
-    // ---------------------------------------------------------------------------
 
     fetchDataAndStore();
     montarGraficoComFiltro();
 
     document.getElementById('filtro_ano')?.addEventListener('change', montarGraficoComFiltro);
     document.getElementById('filtro_mes')?.addEventListener('change', montarGraficoComFiltro);
-    document.getElementById('filtro_tipo')?.addEventListener('change', montarGraficoComFiltro);
 });
 
 document.addEventListener("DOMContentLoaded", function () {
