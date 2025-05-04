@@ -1,7 +1,7 @@
 window.addEventListener("DOMContentLoaded", async function () {
 
     document.getElementById('spinner').style.display = 'flex';
-
+    
     let user = sessionStorage.getItem("currentUser");
     let name = sessionStorage.getItem("name");
     let imagem = sessionStorage.getItem("img");
@@ -16,7 +16,7 @@ window.addEventListener("DOMContentLoaded", async function () {
 
     async function fetchDataAndStore() {
 
-
+        document.querySelector('body').style.display = 'block';
 
         try {
             const storedData = sessionStorage.getItem('database');
