@@ -142,7 +142,7 @@ window.addEventListener("DOMContentLoaded", async function () {
 
             let corStatus = "";
             switch (itensPedido[0].STATUS) {
-                case "AGUARDANDO APROVAÇÃO": corStatus = "#E1FF02"; break;
+                case "AGUARDANDO APROVAÇÃO": corStatus = "#E28C02"; break;
                 case "AGUARDANDO PAGAMENTO": corStatus = "#07A2DB"; break;
                 case "PLANEJADO": corStatus = "#DD02FF"; break;
                 case "CANCELADO": corStatus = "#FF0206"; break;
@@ -191,7 +191,7 @@ window.addEventListener("DOMContentLoaded", async function () {
  
     function getStatusColor(status) {
         switch (status) {
-            case "AGUARDANDO APROVAÇÃO": return "#E1FF02";
+            case "AGUARDANDO APROVAÇÃO": return "#E28C02";
             case "AGUARDANDO PAGAMENTO": return "#07A2DB";
             case "PLANEJADO": return "#DD02FF";
             case "CANCELADO": return "#FF0206";

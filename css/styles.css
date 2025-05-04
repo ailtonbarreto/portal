@@ -410,6 +410,22 @@ table tbody tr:hover {
     height: 100vh;
   }
 
+  .charts-card{
+    margin-bottom: 10vw;
+  }
+
+  .card-header{
+    flex-direction: column;
+
+    h3{
+      margin-top: 2vw;
+    }
+
+    p{
+      margin-top: 0;
+    }
+  }
+
 
   .main-cards {
     grid-template-columns: 1fr;
@@ -482,7 +498,7 @@ table tbody tr:hover {
     flex-direction: column;
     gap: 12px;
     margin-top: 15px;
-    margin-bottom: 10vw;
+    margin-bottom: 10vh;
   }
 
   .card_items{

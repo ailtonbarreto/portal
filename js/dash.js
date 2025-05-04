@@ -263,7 +263,7 @@ window.addEventListener("DOMContentLoaded", async function () {
     }
 
     const coresPorStatus = {
-        "AGUARDANDO APROVAÇÃO": "#EEFF6C",
+        "AGUARDANDO APROVAÇÃO": "#E28C02",
         "AGUARDANDO PAGAMENTO": "#0B81AC",
         "PLANEJADO": "#C063CE",
         "CANCELADO": "#F56C6F",
