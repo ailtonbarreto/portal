@@ -1,8 +1,10 @@
 window.addEventListener("DOMContentLoaded", async function () {
+
+    document.getElementById('spinner').style.display = 'flex';
+
     let user = sessionStorage.getItem("currentUser");
     let name = sessionStorage.getItem("name");
     let imagem = sessionStorage.getItem("img");
-
 
 
     if (user) {
@@ -14,7 +16,6 @@ window.addEventListener("DOMContentLoaded", async function () {
 
     async function fetchDataAndStore() {
 
-        document.getElementById('spinner').style.display = 'flex';
 
 
         try {
