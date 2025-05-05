@@ -530,5 +530,9 @@ table tbody tr:hover {
     font-size: 14px;
   }
   
+  .header{
+    padding: 0 30px 0 5px;
+  }
+
 }
 

@@ -373,4 +373,8 @@ body {
     width: 70vw;
   }
 
+  .header{
+    padding: 0 30px 0 5px;
+  }
+
 }
