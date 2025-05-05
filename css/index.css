@@ -187,7 +187,8 @@ iframe{
         width: 90%;
         border-radius: 3px;
         margin-top: 10vw;
-        padding: 4vw;
+        padding: 5vw;
+        height: 5vw;
         font-size: 4vw;
     }
 
