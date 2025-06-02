@@ -182,7 +182,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                 });
             }
 
-            document.getElementById("popup").style.display = "block";
+            document.getElementById("popup").style.display = "flex";
         } else {
             alert("Pedido não encontrado!");
         }

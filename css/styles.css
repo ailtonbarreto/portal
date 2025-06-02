@@ -5,6 +5,11 @@
   --sidebar-color: #ffffff;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -194,8 +199,9 @@ body {
 .card {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  padding: 0.2vw 3vw;
+  justify-content: space-between;
+  gap: 1vw;
+  padding: 1vw 2vw;
   border-radius: 5px;
   background-color: var(--sidebar-color);
   box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
@@ -234,6 +240,9 @@ body {
   -webkit-column-break-inside: avoid;
   border-radius: 5px;
   box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
+
+  height: 35vh;
+
 }
 
 .pizza {
@@ -258,18 +267,26 @@ body {
 
 /* ----------TABELA DE PEDIDOS---------- */
 
-table {
+
+
+#tabela_pedidos {
   width: 96%;
   margin: 2vw auto;
   border-collapse: collapse;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
   overflow-y: scroll;
+
+  background-color: var(--sidebar-color);
+  text-align: center;
+  padding: 2vw;
+  box-sizing: border-box;
+  -webkit-column-break-inside: avoid;
+  border-radius: 5px;
+  box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
 }
 
-table th {
-  background-color: var(--bg);
-  padding: 0.5vw 0 0.5vw 0;
-  color: var(--text-color);
+
+thead th{
+  padding-top: 1vw;
 }
 
 
@@ -316,6 +333,10 @@ table tbody tr:hover {
   height: 100vh;
   text-align: center;
   overflow-y: scroll;
+
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 #popup table {
@@ -323,6 +344,7 @@ table tbody tr:hover {
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
   width: 80vw;
   border: 1vw solid var(--sidebar-color);
+  border-radius: 0.5vw;
 }
 
 #popup table td:nth-child(1) {
@@ -369,6 +391,7 @@ table tbody tr:hover {
 .close-btn {
   margin-top: 1vw;
   padding: 0 3vw;
+  width: 90vw;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -376,6 +399,7 @@ table tbody tr:hover {
 
 .card_items {
   display: flex;
+  width: 80vw;
   justify-content: space-evenly;
 }
 
@@ -513,6 +537,10 @@ table tbody tr:hover {
 
   .popup-table {
     display: none;
+  }
+
+  .card-body{
+    line-height: 8vw;
   }
 
   #popup-itens-cards {
