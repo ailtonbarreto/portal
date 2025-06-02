@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 
 <head>
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Portal Representante</title>
@@ -9,13 +10,9 @@
     rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
-
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
   <script defer src="./js/dash.js"></script>
-  <script defer src="js/scripts.js"></script>
+  <script defer src="/js/scripts.js"></script>
 
 </head>
 
@@ -72,7 +69,7 @@
           <option value="2025">2025</option>
           <option value="2024">2024</option>
           <option value="2023">2023</option>
-          
+
 
         </select>
 
@@ -118,16 +115,6 @@
           </a>
 
         </li>
-
-        <!-- <li class="sidebar-list-item">
-
-          <a href="#">
-
-            <span class="material-icons-outlined">person</span> Clientes
-
-          </a>
-
-        </li> -->
 
         <li class="sidebar-list-item" onclick="window.location.href='./estoque.html'">
 
@@ -215,46 +202,43 @@
 
       </div>
 
-      <div class="charts">
 
-        <div class="charts-card pizza">
+        <div class="charts">
 
-          <h2 class="chart-title">Pedidos Por Status</h2>
 
-          <div id="graficoContainer">
+          <div class="charts-card pizza">
 
-            <canvas id="pizza-chart" class="chart"></canvas>
+            <h2 class="chart-title">Pedidos Por Status</h2>
+
+            <div id="pizza-chart" class="chart" style="width: 100%; height: 300px;"></div>
+
+          </div>
+
+          <div class="charts-card">
+
+            <h2 class="chart-title">Vendas Diárias</h2>
+
+            <div id="line-chart" class="chart" style="width: 100%; height: 300px;"></div>
+
+          </div>
+
+          <div class="charts-card">
+
+            <h2 class="chart-title">Pedidos Por Categoria</h2>
+
+            <div id="barchart" class="chart" style="width: 100%; height: 300px;"></div>
+
+          </div>
+
+          <div class="charts-card">
+
+            <h2 class="chart-title">Dispersão Por Clientes</h2>
+
+            <div id="scatter-chart" class="chart" style="width: 100%; height: 300px;"></div>
 
           </div>
 
         </div>
-
-        <div class="charts-card">
-
-          <h2 class="chart-title">Vendas Diárias</h2>
-
-          <canvas id="line-chart" class="chart"></canvas>
-
-        </div>
-
-        <div class="charts-card">
-
-          <h2 class="chart-title">Pedidos Por Categoria</h2>
-
-          <canvas id="barchart" class="chart"></canvas>
-
-        </div>
-
-        <div class="charts-card">
-
-          <h2 class="chart-title">Dispersão Por Clientes</h2>
-
-          <canvas id="scatter-chart" class="chart"></canvas>
-
-        </div>
-
-
-      </div>
 
 
     </main>

@@ -1,7 +1,7 @@
 window.addEventListener("DOMContentLoaded", async function () {
 
     document.getElementById('spinner').style.display = 'flex';
-    
+
     let user = sessionStorage.getItem("currentUser");
     let name = sessionStorage.getItem("name");
     let imagem = sessionStorage.getItem("img");
@@ -106,75 +106,72 @@ window.addEventListener("DOMContentLoaded", async function () {
     }
 
     function criarGraficoBarras(idCanvas, labels, valores, labelDataset) {
-        const ctx = document.getElementById(idCanvas);
+        const chartDom = document.getElementById(idCanvas);
+        if (!chartDom) return;
 
-        if (!ctx) {
-            console.error(`Canvas ${idCanvas} não encontrado!`);
-            return;
-        }
+        const tipoAnalise = document.getElementById('filtro_tipo').value;
 
-        const context = ctx.getContext('2d');
+        const dadosOrdenados = labels.map((label, i) => ({
+            label,
+            valor: valores[i]
+        })).sort((b, a) => b.valor - a.valor);
 
-        if (window[idCanvas] instanceof Chart) {
-            window[idCanvas].destroy();
-        }
+        const labelsOrdenados = dadosOrdenados.map(item => item.label);
+        const valoresOrdenados = dadosOrdenados.map(item => item.valor);
 
-        const cores = ['#1EC1B4', '#33F1FF', '#33C2FF', '#C469D7'];
+        const myChart = echarts.init(chartDom);
 
-        window[idCanvas] = new Chart(context, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: labelDataset,
-                    data: valores,
-                    borderColor: 'transparent',
-                    // backgroundColor: valores.map((_, i) => cores[i % cores.length]),
-                    backgroundColor: '#0F8F8F',
-                    borderWidth: 1
-                }]
+        const option = {
+
+            grid: {
+                left: '2%',
+                right: '20%',
+                top: '10%',
+                bottom: '1%',
+                containLabel: true
             },
-            options: {
-                responsive: true,
-                indexAxis: 'y',
-                scales: {
-                    x: {
-                        display: false,
-                        beginAtZero: true,
-                        grid: { display: false },
-                        ticks: { color: '#0F8F8F' }
-                    },
-                    y: {
-                        grid: { display: false },
-                        ticks: { color: '#0F8F8F' }
-                    }
-                },
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        enabled: true,
-                        callbacks: {
-                            label: context => {
-                                let value = context.raw;
-                                let tipoAnalise = document.getElementById('filtro_tipo').value;
 
-                                if (tipoAnalise === "valor") {
-                                    return `Valor: R$ ${parseFloat(value).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-                                } else {
-                                    return `Quantidade: ${value}`;
-                                }
-                            }
-                        }
-                    }
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: { type: 'shadow' },
+                formatter: function (params) {
+                    const value = params[0].value;
+                    return tipoAnalise === "valor"
+                        ? `Valor: R$ ${parseFloat(value).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
+                        : `Quantidade: ${value}`;
                 }
-            }
+            },
+            xAxis: { type: 'value', show: false },
+            yAxis: {
+                type: 'category',
+                data: labelsOrdenados,
+                axisLabel: { color: '#0F8F8F' }
+            },
+            series: [{
+                type: 'bar',
+                data: valoresOrdenados,
+                itemStyle: { color: '#0F8F8F' },
+                label: {
+                    show: true,
+                    position: 'right',
+                    formatter: function (params) {
+                        const value = params.value;
+                        return tipoAnalise === "valor"
+                            ? `R$ ${parseFloat(value).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
+                            : `${value}`;
+                    },
+                    color: '#0F8F8F',
+                    fontWeight: 'bold'
+                }
+            }]
+        };
 
-        });
+        myChart.setOption(option);
     }
+
 
     function criarGraficoLinha(idCanvas, dadosFiltrados, tipoAnalise) {
         const getMetric = item => tipoAnalise === "quantidade" ? item.QTD : item.QTD * item.VR_UNIT;
-
         const vendasPorDia = dadosFiltrados.reduce((acc, item) => {
             acc[item.dia] = (acc[item.dia] || 0) + getMetric(item);
             return acc;
@@ -183,60 +180,48 @@ window.addEventListener("DOMContentLoaded", async function () {
         const diasOrdenados = Object.keys(vendasPorDia).sort();
         const valoresOrdenados = diasOrdenados.map(dia => vendasPorDia[dia]);
 
-        const ctx = document.getElementById(idCanvas);
+        const chartDom = document.getElementById(idCanvas);
+        if (!chartDom) return;
 
-        if (!ctx) {
-            console.error(`Canvas ${idCanvas} não encontrado!`);
-            return;
-        }
+        const myChart = echarts.init(chartDom);
 
-        const context = ctx.getContext('2d');
+        const option = {
 
-        if (window[idCanvas] instanceof Chart) {
-            window[idCanvas].destroy();
-        }
-
-        window[idCanvas] = new Chart(context, {
-            type: 'line',
-            data: {
-                labels: diasOrdenados,
-                datasets: [{
-                    label: `Vendas por Dia (${tipoAnalise})`,
-                    data: valoresOrdenados,
-                    borderColor: '#0F8F8F',
-                    backgroundColor: '#0DEDC8',
-                    fill: true,
-                    borderWidth: 2
-                }]
+            grid: {
+                left: '0%',
+                right: '0%',
+                top: '1%',
+                bottom: '1%',
+                containLabel: true
             },
-            options: {
-                responsive: true,
-                scales: {
-                    x: { grid: { display: false }, ticks: { color: '#0F8F8F' } },
-                    y: { display: false },
-                },
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        enabled: true,
-                        callbacks: {
-                            label: context => {
-                                let value = context.raw;
-                                let tipoAnalise = document.getElementById('filtro_tipo').value;
 
-                                if (tipoAnalise === "valor") {
-                                    return `Valor: R$ ${parseFloat(value).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-                                } else {
-                                    return `Quantidade: ${value}`;
-                                }
-                            }
-                        }
-                    }
+            tooltip: {
+                trigger: 'axis',
+                formatter: function (params) {
+                    const value = params[0].value;
+                    return tipoAnalise === "valor"
+                        ? `Valor: R$ ${parseFloat(value).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
+                        : `Quantidade: ${value}`;
                 }
-            }
+            },
+            xAxis: {
+                type: 'category',
+                data: diasOrdenados,
+                axisLabel: { color: '#0F8F8F' }
+            },
+            yAxis: { type: 'value', show: false },
+            series: [{
+                data: valoresOrdenados,
+                type: 'line',
+                areaStyle: {},
+                lineStyle: { color: '#0F8F8F' },
+                itemStyle: { color: '#0DEDC8' }
+            }]
+        };
 
-        });
+        myChart.setOption(option);
     }
+
 
     function contarStatus(dadosFiltrados) {
         const statusCount = {};
@@ -274,139 +259,109 @@ window.addEventListener("DOMContentLoaded", async function () {
         const statusCount = contarStatus(dadosFiltrados);
         const labels = Object.keys(statusCount);
         const valores = Object.values(statusCount);
-
         const cores = labels.map(status => coresPorStatus[status] || "#CCCCCC");
 
-        const ctx = document.getElementById(idCanvas);
+        const chartDom = document.getElementById(idCanvas);
+        if (!chartDom) return;
 
-        if (!ctx) {
-            console.error(`Canvas ${idCanvas} não encontrado!`);
-            return;
-        }
+        const myChart = echarts.init(chartDom);
 
-        const context = ctx.getContext('2d');
-
-        if (window[idCanvas] instanceof Chart) {
-            window[idCanvas].destroy();
-        }
-
-        window[idCanvas] = new Chart(context, {
-            type: 'doughnut',
-            data: {
-                labels: labels,
-                datasets: [{
-                    data: valores,
-                    backgroundColor: cores,
-                    borderWidth: 0
-                }]
+        const option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: '{b}: {c} pedidos ({d}%)'
             },
-            options: {
-                responsive: true,
-                cutout: '70%',
-                plugins: {
-                    tooltip: {
-                        callbacks: {
-                            label: function (context) {
-                                return `${context.label}: ${context.raw} pedidos`;
-                            }
-                        }
-                    },
-                    legend: {
-                        position: 'top',
-                        labels: {
-                            boxWidth: 20,
-                            padding: 10,
-                            color: '#0F8F8F'
-                        }
-                    }
-                }
-            }
-        });
+            legend: {
+                top: '5%',
+                left: 'center',
+                textStyle: { color: '#0F8F8F' }
+            },
+            series: [{
+                type: 'pie',
+                radius: ['50%', '70%'],
+                avoidLabelOverlap: false,
+                itemStyle: { borderRadius: 10, borderColor: '#fff', borderWidth: 2 },
+                label: { show: false },
+                emphasis: { label: { show: true, fontSize: 14 } },
+                labelLine: { show: false },
+                data: labels.map((label, i) => ({
+                    value: valores[i],
+                    name: label,
+                    itemStyle: { color: cores[i] }
+                }))
+            }]
+        };
+
+        myChart.setOption(option);
     }
+
+
 
     function criarGraficoDispersaoPorCliente(idCanvas, dadosFiltrados, tipoAnalise) {
         const getMetric = item => tipoAnalise === "quantidade" ? item.QTD : item.QTD * item.VR_UNIT;
-
         const clientes = [...new Set(dadosFiltrados.map(item => item.CLIENTE))];
-        const vendasPorCliente = clientes.map(cliente => {
-            const vendasCliente = dadosFiltrados.filter(item => item.CLIENTE === cliente);
-            const totalVendas = vendasCliente.reduce((acc, item) => acc + getMetric(item), 0);
+
+        const data = clientes.map((cliente, index) => {
+            const total = dadosFiltrados.filter(i => i.CLIENTE === cliente)
+                .reduce((acc, i) => acc + getMetric(i), 0);
             return {
-                cliente,
-                totalVendas
+                name: cliente,
+                value: [index + 1, total, Math.sqrt(total) * (tipoAnalise === "quantidade" ? 2.5 : 0.3)]
             };
         });
 
-        const ctx = document.getElementById(idCanvas);
+        const chartDom = document.getElementById(idCanvas);
+        if (!chartDom) return;
 
-        if (!ctx) {
-            console.error(`Canvas ${idCanvas} não encontrado!`);
-            return;
-        }
+        const myChart = echarts.init(chartDom);
 
-        const context = ctx.getContext('2d');
+        const option = {
 
-        if (window[idCanvas] instanceof Chart) {
-            window[idCanvas].destroy();
-        }
-
-        window[idCanvas] = new Chart(context, {
-            type: 'bubble',
-            data: {
-                datasets: [{
-                    label: `Vendas por Cliente (${tipoAnalise})`,
-                    data: vendasPorCliente.map((item, index) => ({
-                        x: index + 1,
-                        y: item.totalVendas,
-                        r: Math.sqrt(item.totalVendas) * (tipoAnalise === "quantidade" ? 2.5 : 0.3)
-                    })),
-                    backgroundColor: vendasPorCliente.map(() =>
-                        `hsl(${Math.random() * 360}, 70%, 60%)`
-                    ),
-                    borderColor: 'transparent',
-                    borderWidth: 1
-                }]
+            grid: {
+                left: '1%',
+                right: '5%',
+                top: '1%',
+                bottom: '1%',
+                containLabel: true
             },
-            options: {
-                responsive: true,
-                scales: {
-                    x: {
-                        display: false,
-                        grid: { display: false },
-                        ticks: { color: 'white' },
-                        title: { display: true, text: 'Clientes', color: 'white' }
-                    },
-                    y: {
-                        grid: { display: false },
-                        ticks: { display: false },
-                        title: { display: false, text: 'Total de Vendas', color: 'white' }
-                    }
-                },
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        enabled: true,
-                        callbacks: {
-                            label: (context) => {
-                                const index = context.dataIndex;
-                                const cliente = vendasPorCliente[index].cliente;
-                                const totalVendas = vendasPorCliente[index].totalVendas;
-                                let tipoAnalise = document.getElementById('filtro_tipo').value;
 
-                                if (tipoAnalise === "valor") {
-                                    return `${cliente}: R$ ${totalVendas.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-                                } else {
-                                    return `${cliente}: ${totalVendas}`;
-                                }
-                            }
-                        }
-                    }
+            tooltip: {
+                trigger: 'item',
+                formatter: function (params) {
+                    const cliente = params.name;
+                    const total = params.value[1];
+                    return tipoAnalise === "valor"
+                        ? `${cliente}: R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
+                        : `${cliente}: ${total}`;
                 }
-            }
-        });
-    }
+            },
+            xAxis: {
+                show: true,
+                // name: "QTD Itens",
+                axisLine: { show: true },
+                splitLine: { show: false }
+            },
+            yAxis: {
+                show: false,
+                axisLine: { show: true },
+                splitLine: { show: false }
+            },
 
-    
+            series: [{
+                type: 'scatter',
+                symbolSize: val => val[2],
+                data: data,
+                label: {
+                    show: false
+                },
+                itemStyle: {
+                    color: () => `hsl(${Math.random() * 360}, 70%, 60%)`
+                }
+            }]
+        };
+
+        myChart.setOption(option);
+    }
 
 
     await fetchDataAndStore();

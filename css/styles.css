@@ -136,6 +136,10 @@ body {
   color: var(--text-color);
 }
 
+.sidebar-list li:last-child{
+  position: absolute;
+  bottom: 3vw;
+}
 
 .sidebar-responsive {
   display: inline !important;
@@ -173,11 +177,7 @@ body {
   justify-content: center;
 }
 
-#pizza-chart {
-  width: 17vw !important;
-  height: 17vw !important;
 
-}
 
 
 /* ---------- MAIN ---------- */
@@ -193,7 +193,6 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 20px;
-  margin: 0 0 2vw 0;
 }
 
 .card {
@@ -224,11 +223,10 @@ body {
 
 .charts {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 2fr;
   gap: 20px;
   margin-top: 1vw;
 }
-
 
 
 
