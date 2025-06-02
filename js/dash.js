@@ -282,7 +282,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                 avoidLabelOverlap: false,
                 itemStyle: { borderRadius: 10, borderColor: '#fff', borderWidth: 2 },
                 label: { show: false },
-                emphasis: { label: { show: true, fontSize: 14 } },
+                emphasis: { label: { show: false, fontSize: 14 } },
                 labelLine: { show: false },
                 data: labels.map((label, i) => ({
                     value: valores[i],
