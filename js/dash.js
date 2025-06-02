@@ -280,7 +280,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                 type: 'pie',
                 radius: ['50%', '70%'],
                 avoidLabelOverlap: false,
-                itemStyle: { borderRadius: 10, borderColor: '#fff', borderWidth: 2 },
+                itemStyle: { borderRadius: 0, borderColor: '#fff', borderWidth: 1 },
                 label: { show: false },
                 emphasis: { label: { show: false, fontSize: 14 } },
                 labelLine: { show: false },
