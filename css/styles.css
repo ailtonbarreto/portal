@@ -136,10 +136,6 @@ body {
   color: var(--text-color);
 }
 
-.sidebar-list li:last-child{
-  position: absolute;
-  bottom: 3vw;
-}
 
 .sidebar-responsive {
   display: inline !important;
