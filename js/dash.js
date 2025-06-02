@@ -320,7 +320,7 @@ window.addEventListener("DOMContentLoaded", async function () {
             grid: {
                 left: '1%',
                 right: '5%',
-                top: '1%',
+                top: '4%',
                 bottom: '1%',
                 containLabel: true
             },
