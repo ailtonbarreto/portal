@@ -286,7 +286,7 @@ body {
 }
 
 
-thead th{
+thead th {
   padding-top: 1vw;
 }
 
@@ -446,7 +446,8 @@ table tbody tr:hover {
   }
 
   .charts-card {
-    margin-bottom: 1vh;
+    margin-bottom: 0;
+    padding-top: 10vw;
   }
 
   .card-header {
@@ -460,6 +461,16 @@ table tbody tr:hover {
       margin-top: 0;
     }
   }
+
+  .main-cards {
+
+    .card {
+      padding: 3vw 4vw;
+    }
+
+  }
+
+
 
   .close-btn {
     margin-top: 1vw;
@@ -540,7 +551,7 @@ table tbody tr:hover {
     display: none;
   }
 
-  .card-body{
+  .card-body {
     line-height: 8vw;
   }
 
