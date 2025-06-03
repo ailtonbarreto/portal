@@ -5,13 +5,18 @@
   --sidebar-color: #ffffff;
 }
 
-
-body {
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+
+body {
   background-color: var(--bg);
   color: var(--text-color);
   font-family: 'Montserrat', sans-serif;
+  height: 100vh;
 }
 
 .material-icons-outlined {
@@ -66,9 +71,10 @@ body {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  line-height: 2vw;
   text-align: center;
   margin: 0;
-  padding: 0 2vw;
+  padding: 2vw;
   color: var(--text-color);
   background-color: var(--sidebar-color);
   border-radius: 0.4vw;
@@ -157,6 +163,11 @@ body {
   padding: 30px 30px 30px 30px;
   margin-bottom: 30px;
   color: var(--text-color);
+}
+
+#nome {
+  color: var(--text-color);
+  margin-top: 1vw;
 }
 
 .sidebar-title>span {

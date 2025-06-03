@@ -12,8 +12,6 @@
 }
 
 body {
-  margin: 0;
-  padding: 0;
   background-color: var(--bg);
   color: var(--text-color);
   font-family: 'Montserrat', sans-serif;
@@ -97,16 +95,19 @@ body {
   -webkit-transition: all 0.5s;
 }
 
+
 .sidebar-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 30px 30px 30px 30px;
   margin-bottom: 30px;
+  color: var(--text-color);
 }
 
 #nome {
   color: var(--text-color);
+  margin-top: 1vw;
 }
 
 .sidebar-title>span {
