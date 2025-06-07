@@ -272,6 +272,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                 formatter: '{b}: {c} pedidos ({d}%)'
             },
             legend: {
+                show: false,
                 top: '5%',
                 left: 'center',
                 textStyle: { color: '#0F8F8F' }
