@@ -167,6 +167,8 @@ window.addEventListener("DOMContentLoaded", async function () {
         };
 
         myChart.setOption(option);
+
+
     }
 
 
