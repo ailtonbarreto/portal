@@ -330,7 +330,7 @@ table tbody tr:hover {
   padding: 20px;
   border-radius: 12px;
   z-index: 10000;
-  width: 100vw;
+  /* width: 100vw; */
   height: 100vh;
   text-align: center;
   overflow-y: scroll;
@@ -416,8 +416,12 @@ table tbody tr:hover {
       'main';
   }
 
-  .main-container table {
+  /* .main-container table {
     display: none;
+  } */
+
+    .main-container table {
+    margin-top: 2vw;
   }
 
   #sidebar {

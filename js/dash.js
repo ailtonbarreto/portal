@@ -304,66 +304,25 @@ window.addEventListener("DOMContentLoaded", async function () {
         const getMetric = item => tipoAnalise === "quantidade" ? item.QTD : item.QTD * item.VR_UNIT;
         const clientes = [...new Set(dadosFiltrados.map(item => item.CLIENTE))];
 
-        const data = clientes.map((cliente, index) => {
+        const data = clientes.map(cliente => {
             const total = dadosFiltrados.filter(i => i.CLIENTE === cliente)
                 .reduce((acc, i) => acc + getMetric(i), 0);
-            return {
-                name: cliente,
-                value: [index + 1, total, Math.sqrt(total) * (tipoAnalise === "quantidade" ? 2.5 : 0.3)]
-            };
+            return { cliente, total };
+        }).sort((a, b) => b.total - a.total);
+
+        let tableHTML = '<div style="overflow-y: scroll; height: 32vh; text-align: center;"><table style="min-width: 100%; border-collapse: collapse;"><thead style="position: sticky; top: 0; background-color: #0F8F8F; z-index: 1;"><tr><th style="border: 1px solid #ddd; padding: 12px; background-color: #0F8F8F; color: white; text-align: center; font-weight: bold;">Cliente</th><th style="border: 1px solid #ddd; padding: 12px; background-color: #0F8F8F; color: white; text-align: center; font-weight: bold;">Total</th></tr></thead><tbody>';
+
+        data.forEach((item, index) => {
+            const formattedTotal = tipoAnalise === "valor"
+                ? `R$ ${item.total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
+                : item.total;
+            const rowStyle = index % 2 === 0 ? 'background-color: #f9f9f9;' : '';
+            tableHTML += `<tr style="${rowStyle}"><td style="border: 1px solid #ddd; padding: 12px; color: #0F8F8F;">${item.cliente}</td><td style="border: 1px solid #ddd; padding: 12px; color: #0F8F8F">${formattedTotal}</td></tr>`;
         });
 
-        const chartDom = document.getElementById(idCanvas);
-        if (!chartDom) return;
+        tableHTML += '</tbody></table></div>';
 
-        const myChart = echarts.init(chartDom);
-
-        const option = {
-
-            grid: {
-                left: '1%',
-                right: '5%',
-                top: '10%',
-                bottom: '1%',
-                containLabel: true
-            },
-
-            tooltip: {
-                trigger: 'item',
-                formatter: function (params) {
-                    const cliente = params.name;
-                    const total = params.value[1];
-                    return tipoAnalise === "valor"
-                        ? `${cliente}: R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
-                        : `${cliente}: ${total}`;
-                }
-            },
-            xAxis: {
-                show: true,
-                // name: "QTD Itens",
-                axisLine: { show: true },
-                splitLine: { show: false }
-            },
-            yAxis: {
-                show: false,
-                axisLine: { show: true },
-                splitLine: { show: false }
-            },
-
-            series: [{
-                type: 'scatter',
-                symbolSize: val => val[2],
-                data: data,
-                label: {
-                    show: false
-                },
-                itemStyle: {
-                    color: () => `hsl(${Math.random() * 360}, 70%, 60%)`
-                }
-            }]
-        };
-
-        myChart.setOption(option);
+        document.getElementById(idCanvas).innerHTML = tableHTML;
     }
 
 
