@@ -1,7 +1,7 @@
 :root {
-    --bg: #ffffff;
+    --bg: #252525;
     --cor-texto: #ffffff;
-    --cor-container: #0F8F8F;
+    --cor-container: #000000;
 }
 
 * {
@@ -38,7 +38,7 @@ body {
 
 form {
     margin-top: 2vw;
-    color: var(--bg);
+    color: var(--cor-texto);
     padding: 0.5vw;
     background-color: var(--cor-container);
     display: flex;
@@ -74,7 +74,7 @@ label {
 
 button {
     margin-top: 1vw;
-    color: var(--cor-container);
+    color: var(--cor-texto);
     border: none;
     background-color: var(--bg);
     height: 2vw;

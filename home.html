@@ -25,11 +25,76 @@
 
   </div>
 
-
   <div class="grid-container">
 
 
-    <header class="header">
+    <aside id="sidebar">
+
+      <div class="sidebar-title">
+
+
+        <div class="sidebar-brand">
+
+          <img src="" id="photo" style="width: 10vw;">
+
+          <h5 id="nome">Vendedor Fulano</h5>
+
+        </div>
+
+        <span class="material-icons-outlined" onclick="closeSidebar()" id="close">close</span>
+
+      </div>
+
+      <ul class="sidebar-list">
+
+        <li class="sidebar-list-item">
+
+          <a href="#">
+
+            <span class="material-icons-outlined">dashboard</span> Dashboard
+
+          </a>
+
+        </li>
+
+        <li class="sidebar-list-item" onclick="window.location.href='./pedidos.html'">
+
+          <a href="./pedidos.html">
+
+            <span class="material-icons-outlined">inventory_2</span> Pedidos
+
+          </a>
+
+        </li>
+
+        <li class="sidebar-list-item" onclick="window.location.href='./estoque.html'">
+
+          <a href="#">
+
+            <span class="material-icons-outlined">fact_check</span> Estoque
+
+          </a>
+
+        </li>
+
+        <li class="sidebar-list-item" onclick="Exit()">
+
+          <a>
+
+            <span class="material-icons-outlined">logout</span> Sair
+
+          </a>
+
+        </li>
+
+      </ul>
+
+    </aside>
+
+
+    <main class="main-container">
+
+          <header class="header">
 
       <div class="menu-icon" onclick="openSidebar()">
 
@@ -78,72 +143,6 @@
       </div>
 
     </header>
-
-    <aside id="sidebar">
-
-      <div class="sidebar-title">
-
-
-        <div class="sidebar-brand">
-
-          <img src="" id="photo" style="width: 10vw;">
-
-          <h5 id="nome">Vendedor Fulano</h5>
-
-        </div>
-
-        <span class="material-icons-outlined" onclick="closeSidebar()" id="close">close</span>
-
-      </div>
-
-      <ul class="sidebar-list">
-
-        <li class="sidebar-list-item">
-
-          <a href="#">
-
-            <span class="material-icons-outlined">dashboard</span> Visão Geral
-
-          </a>
-
-        </li>
-
-        <li class="sidebar-list-item" onclick="window.location.href='./pedidos.html'">
-
-          <a href="./pedidos.html">
-
-            <span class="material-icons-outlined">inventory_2</span> Pedidos
-
-          </a>
-
-        </li>
-
-        <li class="sidebar-list-item" onclick="window.location.href='./estoque.html'">
-
-          <a href="#">
-
-            <span class="material-icons-outlined">fact_check</span> Estoque
-
-          </a>
-
-        </li>
-
-        <li class="sidebar-list-item" onclick="Exit()">
-
-          <a>
-
-            <span class="material-icons-outlined">logout</span> Sair
-
-          </a>
-
-        </li>
-
-      </ul>
-
-    </aside>
-
-
-    <main class="main-container">
 
       <div class="main-cards">
 

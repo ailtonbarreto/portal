@@ -145,12 +145,12 @@ window.addEventListener("DOMContentLoaded", async function () {
             yAxis: {
                 type: 'category',
                 data: labelsOrdenados,
-                axisLabel: { color: '#0F8F8F' }
+                axisLabel: { color: '#ffffff' }
             },
             series: [{
                 type: 'bar',
                 data: valoresOrdenados,
-                itemStyle: { color: '#0F8F8F' },
+                itemStyle: { color: '#ffffff' },
                 label: {
                     show: true,
                     position: 'right',
@@ -160,7 +160,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                             ? `R$ ${parseFloat(value).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
                             : `${value}`;
                     },
-                    color: '#0F8F8F',
+                    color: '#ffffff',
                     fontWeight: 'bold'
                 }
             }]
@@ -209,15 +209,17 @@ window.addEventListener("DOMContentLoaded", async function () {
             xAxis: {
                 type: 'category',
                 data: diasOrdenados,
-                axisLabel: { color: '#0F8F8F' }
+                axisLabel: { color: '#ffffff' }
             },
             yAxis: { type: 'value', show: false },
             series: [{
                 data: valoresOrdenados,
                 type: 'line',
                 areaStyle: {},
-                lineStyle: { color: '#0F8F8F' },
-                itemStyle: { color: '#0DEDC8' }
+                lineStyle: { color: '#000000' },
+                itemStyle: { color: '#ffffff' },
+                symbol: 'none',
+                showSymbol: false
             }]
         };
 
@@ -253,8 +255,8 @@ window.addEventListener("DOMContentLoaded", async function () {
         "AGUARDANDO APROVAÇÃO": "#E28C02",
         "AGUARDANDO PAGAMENTO": "#0B81AC",
         "PLANEJADO": "#C063CE",
-        "CANCELADO": "#F56C6F",
-        "CONCLUIDO": "#46E0A3",
+        "CANCELADO": "#fa0206",
+        "CONCLUIDO": "#04cc7c",
     };
 
     function criarGraficoPizzaDeStatus(idCanvas, dadosFiltrados) {
@@ -277,13 +279,13 @@ window.addEventListener("DOMContentLoaded", async function () {
                 show: false,
                 top: '5%',
                 left: 'center',
-                textStyle: { color: '#0F8F8F' }
+                textStyle: { color: '#04090e' }
             },
             series: [{
                 type: 'pie',
                 radius: ['50%', '70%'],
                 avoidLabelOverlap: false,
-                itemStyle: { borderRadius: 0, borderColor: '#fff', borderWidth: 1 },
+                itemStyle: { borderRadius: 0, borderColor: '#000000', borderWidth: 1 },
                 label: { show: false },
                 emphasis: { label: { show: false, fontSize: 14 } },
                 labelLine: { show: false },
@@ -310,14 +312,14 @@ window.addEventListener("DOMContentLoaded", async function () {
             return { cliente, total };
         }).sort((a, b) => b.total - a.total);
 
-        let tableHTML = '<div style="overflow-y: scroll; height: 32vh; text-align: center;"><table style="min-width: 100%; border-collapse: collapse;"><thead style="position: sticky; top: 0; background-color: #0F8F8F; z-index: 1;"><tr><th style="border: 1px solid #ddd; padding: 12px; background-color: #0F8F8F; color: white; text-align: center; font-weight: bold;">Cliente</th><th style="border: 1px solid #ddd; padding: 12px; background-color: #0F8F8F; color: white; text-align: center; font-weight: bold;">Total</th></tr></thead><tbody>';
+        let tableHTML = '<div style="overflow-y: scroll; height: 32vh; text-align: center;"><table style="min-width: 100%; border-collapse: collapse;"><thead style="position: sticky; top: 0; background-color: none; z-index: 1;"><tr><th style="border: none; padding: 12px; background-color: none; color: white; text-align: center; font-weight: bold;">Cliente</th><th style="border: none; padding: 12px; background-color: none; color: white; text-align: center; font-weight: bold;">Total</th></tr></thead><tbody>';
 
         data.forEach((item, index) => {
             const formattedTotal = tipoAnalise === "valor"
                 ? `R$ ${item.total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
                 : item.total;
-            const rowStyle = index % 2 === 0 ? 'background-color: #f9f9f9;' : '';
-            tableHTML += `<tr style="${rowStyle}"><td style="border: 1px solid #ddd; padding: 12px; color: #0F8F8F;">${item.cliente}</td><td style="border: 1px solid #ddd; padding: 12px; color: #0F8F8F">${formattedTotal}</td></tr>`;
+            const rowStyle = index % 2 === 0 ? 'background-color: none;' : '';
+            tableHTML += `<tr style="${rowStyle}"><td style="border: none; padding: 12px; color: #ffffff;">${item.cliente}</td><td style="border: none; padding: 12px; color: #ffffff">${formattedTotal}</td></tr>`;
         });
 
         tableHTML += '</tbody></table></div>';
