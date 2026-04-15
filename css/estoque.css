@@ -33,7 +33,6 @@ body {
 .grid-container {
   display: grid;
   grid-template-columns: 260px 1fr 1fr 1fr;
-  grid-template-rows: 0.2fr 3fr;
   grid-template-areas:
     'sidebar header header header'
     'sidebar main main main';
@@ -46,8 +45,10 @@ body {
   height: 70px;
   display: flex;
   align-items: center;
+  border-radius: 0.5vw;
   justify-content: space-between;
   padding: 0 30px 0 30px;
+  margin-bottom: 1vw;
   box-shadow: 0 6px 7px -3px rgba(0, 0, 0, 0.35);
   background-color: var(--sidebar-color);
   color: var(--text-color-hover);

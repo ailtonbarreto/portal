@@ -276,8 +276,8 @@ body {
 /* ----------TABELA DE PEDIDOS---------- */
 
 #tabela_pedidos {
-  width: 96%;
-  margin: 2vw auto;
+  width: 100%;
+  margin: 0;
   border-collapse: collapse;
   overflow-y: scroll;
 

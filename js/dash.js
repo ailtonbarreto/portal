@@ -216,7 +216,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                 data: valoresOrdenados,
                 type: 'line',
                 areaStyle: {},
-                lineStyle: { color: '#000000' },
+                lineStyle: { color: '#ffffff' },
                 itemStyle: { color: '#ffffff' },
                 symbol: 'none',
                 showSymbol: false
@@ -312,7 +312,7 @@ window.addEventListener("DOMContentLoaded", async function () {
             return { cliente, total };
         }).sort((a, b) => b.total - a.total);
 
-        let tableHTML = '<div style="overflow-y: scroll; height: 32vh; text-align: center;"><table style="min-width: 100%; border-collapse: collapse;"><thead style="position: sticky; top: 0; background-color: none; z-index: 1;"><tr><th style="border: none; padding: 12px; background-color: none; color: white; text-align: center; font-weight: bold;">Cliente</th><th style="border: none; padding: 12px; background-color: none; color: white; text-align: center; font-weight: bold;">Total</th></tr></thead><tbody>';
+        let tableHTML = '<div style="overflow-y: scroll; height: 32vh; text-align: center;"><table style="min-width: 100%; border-collapse: collapse;"><thead style="position: sticky; top: 0; background-color: none; z-index: 1;"><tr><th style="border: none; padding: 12px; background-color: #252525; color: white; text-align: center; font-weight: bold;">Cliente</th><th style="border: none; padding: 12px; background-color: #252525; color: white; text-align: center; font-weight: bold;">Total</th></tr></thead><tbody>';
 
         data.forEach((item, index) => {
             const formattedTotal = tipoAnalise === "valor"
