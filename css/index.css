@@ -54,10 +54,11 @@ form {
 input {
     outline: none;
     height: 1.5vw;
-    width: 80%;
+    width: 70%;
     color: var(--cor-container);
     border-radius: 3px;
     border: none;
+    padding: 0.5vw;
 }
 
 .campos {
@@ -65,7 +66,7 @@ input {
     flex-direction: column;
     align-items: center;
     gap: 0.5vw;
-    width: 90%;
+    width: 100%;
 }
 
 label {
@@ -74,15 +75,15 @@ label {
 
 button {
     margin-top: 1vw;
-    color: var(--cor-texto);
+    color: var(--bg);
     border: none;
-    background-color: var(--bg);
+    background-color: var(--cor-texto);
     height: 2vw;
     padding: 1vw;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40%;
+    width: 70%;
     border-radius: 3px;
     margin-bottom: 1vw;
     cursor: pointer;
