@@ -179,7 +179,7 @@ iframe {
     input {
         outline: none;
         height: 8vw;
-        width: 100%;
+        width: 80%;
         color: var(--cor-container);
         border-radius: 3px;
         border: none;
@@ -187,7 +187,7 @@ iframe {
 
     button {
         border: none;
-        width: 90%;
+        width: 80%;
         border-radius: 3px;
         margin-top: 10vw;
         padding: 5vw;

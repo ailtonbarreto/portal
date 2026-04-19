@@ -157,7 +157,8 @@ body {
 
 
 #filtro_mes,
-#filtro_ano {
+#filtro_ano,
+#filtro_tipo {
   background-color: var(--bg);
   color: var(--text-color);
   font-size: 1vw;
@@ -169,15 +170,22 @@ body {
   border-radius: 0.3vw;
 }
 
-#filtro_tipo {
-  font-size: 1vw !important;
-  font-weight: bold;
-  padding: 0.4vw;
-  border-radius: 0.3vw;
-  border: none;
-  outline: none;
-  background-color: var(--bg);
-  color: var(--text-color);
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.chart-header select {
+    background-color: var(--bg);
+    color: var(--text-color);
+    font-size: 0.8vw;
+    padding: 0.3vw;
+    border: none;
+    outline: none;
+    border-radius: 0.5vw;
 }
 
 .chart {
@@ -449,6 +457,7 @@ table tbody tr:hover {
     height: 100vh;
   }
 
+
   .main-container {
     margin-bottom: 3%;
   }
@@ -456,6 +465,7 @@ table tbody tr:hover {
   .charts-card {
     margin-bottom: 0;
     padding-top: 5vw;
+    height: auto;
   }
 
   .card-header {
@@ -515,7 +525,7 @@ table tbody tr:hover {
     outline: none;
   }
 
-  #filtro_tipo {
+  #filtro_tipo, #filtro_vendas_tipo {
     background-color: var(--bg);
     color: var(--text-color);
     font-size: 4vw !important;

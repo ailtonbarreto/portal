@@ -69,6 +69,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         const anoSelecionado = parseInt(document.getElementById('filtro_ano').value, 10);
         const mesSelecionado = parseInt(document.getElementById('filtro_mes').value, 10);
         const tipoAnalise = document.getElementById('filtro_tipo').value;
+        const modoVendas = document.getElementById('filtro_vendas_tipo')?.value || 'total';
 
         const dadosFiltrados = dataFromLocalStorage.filter(item =>
             parseInt(item.mes, 10) === mesSelecionado &&
@@ -77,8 +78,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         );
 
         calcularIndicadores(dadosFiltrados);
-        atualizarGraficos(dadosFiltrados, tipoAnalise);
-
+        atualizarGraficos(dadosFiltrados, tipoAnalise, modoVendas);
 
         criarGraficoPizzaDeStatus('pizza-chart', dadosFiltrados);
 
@@ -86,7 +86,7 @@ window.addEventListener("DOMContentLoaded", async function () {
     }
 
 
-    function atualizarGraficos(dadosFiltrados, tipoAnalise) {
+    function atualizarGraficos(dadosFiltrados, tipoAnalise, modoVendas) {
         const getMetric = item => tipoAnalise === "quantidade" ? item.QTD : item.QTD * item.VR_UNIT;
 
         const categoriaMap = dadosFiltrados.reduce((acc, item) => {
@@ -102,7 +102,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         const valoresOrdenados = sortedData.map(item => item.soma);
 
         criarGraficoBarras('barchart', categoriasOrdenadas, valoresOrdenados, tipoAnalise);
-        criarGraficoLinha('line-chart', dadosFiltrados, tipoAnalise);
+        criarGraficoLinha('line-chart', dadosFiltrados, tipoAnalise, modoVendas);
     }
 
     function criarGraficoBarras(idCanvas, labels, valores, labelDataset) {
@@ -172,15 +172,23 @@ window.addEventListener("DOMContentLoaded", async function () {
     }
 
 
-    function criarGraficoLinha(idCanvas, dadosFiltrados, tipoAnalise) {
+    function criarGraficoLinha(idCanvas, dadosFiltrados, tipoAnalise, modoVendas = 'total') {
         const getMetric = item => tipoAnalise === "quantidade" ? item.QTD : item.QTD * item.VR_UNIT;
         const vendasPorDia = dadosFiltrados.reduce((acc, item) => {
             acc[item.dia] = (acc[item.dia] || 0) + getMetric(item);
             return acc;
         }, {});
 
-        const diasOrdenados = Object.keys(vendasPorDia).sort();
+        const diasOrdenados = Object.keys(vendasPorDia).sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
         const valoresOrdenados = diasOrdenados.map(dia => vendasPorDia[dia]);
+        const valoresAcumulados = valoresOrdenados.reduce((acc, valor, index) => {
+            if (index === 0) return [valor];
+            acc.push(valor + acc[index - 1]);
+            return acc;
+        }, []);
+
+        const seriesData = modoVendas === 'acumulado' ? valoresAcumulados : valoresOrdenados;
+        const labelPrefix = modoVendas === 'acumulado' ? 'Acumulado' : 'Total';
 
         const chartDom = document.getElementById(idCanvas);
         if (!chartDom) return;
@@ -202,8 +210,8 @@ window.addEventListener("DOMContentLoaded", async function () {
                 formatter: function (params) {
                     const value = params[0].value;
                     return tipoAnalise === "valor"
-                        ? `Valor: R$ ${parseFloat(value).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
-                        : `Quantidade: ${value}`;
+                        ? `${labelPrefix}: R$ ${parseFloat(value).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
+                        : `${labelPrefix}: ${value}`;
                 }
             },
             xAxis: {
@@ -213,7 +221,7 @@ window.addEventListener("DOMContentLoaded", async function () {
             },
             yAxis: { type: 'value', show: false },
             series: [{
-                data: valoresOrdenados,
+                data: seriesData,
                 type: 'line',
                 areaStyle: {},
                 lineStyle: { color: '#ffffff' },
@@ -312,14 +320,14 @@ window.addEventListener("DOMContentLoaded", async function () {
             return { cliente, total };
         }).sort((a, b) => b.total - a.total);
 
-        let tableHTML = '<div style="overflow-y: scroll; height: 32vh; text-align: center;"><table style="min-width: 100%; border-collapse: collapse;"><thead style="position: sticky; top: 0; background-color: none; z-index: 1;"><tr><th style="border: none; padding: 12px; background-color: #252525; color: white; text-align: center; font-weight: bold;">Cliente</th><th style="border: none; padding: 12px; background-color: #252525; color: white; text-align: center; font-weight: bold;">Total</th></tr></thead><tbody>';
+        let tableHTML = '<div style="overflow-y: scroll; height: 32vh; text-align: center;"><table style="width: 100%; table-layout: fixed; border-collapse: collapse;"><thead style="position: sticky; top: 0; background-color: none; z-index: 1;"><tr><th style="width: 50%; border: none; padding: 12px; background-color: #252525; color: white; text-align: center; font-weight: bold;">Cliente</th><th style="width: 50%; border: none; padding: 12px; background-color: #252525; color: white; text-align: center; font-weight: bold;">Total</th></tr></thead><tbody>';
 
         data.forEach((item, index) => {
             const formattedTotal = tipoAnalise === "valor"
                 ? `R$ ${item.total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
                 : item.total;
             const rowStyle = index % 2 === 0 ? 'background-color: none;' : '';
-            tableHTML += `<tr style="${rowStyle}"><td style="border: none; padding: 12px; color: #ffffff;">${item.cliente}</td><td style="border: none; padding: 12px; color: #ffffff">${formattedTotal}</td></tr>`;
+            tableHTML += `<tr style="${rowStyle}"><td style="width: 50%; border: none; padding: 12px; color: #ffffff;">${item.cliente}</td><td style="width: 50%; border: none; padding: 12px; color: #ffffff">${formattedTotal}</td></tr>`;
         });
 
         tableHTML += '</tbody></table></div>';
@@ -333,6 +341,7 @@ window.addEventListener("DOMContentLoaded", async function () {
     document.getElementById('filtro_mes').addEventListener('change', montarGraficoComFiltro);
     document.getElementById('filtro_ano').addEventListener('change', montarGraficoComFiltro);
     document.getElementById('filtro_tipo').addEventListener('change', montarGraficoComFiltro);
+    document.getElementById('filtro_vendas_tipo')?.addEventListener('change', montarGraficoComFiltro);
 });
 
 document.addEventListener("DOMContentLoaded", function () {
