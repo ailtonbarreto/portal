@@ -29,6 +29,23 @@ body {
   font-size: 35px;
 }
 
+.money{
+  color: rgb(208, 255, 0);
+}
+
+.order{
+  color: rgb(0, 215, 253);
+}
+
+
+.client{
+  color: rgb(255, 18, 255);
+}
+
+.ticket-medio{
+  color: rgb(252, 114, 1);
+}
+
 .grid-container {
   display: grid;
   grid-template-columns: 260px 1fr 1fr 1fr;
@@ -220,7 +237,7 @@ body {
   padding: 1vw 2vw;
   border-radius: 5px;
   background-color: var(--sidebar-color);
-  box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2); */
 }
 
 
@@ -230,6 +247,10 @@ body {
   justify-content: space-between;
   font-size: 1.3vw;
 
+  h3{
+    color: #b6b6b6;
+  }
+
 }
 
 #ticket_medio,
@@ -237,6 +258,7 @@ body {
 #qtd_pedidos,
 #qtd_clientes {
   font-size: 1.3vw;
+  color: #ffffff;
 }
 
 .charts {
@@ -465,7 +487,7 @@ table tbody tr:hover {
   .charts-card {
     margin-bottom: 0;
     padding-top: 5vw;
-    height: auto;
+    height: 35vh;
   }
 
   .card-header {

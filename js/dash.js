@@ -150,7 +150,7 @@ window.addEventListener("DOMContentLoaded", async function () {
             series: [{
                 type: 'bar',
                 data: valoresOrdenados,
-                itemStyle: { color: '#ffffff' },
+                itemStyle: { color: '#b6b6b6' },
                 label: {
                     show: true,
                     position: 'right',
@@ -224,8 +224,8 @@ window.addEventListener("DOMContentLoaded", async function () {
                 data: seriesData,
                 type: 'line',
                 areaStyle: {},
-                lineStyle: { color: '#ffffff' },
-                itemStyle: { color: '#ffffff' },
+                lineStyle: { color: '#b6b6b6' },
+                itemStyle: { color: '#b6b6b6' },
                 symbol: 'none',
                 showSymbol: false
             }]
