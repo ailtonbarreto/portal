@@ -199,9 +199,9 @@ window.addEventListener("DOMContentLoaded", async function () {
 
             grid: {
                 left: '0%',
-                right: '0%',
+                right: '1%',
                 top: '1%',
-                bottom: '1%',
+                bottom: '0%',
                 containLabel: true
             },
 
@@ -217,6 +217,7 @@ window.addEventListener("DOMContentLoaded", async function () {
             xAxis: {
                 type: 'category',
                 data: diasOrdenados,
+                boundaryGap: false,
                 axisLabel: { color: '#ffffff' }
             },
             yAxis: { type: 'value', show: false },
@@ -293,10 +294,30 @@ window.addEventListener("DOMContentLoaded", async function () {
                 type: 'pie',
                 radius: ['50%', '70%'],
                 avoidLabelOverlap: false,
-                itemStyle: { borderRadius: 0, borderColor: '#000000', borderWidth: 1 },
-                label: { show: false },
-                emphasis: { label: { show: false, fontSize: 14 } },
-                labelLine: { show: false },
+                itemStyle: {
+                    borderRadius: 0,
+                    borderColor: '#000000',
+                    borderWidth: 1
+                },
+
+                label: {
+                    show: true,
+                    position: 'outside',
+                    color: '#ffffff',
+                    formatter: '{b}: {c}'
+                },
+
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: 14
+                    }
+                },
+
+                labelLine: {
+                    show: true
+                },
+
                 data: labels.map((label, i) => ({
                     value: valores[i],
                     name: label,
@@ -307,6 +328,47 @@ window.addEventListener("DOMContentLoaded", async function () {
 
         myChart.setOption(option);
     }
+
+    // function criarGraficoPizzaDeStatus(idCanvas, dadosFiltrados) {
+    //     const statusCount = contarStatus(dadosFiltrados);
+    //     const labels = Object.keys(statusCount);
+    //     const valores = Object.values(statusCount);
+    //     const cores = labels.map(status => coresPorStatus[status] || "#CCCCCC");
+
+    //     const chartDom = document.getElementById(idCanvas);
+    //     if (!chartDom) return;
+
+    //     const myChart = echarts.init(chartDom);
+
+    //     const option = {
+    //         tooltip: {
+    //             trigger: 'item',
+    //             formatter: '{b}: {c} pedidos ({d}%)'
+    //         },
+    //         legend: {
+    //             show: false,
+    //             top: '5%',
+    //             left: 'center',
+    //             textStyle: { color: '#04090e' }
+    //         },
+    //         series: [{
+    //             type: 'pie',
+    //             radius: ['50%', '70%'],
+    //             avoidLabelOverlap: false,
+    //             itemStyle: { borderRadius: 0, borderColor: '#000000', borderWidth: 1 },
+    //             label: { show: false },
+    //             emphasis: { label: { show: false, fontSize: 14 } },
+    //             labelLine: { show: false },
+    //             data: labels.map((label, i) => ({
+    //                 value: valores[i],
+    //                 name: label,
+    //                 itemStyle: { color: cores[i] }
+    //             }))
+    //         }]
+    //     };
+
+    //     myChart.setOption(option);
+    // }
 
 
 
