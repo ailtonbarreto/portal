@@ -16,7 +16,7 @@ pode acompanhar sua carteira de clientes assim como o estoque atualizado em temp
 
 ## Projeoto Funcionando
 
-Acesse: `[https://ailtonbarreto.github.io/portal/].
+Acesse: https://ailtonbarreto.github.io/portal/.
 
 
 <img width="1887" height="946" alt="image" src="https://github.com/user-attachments/assets/1988a0eb-4377-46bc-853a-d4356f4944a0" />
