@@ -14,13 +14,9 @@ pode acompanhar sua carteira de clientes assim como o estoque atualizado em temp
 - `js/` - scripts e dados
 - `img/` - imagens usadas pelo portal
 
-## Uso
+## Projeoto Funcionando
 
-Abra `index.html` em um navegador para acessar o portal.
-
-## Observações
-
-- Certifique-se de manter o arquivo `js/credenciais.json` protegido, pois ele pode conter dados de credenciais.
-- Este projeto usa apenas frontend estático, então não há backend integrado.
+Acesse: `[https://ailtonbarreto.github.io/portal/].
 
 
+<img width="1887" height="946" alt="image" src="https://github.com/user-attachments/assets/1988a0eb-4377-46bc-853a-d4356f4944a0" />
