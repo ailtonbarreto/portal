@@ -145,12 +145,12 @@ window.addEventListener("DOMContentLoaded", async function () {
             yAxis: {
                 type: 'category',
                 data: labelsOrdenados,
-                axisLabel: { color: '#ffffff' }
+                axisLabel: { color: '#000' }
             },
             series: [{
                 type: 'bar',
                 data: valoresOrdenados,
-                itemStyle: { color: '#b6b6b6' },
+                itemStyle: { color: '#000' },
                 label: {
                     show: true,
                     position: 'right',
@@ -160,7 +160,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                             ? `R$ ${parseFloat(value).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
                             : `${value}`;
                     },
-                    color: '#ffffff',
+                    color: '#000',
                     fontWeight: 'bold'
                 }
             }]
@@ -218,15 +218,15 @@ window.addEventListener("DOMContentLoaded", async function () {
                 type: 'category',
                 data: diasOrdenados,
                 boundaryGap: false,
-                axisLabel: { color: '#ffffff' }
+                axisLabel: { color: '#000' }
             },
             yAxis: { type: 'value', show: false },
             series: [{
                 data: seriesData,
                 type: 'line',
                 areaStyle: {},
-                lineStyle: { color: '#b6b6b6' },
-                itemStyle: { color: '#b6b6b6' },
+                lineStyle: { color: '#000' },
+                itemStyle: { color: '#000' },
                 symbol: 'none',
                 showSymbol: false
             }]
@@ -272,7 +272,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         const statusCount = contarStatus(dadosFiltrados);
         const labels = Object.keys(statusCount);
         const valores = Object.values(statusCount);
-        const cores = labels.map(status => coresPorStatus[status] || "#CCCCCC");
+        const cores = labels.map(status => coresPorStatus[status] || "#000");
 
         const chartDom = document.getElementById(idCanvas);
         if (!chartDom) return;
@@ -303,7 +303,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                 label: {
                     show: true,
                     position: 'outside',
-                    color: '#ffffff',
+                    color: '#000',
                     formatter: '{b}: {c}'
                 },
 
@@ -329,48 +329,6 @@ window.addEventListener("DOMContentLoaded", async function () {
         myChart.setOption(option);
     }
 
-    // function criarGraficoPizzaDeStatus(idCanvas, dadosFiltrados) {
-    //     const statusCount = contarStatus(dadosFiltrados);
-    //     const labels = Object.keys(statusCount);
-    //     const valores = Object.values(statusCount);
-    //     const cores = labels.map(status => coresPorStatus[status] || "#CCCCCC");
-
-    //     const chartDom = document.getElementById(idCanvas);
-    //     if (!chartDom) return;
-
-    //     const myChart = echarts.init(chartDom);
-
-    //     const option = {
-    //         tooltip: {
-    //             trigger: 'item',
-    //             formatter: '{b}: {c} pedidos ({d}%)'
-    //         },
-    //         legend: {
-    //             show: false,
-    //             top: '5%',
-    //             left: 'center',
-    //             textStyle: { color: '#04090e' }
-    //         },
-    //         series: [{
-    //             type: 'pie',
-    //             radius: ['50%', '70%'],
-    //             avoidLabelOverlap: false,
-    //             itemStyle: { borderRadius: 0, borderColor: '#000000', borderWidth: 1 },
-    //             label: { show: false },
-    //             emphasis: { label: { show: false, fontSize: 14 } },
-    //             labelLine: { show: false },
-    //             data: labels.map((label, i) => ({
-    //                 value: valores[i],
-    //                 name: label,
-    //                 itemStyle: { color: cores[i] }
-    //             }))
-    //         }]
-    //     };
-
-    //     myChart.setOption(option);
-    // }
-
-
 
     function criarGraficoDispersaoPorCliente(idCanvas, dadosFiltrados, tipoAnalise) {
         const getMetric = item => tipoAnalise === "quantidade" ? item.QTD : item.QTD * item.VR_UNIT;
@@ -389,7 +347,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                 ? `R$ ${item.total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
                 : item.total;
             const rowStyle = index % 2 === 0 ? 'background-color: none;' : '';
-            tableHTML += `<tr style="${rowStyle}"><td style="width: 50%; border: none; padding: 12px; color: #ffffff;">${item.cliente}</td><td style="width: 50%; border: none; padding: 12px; color: #ffffff">${formattedTotal}</td></tr>`;
+            tableHTML += `<tr style="${rowStyle}"><td style="width: 50%; border: none; padding: 12px; color: #000;">${item.cliente}</td><td style="width: 50%; border: none; padding: 12px; color: #000">${formattedTotal}</td></tr>`;
         });
 
         tableHTML += '</tbody></table></div>';
