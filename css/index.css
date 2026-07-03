@@ -64,6 +64,10 @@ input {
     padding: 0.5vw;
 }
 
+#input-user, #password {
+    background-color: var(--cor-container);
+}
+
 
 .campos {
     display: flex;
@@ -158,7 +162,7 @@ iframe {
 
 /* ---------------------------------------------------- */
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
 
     .form {
         justify-content: space-around;
