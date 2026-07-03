@@ -66,6 +66,7 @@ input {
 
 #input-user, #password {
     background-color: var(--cor-container);
+    color: var(--cor-texto);
 }
 
 
