@@ -58,7 +58,7 @@ input {
     outline: none;
     height: 1.5vw;
     width: 70%;
-    color: var(--cor-container);
+    color: var(--cor-texto);
     border-radius: 3px;
     border: none;
     padding: 0.5vw;
@@ -66,7 +66,6 @@ input {
 
 #input-user, #password {
     background-color: var(--cor-container);
-    color: var(--cor-texto);
 }
 
 
