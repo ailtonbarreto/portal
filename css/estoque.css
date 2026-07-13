@@ -100,11 +100,11 @@ body {
 .pesquisar-text {
   color: var(--text-color);
   font-size: 1.5vw;
-  margin-bottom: 0.3vw;
+
 }
 
 #filterInput {
-  background-color: var(--sidebar-color);
+  background-color: var(--bg);
   outline: none;
   padding: 0.5vw;
   width: 20vw;
